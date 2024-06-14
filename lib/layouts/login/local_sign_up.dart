@@ -493,7 +493,29 @@ class _LocalSignUpState extends State<LocalSignUp> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-       
+                      GestureDetector(
+                        onTap: () {
+                          print("Back button tapped");
+                          Navigator.pop(context);
+                        },
+                        child: Container(
+                          height: 30,
+                          width: 30,
+                          decoration: const BoxDecoration(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(15)),
+                              color: Color.fromARGB(84, 148, 147, 147)),
+                          child: Center(
+                            child: Icon(
+                              Icons.arrow_back,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ),
+                  Expanded(
+                    flex: 2,
+                    child: Container()),
                   Text(
                     "Let's create your profile",
                     style: GoogleFonts.montserrat(
@@ -569,7 +591,7 @@ class _LocalSignUpState extends State<LocalSignUp> {
                             print("next button clicked");
                             print(currentIndex);
                             } else {
-                              
+
                             }
                         } else if (currentIndex == 4) {
                             email = emailController.text;
