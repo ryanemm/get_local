@@ -380,7 +380,7 @@ class _EmployerSignUpState extends State<EmployerSignUp> {
                     return SlideTransition(
                         position: offsetAnimation, child: child);
                   }
-                  // ScaleTransition(child: child, scale: animation),
+                  // ScaleTransition(child: child, scale: animation),sdfd
                   ),
               const SizedBox(height: 32),
               Row(
