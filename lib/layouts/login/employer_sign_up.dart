@@ -330,9 +330,29 @@ class _EmployerSignUpState extends State<EmployerSignUp> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.1,
-                  ),
+                      GestureDetector(
+                        onTap: () {
+                          print("Back button tapped");
+                          Navigator.pop(context);
+                        },
+                        child: Container(
+                          height: 50,
+                          width: 50,
+                          decoration: const BoxDecoration(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(25)),
+                              color: Color.fromARGB(84, 148, 147, 147)),
+                          child: Center(
+                            child: Icon(
+                              Icons.arrow_back,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ),
+                      ),
+                   Expanded(
+                    flex: 2,
+                    child: Container()),
                   Text(
                     "Let's create your profile",
                     style: GoogleFonts.montserrat(
@@ -399,7 +419,7 @@ class _EmployerSignUpState extends State<EmployerSignUp> {
                             ? currentIndex = currentIndex + 1
                             : () {};
                         signUpStage = stages[currentIndex];
-                        print("gradient button clicked");
+                        print("next button clicked");
                         print(currentIndex);
                       });
                     },
