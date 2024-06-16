@@ -19,10 +19,20 @@ class _SignUpPageState extends State<SignUpPage> {
     return LoaderOverlay(
         child: Scaffold(
           appBar:  AppBar(
-          
-            toolbarHeight: 0,
             elevation: 0,
             backgroundColor: Colors.grey[50],
+            leading:   GestureDetector(
+                onTap: () {
+                  print("Back button tapped");
+                  Navigator.pop(context);
+                },
+                child: Center(
+                  child: Icon(
+                    Icons.arrow_back,
+                    color: Colors.black,
+                  ),
+                ),
+              ),
          ),
             body: Container(
                 padding:
@@ -33,31 +43,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          GestureDetector(
-                            onTap: () {
-                              print("Back button tapped");
-                              Navigator.pop(context);
-                            },
-                            child: Container(
-                              height: 50,
-                              width: 50,
-                              decoration: const BoxDecoration(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(25)),
-                                  color: Color.fromARGB(84, 148, 147, 147)),
-                              child: Center(
-                                child: Icon(
-                                  Icons.arrow_back,
-                                  color: Colors.black,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
+                      
                     Expanded(flex: 3, child: Container()),
                     Text(
                       "Let's Get You Started",

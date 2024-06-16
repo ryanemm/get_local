@@ -49,6 +49,7 @@ class _LocalSignUpState extends State<LocalSignUp> {
   String _chosenModel = "title";
   DateTime selectedDate = DateTime.now();
   bool OTPVerified = false;
+  bool showOTPError = false; 
 
   Future<void> selectDate(BuildContext context) async {
     final pickedDate = await showDatePicker(
@@ -110,6 +111,7 @@ class _LocalSignUpState extends State<LocalSignUp> {
     }
     if (result.result == "incorrect") {
       print("Incorrect OPT");
+      showOTPError = true;
     }
 
     return result;
@@ -220,6 +222,14 @@ class _LocalSignUpState extends State<LocalSignUp> {
                     )),
               ),
             ),
+            SizedBox(height: 16), 
+            showOTPError == true ? 
+              Text("Incorrect OTP entered", 
+                  style: GoogleFonts.montserrat(
+                  fontSize: 16, 
+                  fontWeight: FontWeight.bold,
+                  color: Colors.red)) : 
+              Container()
           ],
         ),
       ),
@@ -480,9 +490,24 @@ class _LocalSignUpState extends State<LocalSignUp> {
     Widget signUpStage = stages[currentIndex];
     return LoaderOverlay(
         child: Scaffold(
+          appBar: AppBar(
+            backgroundColor: Colors.grey[50],
+            leading:   GestureDetector(
+                onTap: () {
+                  print("Back button tapped");
+                  Navigator.pop(context);
+                },
+                child: Center(
+                  child: Icon(
+                    Icons.arrow_back,
+                    color: Colors.black,
+                  ),
+                ),
+              ),
+          ),
             body: Container(
       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
-      height: double.infinity,
+   
       color: Colors.grey[50],
       child: Form(
         //key: _formKey,
@@ -490,44 +515,19 @@ class _LocalSignUpState extends State<LocalSignUp> {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                      GestureDetector(
-                        onTap: () {
-                          print("Back button tapped");
-                          Navigator.pop(context);
-                        },
-                        child: Container(
-                          height: 30,
-                          width: 30,
-                          decoration: const BoxDecoration(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(15)),
-                              color: Color.fromARGB(84, 148, 147, 147)),
-                          child: Center(
-                            child: Icon(
-                              Icons.arrow_back,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
-                      ),
-                  Expanded(
-                    flex: 2,
-                    child: Container()),
-                  Text(
-                    "Let's create your profile",
-                    style: GoogleFonts.montserrat(
-                        fontSize: 24, fontWeight: FontWeight.bold),
-                  ),
-                  Text(
-                    "Just a few quick steps",
-                    style: GoogleFonts.montserrat(
-                        fontSize: 16, fontWeight: FontWeight.normal),
-                  )
-                ],
-              ),
+            
+              Expanded(child: Container()),
+                              
+                                Text(
+                                  "Let's create your profile",
+                                  style: GoogleFonts.montserrat(
+                fontSize: 24, fontWeight: FontWeight.bold),
+                                ),
+                                Text(
+                                  "Just a few quick steps",
+                                  style: GoogleFonts.montserrat(
+                fontSize: 16, fontWeight: FontWeight.normal),
+                                ),
               SizedBox(height: 36),
               AnimatedSwitcher(
                   duration: const Duration(milliseconds: 500),
@@ -591,7 +591,7 @@ class _LocalSignUpState extends State<LocalSignUp> {
                             print("next button clicked");
                             print(currentIndex);
                             } else {
-
+                              OTPController.text = "";
                             }
                         } else if (currentIndex == 4) {
                             email = emailController.text;
