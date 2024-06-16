@@ -71,6 +71,7 @@ class _LocalSignUpState extends State<LocalSignUp> {
 
     Future requestOTP() async {
     var url = "http://139.144.77.133/getLocalDemo/otp_mailer.php";
+    context.loaderOverlay.show();
     var response = await http.post(Uri.parse(url), body: {
       "email": email,
 
@@ -84,6 +85,7 @@ class _LocalSignUpState extends State<LocalSignUp> {
     if (response.body.contains("Incorrect")) {
       print("Check you the details and verify they are correct");
     }
+    context.loaderOverlay.hide();
 
     /*if (data == "Login Successful.") {
       Fluttertoast.showToast(msg: "Login successful");
@@ -97,6 +99,7 @@ class _LocalSignUpState extends State<LocalSignUp> {
 
     Future<OTPResult> checkOTP() async {
     var url = "http://139.144.77.133/getLocalDemo/otp_checker.php";
+    context.loaderOverlay.show();
     var response = await http.post(Uri.parse(url), body: {
       "email": email,
       "otp": OTP
@@ -108,12 +111,13 @@ class _LocalSignUpState extends State<LocalSignUp> {
     if (result.result == "correct") {
       print("Correct OTP ");
       OTPVerified = true;
+      showOTPError = false;
     }
     if (result.result == "incorrect") {
       print("Incorrect OPT");
       showOTPError = true;
     }
-
+    context.loaderOverlay.hide();
     return result;
   }
 

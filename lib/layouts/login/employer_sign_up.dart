@@ -82,6 +82,7 @@ class _EmployerSignUpState extends State<EmployerSignUp> {
     if (result.result == "correct") {
       print("Correct OTP ");
       OTPVerified = true;
+      showOTPError = false;
     }
     if (result.result == "incorrect") {
       print("Incorrect OPT");
