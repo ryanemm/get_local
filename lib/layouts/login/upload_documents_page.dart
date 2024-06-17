@@ -38,86 +38,87 @@ class _UploadDocumentsPageState extends State<UploadDocumentsPage> {
     final Map params = Map();
 
     Size screenSize = MediaQuery.of(context).size;
-    return SafeArea(
-      child: LoaderOverlay(
-          child: Scaffold(
-              body: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
-        height: double.infinity,
-        color: Colors.grey[50],
-        child: Column(
-          children: [
-            SizedBox(height: 32),
-            Text(
-              "Please upload your supporting documents",
-              style: GoogleFonts.montserrat(
-                  fontSize: 16, fontWeight: FontWeight.bold),
+    return LoaderOverlay(
+        child: Scaffold(
+          appBar: AppBar(
+            backgroundColor: Colors.grey.shade50,
+          ),
+            body: Container(
+      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
+      height: double.infinity,
+      color: Colors.grey[50],
+      child: Column(
+        children: [
+          SizedBox(height: 32),
+          Text(
+            "Please upload your supporting documents",
+            style: GoogleFonts.montserrat(
+                fontSize: 16, fontWeight: FontWeight.bold),
+          ),
+          SizedBox(height: 32),
+          Expanded(
+            child: Container(
+              //height: screenSize.height * 0.7,
+              child: widget.profileType == "company"
+                  ? ListView(
+                      children: [
+                        DocumentUploadCard(
+                            requiredDocument: requiredDocumentsCompany[0]),
+                        DocumentUploadCard(
+                            requiredDocument: requiredDocumentsCompany[1]),
+                        DocumentUploadCard(
+                            requiredDocument: requiredDocumentsCompany[2]),
+                        GradientButton(
+                          text: "Submit Documents",
+                          buttonColor1: Color.fromARGB(255, 0, 23, 226),
+                          buttonColor2: Color.fromARGB(255, 97, 178, 245),
+                          shadowColor: Colors.grey.shade500,
+                          offsetX: 4,
+                          offsetY: 4,
+                          width: 120.00,
+                          function: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => PreDocUploadPage(
+                                          profileType: "local",
+                                        )));
+                          },
+                        ),
+                        SizedBox(height: 16),
+                      ],
+                    )
+                  : ListView(
+                      children: [
+                        DocumentUploadCard(
+                            requiredDocument: requiredDocumentsLocal[0]),
+                        DocumentUploadCard(
+                            requiredDocument: requiredDocumentsLocal[1]),
+                        DocumentUploadCard(
+                            requiredDocument: requiredDocumentsLocal[2]),
+                        GradientButton(
+                          text: "Submit Documents",
+                          buttonColor1: Color.fromARGB(255, 0, 23, 226),
+                          buttonColor2: Color.fromARGB(255, 97, 178, 245),
+                          shadowColor: Colors.grey.shade500,
+                          offsetX: 4,
+                          offsetY: 4,
+                          width: 120.00,
+                          function: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        AwaitingApprovalPage()));
+                          },
+                        ),
+                        SizedBox(height: 16),
+                      ],
+                    ),
             ),
-            SizedBox(height: 32),
-            Expanded(
-              child: Container(
-                //height: screenSize.height * 0.7,
-                child: widget.profileType == "company"
-                    ? ListView(
-                        children: [
-                          DocumentUploadCard(
-                              requiredDocument: requiredDocumentsCompany[0]),
-                          DocumentUploadCard(
-                              requiredDocument: requiredDocumentsCompany[1]),
-                          DocumentUploadCard(
-                              requiredDocument: requiredDocumentsCompany[2]),
-                          GradientButton(
-                            text: "Submit Documents",
-                            buttonColor1: Color.fromARGB(255, 0, 23, 226),
-                            buttonColor2: Color.fromARGB(255, 97, 178, 245),
-                            shadowColor: Colors.grey.shade500,
-                            offsetX: 4,
-                            offsetY: 4,
-                            width: 120.00,
-                            function: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => PreDocUploadPage(
-                                            profileType: "local",
-                                          )));
-                            },
-                          ),
-                          SizedBox(height: 16),
-                        ],
-                      )
-                    : ListView(
-                        children: [
-                          DocumentUploadCard(
-                              requiredDocument: requiredDocumentsLocal[0]),
-                          DocumentUploadCard(
-                              requiredDocument: requiredDocumentsLocal[1]),
-                          DocumentUploadCard(
-                              requiredDocument: requiredDocumentsLocal[2]),
-                          GradientButton(
-                            text: "Submit Documents",
-                            buttonColor1: Color.fromARGB(255, 0, 23, 226),
-                            buttonColor2: Color.fromARGB(255, 97, 178, 245),
-                            shadowColor: Colors.grey.shade500,
-                            offsetX: 4,
-                            offsetY: 4,
-                            width: 120.00,
-                            function: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          AwaitingApprovalPage()));
-                            },
-                          ),
-                          SizedBox(height: 16),
-                        ],
-                      ),
-              ),
-            ),
-          ],
-        ),
-      ))),
-    );
+          ),
+        ],
+      ),
+    )));
   }
 }
