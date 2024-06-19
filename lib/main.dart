@@ -3,7 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:get_local/layouts/home/home_screen.dart';
 import 'package:get_local/layouts/login/login_screen.dart';
 import 'package:get_local/layouts/login/upload_documents_test_page.dart';
-import 'package:get_local/test_screen.dart';
+import 'package:get_local/file_upload_screen.dart';
+import 'package:get_local/upload_test.dart';
 
 void main() {
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
@@ -28,7 +29,7 @@ class MyApp extends StatelessWidget {
         
         useMaterial3: true,
       ),
-      home: loggedIn == true ? HomeScreen() : LoginScreen(),
+      home: loggedIn == true ? HomeScreen() : FileUploadScreen(),
     );
   }
 }

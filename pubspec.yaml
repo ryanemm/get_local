@@ -50,6 +50,7 @@ dependencies:
   scroll_to_hide: ^2.1.0
   flutter_launcher_icons: "^0.13.1"
   timelines: ^0.1.0
+  image_picker: ^1.1.2
 
 dev_dependencies:
   flutter_test:
