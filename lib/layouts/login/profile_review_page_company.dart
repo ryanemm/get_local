@@ -40,6 +40,7 @@ class _ProfileReviewPageCompanyState extends State<ProfileReviewPageCompany> {
   String? applicant_id;
 
   Future createProfile() async {
+    print("creating profile");
     var url = "http://139.144.77.133/getLocalDemo/registerCompany.php";
     var response = await http.post(Uri.parse(url), body: {
       "email": widget.email,
@@ -53,12 +54,16 @@ class _ProfileReviewPageCompanyState extends State<ProfileReviewPageCompany> {
     });
 
     var data = json.decode(response.body);
+    print(response.statusCode);
+    print(response.body);
 
-    if (response.statusCode == "200") {
+    if (response.statusCode == 200) {
       print("Profile Created");
-      Map<String, dynamic> parsedJson = jsonDecode(response.body);
-      AccountDetailsCompany fetched_id = AccountDetailsCompany.fromJson(parsedJson);
-      applicant_id = fetched_id.id;
+      print(response.body);
+      List accountDetails = json.decode(response.body);
+      var formatted =
+      accountDetails.map((account) => AccountDetailsCompany.fromJson(account)).toList();
+      applicant_id = formatted[0].id;
     }
     if (response.body.contains("Incorrect")) {
       print("Check your the details and verify they are correct");
@@ -76,163 +81,161 @@ class _ProfileReviewPageCompanyState extends State<ProfileReviewPageCompany> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: LoaderOverlay(
-          child: Scaffold(
-              body: Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
-                  height: double.infinity,
-                  color: Colors.grey[50],
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(
-                          "Please review your details and confirm they are correct.",
-                          style: GoogleFonts.montserrat(
-                              fontSize: 14, fontWeight: FontWeight.bold)),
-                      SizedBox(height: 32),
-                      Table(
-                        children: [
-                          TableRow(children: [
-                            TableCell(
-                              child: Text(
-                                "Email",
-                                style: GoogleFonts.montserrat(fontSize: 14),
-                              ),
-                            ),
-                            TableCell(
-                                child: Text(
-                              widget.email,
+    return LoaderOverlay(
+        child: Scaffold(
+            body: Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
+                height: double.infinity,
+                color: Colors.grey[50],
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                        "Please review your details and confirm they are correct.",
+                        style: GoogleFonts.montserrat(
+                            fontSize: 14, fontWeight: FontWeight.bold)),
+                    SizedBox(height: 32),
+                    Table(
+                      children: [
+                        TableRow(children: [
+                          TableCell(
+                            child: Text(
+                              "Email",
                               style: GoogleFonts.montserrat(fontSize: 14),
-                            ))
-                          ]),
-                          TableRow(children: [
-                            TableCell(
-                              child: Text(
-                                "Company Name",
-                                style: GoogleFonts.montserrat(fontSize: 14),
-                              ),
                             ),
-                            TableCell(
-                                child: Text(
-                              widget.companyName,
-                              style: GoogleFonts.montserrat(fontSize: 14),
-                            ))
-                          ]),
-                          TableRow(children: [
-                            TableCell(
-                              child: Text(
-                                "Trading As",
-                                style: GoogleFonts.montserrat(fontSize: 14),
-                              ),
-                            ),
-                            TableCell(
-                                child: Text(
-                              widget.tradingAs,
-                              style: GoogleFonts.montserrat(fontSize: 14),
-                            ))
-                          ]),
-                          TableRow(children: [
-                            TableCell(
-                              child: Text(
-                                "Address",
-                                style: GoogleFonts.montserrat(fontSize: 14),
-                              ),
-                            ),
-                            TableCell(
-                                child: Text(
-                              widget.address,
-                              style: GoogleFonts.montserrat(fontSize: 14),
-                            ))
-                          ]),
-                          TableRow(children: [
-                            TableCell(
-                              child: Text(
-                                "Phone Number",
-                                style: GoogleFonts.montserrat(fontSize: 14),
-                              ),
-                            ),
-                            TableCell(
-                                child: Text(
-                              widget.phoneNumber,
-                              style: GoogleFonts.montserrat(fontSize: 14),
-                            ))
-                          ]),
-                          TableRow(children: [
-                            TableCell(
-                              child: Text(
-                                "Company Registration",
-                                style: GoogleFonts.montserrat(fontSize: 14),
-                              ),
-                            ),
-                            TableCell(
-                                child: Text(
-                              widget.companyRegistration,
-                              style: GoogleFonts.montserrat(fontSize: 14),
-                            ))
-                          ]),
-                          TableRow(children: [
-                            TableCell(
-                              child: Text(
-                                "Service",
-                                style: GoogleFonts.montserrat(fontSize: 14),
-                              ),
-                            ),
-                            TableCell(
-                                child: Text(
-                              widget.service,
-                              style: GoogleFonts.montserrat(fontSize: 14),
-                            ))
-                          ]),
-                        ],
-                      ),
-                      SizedBox(height: 64),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          GradientButton(
-                            text: "Confirm",
-                            buttonColor1: Color.fromARGB(255, 0, 23, 226),
-                            buttonColor2: Color.fromARGB(255, 97, 178, 245),
-                            shadowColor: Colors.grey.shade500,
-                            offsetX: 4,
-                            offsetY: 4,
-                            width: 120.00,
-                            function: () async {
-                              SharedPreferences prefs =
-                                  await SharedPreferences.getInstance();
-                              await createProfile();
-                              await prefs.setString("email", widget.email);
-                              await prefs.setString(
-                                  "password", widget.password);
-                              await prefs.setString(
-                                  "companyName", widget.companyName);
-                              await prefs.setString("companyRegistration",
-                                  widget.companyRegistration);
-                              await prefs.setString("address", widget.address);
-                              await prefs.setString(
-                                  "phoneNumber", widget.phoneNumber);
-                              await prefs.setString(
-                                  "tradingAs", widget.tradingAs);
-                              await prefs.setString("service", widget.service);
-                              await prefs.setString("loggedIn", "true");
-
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => PreDocUploadPage(
-                                            profileType: "company",
-                                            applicantId: applicant_id!
-                                          )));
-                            },
                           ),
-                        ],
-                      )
-                    ],
-                  )))),
-    );
+                          TableCell(
+                              child: Text(
+                            widget.email,
+                            style: GoogleFonts.montserrat(fontSize: 14),
+                          ))
+                        ]),
+                        TableRow(children: [
+                          TableCell(
+                            child: Text(
+                              "Company Name",
+                              style: GoogleFonts.montserrat(fontSize: 14),
+                            ),
+                          ),
+                          TableCell(
+                              child: Text(
+                            widget.companyName,
+                            style: GoogleFonts.montserrat(fontSize: 14),
+                          ))
+                        ]),
+                        TableRow(children: [
+                          TableCell(
+                            child: Text(
+                              "Trading As",
+                              style: GoogleFonts.montserrat(fontSize: 14),
+                            ),
+                          ),
+                          TableCell(
+                              child: Text(
+                            widget.tradingAs,
+                            style: GoogleFonts.montserrat(fontSize: 14),
+                          ))
+                        ]),
+                        TableRow(children: [
+                          TableCell(
+                            child: Text(
+                              "Address",
+                              style: GoogleFonts.montserrat(fontSize: 14),
+                            ),
+                          ),
+                          TableCell(
+                              child: Text(
+                            widget.address,
+                            style: GoogleFonts.montserrat(fontSize: 14),
+                          ))
+                        ]),
+                        TableRow(children: [
+                          TableCell(
+                            child: Text(
+                              "Phone Number",
+                              style: GoogleFonts.montserrat(fontSize: 14),
+                            ),
+                          ),
+                          TableCell(
+                              child: Text(
+                            widget.phoneNumber,
+                            style: GoogleFonts.montserrat(fontSize: 14),
+                          ))
+                        ]),
+                        TableRow(children: [
+                          TableCell(
+                            child: Text(
+                              "Company Registration",
+                              style: GoogleFonts.montserrat(fontSize: 14),
+                            ),
+                          ),
+                          TableCell(
+                              child: Text(
+                            widget.companyRegistration,
+                            style: GoogleFonts.montserrat(fontSize: 14),
+                          ))
+                        ]),
+                        TableRow(children: [
+                          TableCell(
+                            child: Text(
+                              "Service",
+                              style: GoogleFonts.montserrat(fontSize: 14),
+                            ),
+                          ),
+                          TableCell(
+                              child: Text(
+                            widget.service,
+                            style: GoogleFonts.montserrat(fontSize: 14),
+                          ))
+                        ]),
+                      ],
+                    ),
+                    SizedBox(height: 64),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        GradientButton(
+                          text: "Confirm",
+                          buttonColor1: Color.fromARGB(255, 0, 23, 226),
+                          buttonColor2: Color.fromARGB(255, 97, 178, 245),
+                          shadowColor: Colors.grey.shade500,
+                          offsetX: 4,
+                          offsetY: 4,
+                          width: 120.00,
+                          function: () async {
+                            SharedPreferences prefs =
+                                await SharedPreferences.getInstance();
+                            await createProfile();
+                            await prefs.setString("email", widget.email);
+                            await prefs.setString(
+                                "password", widget.password);
+                            await prefs.setString(
+                                "companyName", widget.companyName);
+                            await prefs.setString("companyRegistration",
+                                widget.companyRegistration);
+                            await prefs.setString("address", widget.address);
+                            await prefs.setString(
+                                "phoneNumber", widget.phoneNumber);
+                            await prefs.setString(
+                                "tradingAs", widget.tradingAs);
+                            await prefs.setString("service", widget.service);
+                            await prefs.setString("loggedIn", "true");
+    
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => PreDocUploadPage(
+                                          profileType: "company",
+                                          applicantId: applicant_id!
+                                        )));
+                          },
+                        ),
+                      ],
+                    )
+                  ],
+                ))));
     ;
   }
 }

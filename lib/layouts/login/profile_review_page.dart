@@ -58,7 +58,7 @@ class _ProfileReviewPageState extends State<ProfileReviewPage> {
 
     List applicant_ids = json.decode(response.body);
     var formatted =
-      applicant_ids.map((post) => ApplicantId.fromJson(post)).toList();
+      applicant_ids.map((account) => ApplicantId.fromJson(account)).toList();
     applicant_id = formatted[0].id;
      
     }
