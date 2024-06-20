@@ -12,7 +12,8 @@ import 'package:http/http.dart' as http;
 
 class DocumentUploadCard extends StatefulWidget {
   final String requiredDocument;
-  const DocumentUploadCard({super.key, required this.requiredDocument});
+  File? document;
+  DocumentUploadCard({super.key, required this.requiredDocument, this.document});
 
   @override
   State<DocumentUploadCard> createState() => _DocumentUploadCardState();
@@ -25,6 +26,20 @@ class _DocumentUploadCardState extends State<DocumentUploadCard> {
     "assets/images/file.svg",
     semanticsLabel: "file icon",
   );
+
+  Future<void> _pickFile() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles();
+    setState(() {
+      if (result != null) {
+        widget.document = File(result.files.single.path!);
+        filename = result.files.single.name;
+        documentUploaded = true;
+        print("Document selected");
+      } else {
+        print('No file selected.');
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -68,41 +83,7 @@ class _DocumentUploadCardState extends State<DocumentUploadCard> {
             offsetX: 4,
             offsetY: 4,
             width: 120.00,
-            function: () async {
-              FilePickerResult? result = await FilePicker.platform.pickFiles();
-
-              if (result != null) {
-                File file = File(result.files.single.path!);
-                filename = result.files.single.name;
-                documentUploaded = true;
-                print(filename);
-
-                // API endpoint for file upload
-                var url =
-                    Uri.parse('http://139.144.77.133/document_upload.php');
-
-                // Create multipart request for file upload
-                var request = http.MultipartRequest('POST', url);
-                request.files.add(http.MultipartFile.fromBytes(
-                  'file',
-                  await file.readAsBytes(),
-                  filename: filename,
-                ));
-
-                try {
-                  var streamedResponse = await request.send();
-                  if (streamedResponse.statusCode == 200) {
-                    print('File uploaded successfully');
-                  } else {
-                    print('Failed to upload file');
-                  }
-                } catch (e) {
-                  print('Error uploading file: $e');
-                }
-              } else {
-                // User canceled the picker
-              }
-            },
+            function: _pickFile
           ),
           SizedBox(height: 32),
         ],
