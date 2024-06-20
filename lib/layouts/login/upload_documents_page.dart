@@ -57,7 +57,21 @@ class _UploadDocumentsPageState extends State<UploadDocumentsPage> {
   ];
 
   Future<void> _uploadFile() async {
-    if (_document == null) return;
+
+    print("uploading files");
+    if (widget.profileType == "company") {
+      print("company account");
+      documents.add(uploadCardsCompany[0].document!);
+      documents.add(uploadCardsCompany[1].document!);
+      documents.add(uploadCardsCompany[2].document!);
+    } else if (widget.profileType == "local") {
+      print("local account");
+      documents.add(uploadCardsLocal[0].document!);
+      documents.add(uploadCardsLocal[1].document!);
+      documents.add(uploadCardsLocal[2].document!);
+    }
+    
+     print(documents.length);
 
     final uri = Uri.parse('http://139.144.77.133/getLocalDemo/document_upload.php');
     final request = http.MultipartRequest('POST', uri);
@@ -86,7 +100,7 @@ class _UploadDocumentsPageState extends State<UploadDocumentsPage> {
   @override
   Widget build(BuildContext context) {
     final Map params = Map();
-
+    print(widget.profileType);
     Size screenSize = MediaQuery.of(context).size;
     return LoaderOverlay(
         child: Scaffold(
@@ -123,14 +137,14 @@ class _UploadDocumentsPageState extends State<UploadDocumentsPage> {
                           offsetX: 4,
                           offsetY: 4,
                           width: 120.00,
-                          function: () {
-                          
-                            Navigator.push(
+                          function: () async{
+                            await _uploadFile();
+                            /*Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => PreDocUploadPage(
                                           profileType: "local",
-                                        )));
+                                        )));*/
                           },
                         ),
                         SizedBox(height: 16),
@@ -149,12 +163,13 @@ class _UploadDocumentsPageState extends State<UploadDocumentsPage> {
                           offsetX: 4,
                           offsetY: 4,
                           width: 120.00,
-                          function: () {
-                            Navigator.push(
+                          function: () async{
+                            await _uploadFile();
+                            /*Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) =>
-                                        AwaitingApprovalPage()));
+                                        AwaitingApprovalPage()));*/
                           },
                         ),
                         SizedBox(height: 16),
