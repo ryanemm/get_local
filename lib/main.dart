@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
         
         useMaterial3: true,
       ),
-      home: loggedIn == true ? HomeScreen() : UploadDocumentsPage(profileType: 'local',),
+      home: loggedIn == true ? HomeScreen() : LoginScreen(),
     );
   }
 }

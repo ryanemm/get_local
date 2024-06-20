@@ -34,6 +34,11 @@ class _DocumentUploadCardState extends State<DocumentUploadCard> {
         widget.document = File(result.files.single.path!);
         filename = result.files.single.name;
         documentUploaded = true;
+        var path = widget.document!.path;
+        var lastSeparator = path.lastIndexOf(Platform.pathSeparator);
+        //var newPath = path.substring(0, lastSeparator + 1) + newFileName;
+        //return file.rename(newPath);
+        //widget.document.rename()
         print("Document selected");
       } else {
         print('No file selected.');

@@ -6,7 +6,8 @@ import 'package:loader_overlay/loader_overlay.dart';
 
 class PreDocUploadPage extends StatefulWidget {
   final String profileType;
-  const PreDocUploadPage({super.key, required this.profileType});
+  final String applicantId;
+  const PreDocUploadPage({super.key, required this.profileType, required this.applicantId});
 
   @override
   State<PreDocUploadPage> createState() => _PreDocUploadPageState();
@@ -52,7 +53,8 @@ class _PreDocUploadPageState extends State<PreDocUploadPage> {
                       context,
                       MaterialPageRoute(
                           builder: (context) => UploadDocumentsPage(
-                              profileType: widget.profileType)));
+                              profileType: widget.profileType,
+                              applicantId: widget.applicantId)));
                 },
               ),
             ],

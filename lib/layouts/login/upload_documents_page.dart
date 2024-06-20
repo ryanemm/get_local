@@ -15,7 +15,8 @@ import 'package:http/http.dart' as http;
 
 class UploadDocumentsPage extends StatefulWidget {
   final String profileType;
-  const UploadDocumentsPage({super.key, required this.profileType});
+  final String applicantId;
+  const UploadDocumentsPage({super.key, required this.profileType, required this.applicantId});
 
   @override
   State<UploadDocumentsPage> createState() => _UploadDocumentsPageState();

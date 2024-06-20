@@ -3,6 +3,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get_local/components/gradient_button.dart';
 import 'package:get_local/layouts/login/pre_doc_upload.dart';
+import 'package:get_local/models/account_details_company.dart';
+import 'package:get_local/models/apllicant_id.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 import 'package:http/http.dart' as http;
@@ -35,6 +37,7 @@ class ProfileReviewPageCompany extends StatefulWidget {
 
 class _ProfileReviewPageCompanyState extends State<ProfileReviewPageCompany> {
   String? deviceToken;
+  String? applicant_id;
 
   Future createProfile() async {
     var url = "http://139.144.77.133/getLocalDemo/registerCompany.php";
@@ -53,6 +56,9 @@ class _ProfileReviewPageCompanyState extends State<ProfileReviewPageCompany> {
 
     if (response.statusCode == "200") {
       print("Profile Created");
+      Map<String, dynamic> parsedJson = jsonDecode(response.body);
+      AccountDetailsCompany fetched_id = AccountDetailsCompany.fromJson(parsedJson);
+      applicant_id = fetched_id.id;
     }
     if (response.body.contains("Incorrect")) {
       print("Check your the details and verify they are correct");
@@ -218,6 +224,7 @@ class _ProfileReviewPageCompanyState extends State<ProfileReviewPageCompany> {
                                   MaterialPageRoute(
                                       builder: (context) => PreDocUploadPage(
                                             profileType: "company",
+                                            applicantId: applicant_id!
                                           )));
                             },
                           ),

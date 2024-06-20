@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get_local/components/gradient_button.dart';
 import 'package:get_local/layouts/login/pre_doc_upload.dart';
+import 'package:get_local/models/apllicant_id.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 import 'package:http/http.dart' as http;
@@ -34,6 +35,7 @@ class ProfileReviewPage extends StatefulWidget {
 
 class _ProfileReviewPageState extends State<ProfileReviewPage> {
   String? deviceToken;
+  String? applicant_id;
 
   Future createProfile() async {
     var url = "http://139.144.77.133/getLocalDemo/registerLocal.php";
@@ -52,6 +54,13 @@ class _ProfileReviewPageState extends State<ProfileReviewPage> {
 
     if (response.statusCode == 200) {
       print("Profile Created");
+      print(response.body);
+
+    List applicant_ids = json.decode(response.body);
+    var formatted =
+      applicant_ids.map((post) => ApplicantId.fromJson(post)).toList();
+    applicant_id = formatted[0].id;
+     
     }
     if (response.body.contains("Incorrect")) {
       print("Check you the details and verify they are correct");
@@ -213,6 +222,7 @@ class _ProfileReviewPageState extends State<ProfileReviewPage> {
                                 MaterialPageRoute(
                                     builder: (context) => PreDocUploadPage(
                                           profileType: "local",
+                                          applicantId: applicant_id!
                                         )));
                           },
                         ),
