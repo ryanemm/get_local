@@ -18,10 +18,10 @@ class _SignUpPageState extends State<SignUpPage> {
   Widget build(BuildContext context) {
     return LoaderOverlay(
         child: Scaffold(
-          appBar:  AppBar(
-            elevation: 0,
-            backgroundColor: Colors.grey[50],
-            leading:   GestureDetector(
+            appBar: AppBar(
+              elevation: 0,
+              backgroundColor: Colors.grey[50],
+              leading: GestureDetector(
                 onTap: () {
                   print("Back button tapped");
                   Navigator.pop(context);
@@ -33,7 +33,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   ),
                 ),
               ),
-         ),
+            ),
             body: Container(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
@@ -43,7 +43,6 @@ class _SignUpPageState extends State<SignUpPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                      
                     Expanded(flex: 3, child: Container()),
                     Text(
                       "Let's Get You Started",
@@ -63,8 +62,8 @@ class _SignUpPageState extends State<SignUpPage> {
                             MaterialPageRoute(
                                 builder: (context) => LocalSignUp()));
                       },
-                      buttonColor1: Color.fromARGB(255, 10, 36, 114),
-                      buttonColor2: Color.fromARGB(255, 97, 178, 245),
+                      buttonColor1: const Color.fromARGB(255, 19, 53, 61),
+                      buttonColor2: const Color.fromARGB(255, 179, 237, 169),
                       shadowColor: Colors.grey.shade500,
                       offsetX: 4,
                       offsetY: 4,
@@ -79,8 +78,8 @@ class _SignUpPageState extends State<SignUpPage> {
                             MaterialPageRoute(
                                 builder: (context) => EmployerSignUp()));
                       },
-                      buttonColor1: Color.fromARGB(255, 10, 36, 114),
-                      buttonColor2: Color.fromARGB(255, 97, 178, 245),
+                      buttonColor1: const Color.fromARGB(255, 19, 53, 61),
+                      buttonColor2: const Color.fromARGB(255, 179, 237, 169),
                       shadowColor: Colors.grey.shade500,
                       offsetX: 4,
                       offsetY: 4,
@@ -106,7 +105,7 @@ class _SignUpPageState extends State<SignUpPage> {
                           child: Text(
                             "Sign in",
                             style: GoogleFonts.montserrat(
-                                color: Color.fromARGB(255, 10, 36, 114),
+                                color: const Color.fromARGB(255, 19, 53, 61),
                                 fontWeight: FontWeight.bold,
                                 fontSize: 16),
                           ),

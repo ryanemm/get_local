@@ -20,7 +20,9 @@ InputDecoration textFieldInputDecoration(String hintText, Icon prefixIcon) {
       prefixIcon: prefixIcon,
       hintStyle: const TextStyle(color: Colors.grey),
       focusedBorder: const OutlineInputBorder(
-          borderSide: BorderSide(color: Color.fromARGB(255, 0, 23, 226)),
+          borderSide: BorderSide(
+            color: const Color.fromARGB(255, 19, 53, 61),
+          ),
           borderRadius: BorderRadius.all(Radius.circular(32))),
       enabledBorder: const OutlineInputBorder(
           borderSide: BorderSide(color: Colors.white),

@@ -13,7 +13,9 @@ import 'package:http/http.dart' as http;
 class DocumentUploadCard extends StatefulWidget {
   final String requiredDocument;
   File? document;
-  DocumentUploadCard({super.key, required this.requiredDocument, this.document});
+
+  DocumentUploadCard(
+      {super.key, required this.requiredDocument, this.document});
 
   @override
   State<DocumentUploadCard> createState() => _DocumentUploadCardState();
@@ -34,11 +36,7 @@ class _DocumentUploadCardState extends State<DocumentUploadCard> {
         widget.document = File(result.files.single.path!);
         filename = result.files.single.name;
         documentUploaded = true;
-        var path = widget.document!.path;
-        var lastSeparator = path.lastIndexOf(Platform.pathSeparator);
-        //var newPath = path.substring(0, lastSeparator + 1) + newFileName;
-        //return file.rename(newPath);
-        //widget.document.rename()
+
         print("Document selected");
       } else {
         print('No file selected.');
@@ -81,15 +79,14 @@ class _DocumentUploadCardState extends State<DocumentUploadCard> {
           ),
           SizedBox(height: 16),
           GradientButton(
-            text: "Browse",
-            buttonColor1: Color.fromARGB(255, 10, 36, 114),
-            buttonColor2: Color.fromARGB(255, 135, 226, 242),
-            shadowColor: Colors.grey.shade500,
-            offsetX: 4,
-            offsetY: 4,
-            width: 120.00,
-            function: _pickFile
-          ),
+              text: "Browse",
+              buttonColor1: const Color.fromARGB(255, 19, 53, 61),
+              buttonColor2: const Color.fromARGB(255, 179, 237, 169),
+              shadowColor: Colors.grey.shade500,
+              offsetX: 4,
+              offsetY: 4,
+              width: 120.00,
+              function: _pickFile),
           SizedBox(height: 32),
         ],
       ),

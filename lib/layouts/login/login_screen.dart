@@ -93,201 +93,203 @@ class _LoginScreenState extends State<LoginScreen> {
       child: Scaffold(
         backgroundColor: Colors.grey[50],
         appBar: AppBar(
-          
-            toolbarHeight: 0,
-            elevation: 0,
-            backgroundColor: Color.fromARGB(255, 10, 36, 114),
-         ),
+          toolbarHeight: 0,
+          elevation: 0,
+          backgroundColor: const Color.fromARGB(255, 19, 53, 61),
+        ),
         resizeToAvoidBottomInset: false,
         body: Column(
           children: [
-                   Expanded(
-                    flex: 1,
-                     child: Column(
-                       children: [
-                         Container(
-                                  color: Color.fromARGB(255, 10, 36, 114),
-                                  height: MediaQuery.of(context).size.height * 0.2,
-                                ),
-                                Container(height: 32, color: Color.fromARGB(255, 10, 36, 114),
-                                child: Container(decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.vertical(top: Radius.circular(32)), 
-                                  color: Colors.white),),)
-                       ],
-                     ),
-                   ),
+            Expanded(
+              flex: 1,
+              child: Column(
+                children: [
+                  Container(
+                    color: const Color.fromARGB(255, 19, 53, 61),
+                    height: MediaQuery.of(context).size.height * 0.2,
+                  ),
+                  Container(
+                    height: 32,
+                    color: const Color.fromARGB(255, 19, 53, 61),
+                    child: Container(
+                      decoration: BoxDecoration(
+                          borderRadius:
+                              BorderRadius.vertical(top: Radius.circular(32)),
+                          color: Colors.white),
+                    ),
+                  )
+                ],
+              ),
+            ),
             Expanded(
               flex: 2,
               child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
-              
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
                 color: Colors.grey[50],
                 child: Form(
                   //key: _formKey,
-                  child: 
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                     
-                    
-                            Text(
-                              "Welcome!",
-                              style: GoogleFonts.montserrat(
-                                  fontSize: 32, fontWeight: FontWeight.bold, 
-                                  color: Color.fromARGB(255, 31,69,77)),
-                            ),
-                            Text(
-                              "Please sign in to continue",
-                              style: GoogleFonts.montserrat(
-                                  fontSize: 16, fontWeight: FontWeight.normal),
-                            ),
-                                                  SizedBox(
-                          height: 36,
-                          child: Center(
-                            child: emailPasswordError
-                                ? Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        "Email or password is incorrect",
-                                        style: simpleTextStyle(Colors.red),
-                                      ),
-                                    ],
-                                  )
-                                : const SizedBox(height: 1),
-                          ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Text(
+                        "Welcome!",
+                        style: GoogleFonts.montserrat(
+                            fontSize: 32,
+                            fontWeight: FontWeight.bold,
+                            color: Color.fromARGB(255, 31, 69, 77)),
+                      ),
+                      Text(
+                        "Please sign in to continue",
+                        style: GoogleFonts.montserrat(
+                            fontSize: 16, fontWeight: FontWeight.normal),
+                      ),
+                      SizedBox(
+                        height: 36,
+                        child: Center(
+                          child: emailPasswordError
+                              ? Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      "Email or password is incorrect",
+                                      style: simpleTextStyle(Colors.red),
+                                    ),
+                                  ],
+                                )
+                              : const SizedBox(height: 1),
                         ),
-                        Container(
-                          decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(32)),
-                              boxShadow: [
-                                BoxShadow(
+                      ),
+                      Container(
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(32)),
+                            boxShadow: [
+                              BoxShadow(
+                                offset: const Offset(4, 7),
+                                color: Colors.grey.shade300,
+                                blurRadius: 8,
+                                spreadRadius: 0,
+                              ),
+                            ]),
+                        child: TextFormField(
+                          controller: emailController,
+                          style: simpleTextStyle(Colors.black),
+                          decoration: textFieldInputDecoration(
+                              "Email",
+                              const Icon(
+                                Icons.email_outlined,
+                                color: Color.fromARGB(255, 31, 69, 77),
+                              )),
+                        ),
+                      ),
+                      const SizedBox(height: 24),
+                      Container(
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(32)),
+                            boxShadow: [
+                              BoxShadow(
                                   offset: const Offset(4, 7),
                                   color: Colors.grey.shade300,
                                   blurRadius: 8,
-                                  spreadRadius: 0,
-                                ),
-                              ]),
-                          child: TextFormField(
-                            controller: emailController,
-                            style: simpleTextStyle(Colors.black),
-                            decoration: textFieldInputDecoration(
-                                "Email",
-                                const Icon(
-                                  Icons.email_outlined,
-                                  color: Color.fromARGB(255, 31,69,77),
-                                )),
-                          ),
+                                  spreadRadius: 0),
+                            ]),
+                        child: TextFormField(
+                          controller: passController,
+                          obscureText: true,
+                          validator: (val) {
+                            return val!.length > 8
+                                ? null
+                                : "Password must have 8 characters or more";
+                          },
+                          style: simpleTextStyle(Colors.black),
+                          decoration: textFieldInputDecoration(
+                              "Password",
+                              const Icon(
+                                Icons.lock_outline,
+                                color: Color.fromARGB(255, 31, 69, 77),
+                              )),
                         ),
-                        const SizedBox(height: 24),
-                        Container(
-                          decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(32)),
-                              boxShadow: [
-                                BoxShadow(
-                                    offset: const Offset(4, 7),
-                                    color: Colors.grey.shade300,
-                                    blurRadius: 8,
-                                    spreadRadius: 0),
-                              ]),
-                          child: TextFormField(
-                            controller: passController,
-                            obscureText: true,
-                            validator: (val) {
-                              return val!.length > 8
-                                  ? null
-                                  : "Password must have 8 characters or more";
+                      ),
+                      const SizedBox(height: 16),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                textFieldActive = true;
+                                print("active");
+                              });
                             },
-                            style: simpleTextStyle(Colors.black),
-                            decoration: textFieldInputDecoration(
-                                "Password",
-                                const Icon(
-                                  Icons.lock_outline,
-                                  color: Color.fromARGB(255, 31,69,77),
-                                )),
-                          ),
-                        ),
-                        const SizedBox(height: 16),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            GestureDetector(
-                              onTap: () {
-                                setState(() {
-                                  textFieldActive = true;
-                                  print("active");
-                                });
-                              },
-                              child: Container(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 0, vertical: 8),
-                                child: Text(
-                                  "Forgot password?",
-                                  style: GoogleFonts.montserrat(
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.normal,
-                                      fontSize: 16),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 16),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            ImageButton(
-                              function: () {},
-                              buttonColor1: Color.fromARGB(255, 10, 36, 114),
-                              buttonColor2: Color.fromARGB(255, 135, 226, 242),
-                              shadowColor: Colors.grey.shade500,
-                              offsetX: shadowOffsetX,
-                              offsetY: shadowOffsetY,
-                              text: "Sign In",
-                              width: 150,
-                              iconImage: Image.asset(
-                                "assets/images/sign_in_icon.png",
-                                height: 25,
-                              ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 22),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text("Don't have an account? ",
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 0, vertical: 8),
+                              child: Text(
+                                "Forgot password?",
                                 style: GoogleFonts.montserrat(
                                     color: Colors.black,
                                     fontWeight: FontWeight.normal,
-                                    fontSize: 16)),
-                            GestureDetector(
-                              onTap: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => SignUpPage()));
-                              },
-                              child: Text(
-                                "Sign up",
-                                style: GoogleFonts.montserrat(
-                                    color: Color.fromARGB(255, 31,69,77),
-                                    fontWeight: FontWeight.bold,
                                     fontSize: 16),
                               ),
-                            )
-                          ],
-                        ),
-                        const SizedBox(height: 50),
-                          ],
-                        ),
-              
-                      
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 16),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          ImageButton(
+                            function: () {},
+                            buttonColor1: const Color.fromARGB(255, 19, 53, 61),
+                            buttonColor2:
+                                const Color.fromARGB(255, 179, 237, 169),
+                            shadowColor: Colors.grey.shade500,
+                            offsetX: shadowOffsetX,
+                            offsetY: shadowOffsetY,
+                            text: "Sign In",
+                            width: 150,
+                            iconImage: Image.asset(
+                              "assets/images/sign_in_icon.png",
+                              height: 25,
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 22),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text("Don't have an account? ",
+                              style: GoogleFonts.montserrat(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.normal,
+                                  fontSize: 16)),
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => SignUpPage()));
+                            },
+                            child: Text(
+                              "Sign up",
+                              style: GoogleFonts.montserrat(
+                                  color: Color.fromARGB(255, 31, 69, 77),
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16),
+                            ),
+                          )
+                        ],
+                      ),
+                      const SizedBox(height: 50),
+                    ],
+                  ),
                 ),
               ),
             ),

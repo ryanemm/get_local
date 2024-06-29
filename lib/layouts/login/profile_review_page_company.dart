@@ -61,8 +61,9 @@ class _ProfileReviewPageCompanyState extends State<ProfileReviewPageCompany> {
       print("Profile Created");
       print(response.body);
       List accountDetails = json.decode(response.body);
-      var formatted =
-      accountDetails.map((account) => AccountDetailsCompany.fromJson(account)).toList();
+      var formatted = accountDetails
+          .map((account) => AccountDetailsCompany.fromJson(account))
+          .toList();
       applicant_id = formatted[0].id;
     }
     if (response.body.contains("Incorrect")) {
@@ -83,6 +84,9 @@ class _ProfileReviewPageCompanyState extends State<ProfileReviewPageCompany> {
   Widget build(BuildContext context) {
     return LoaderOverlay(
         child: Scaffold(
+            appBar: AppBar(
+              backgroundColor: Colors.grey[50],
+            ),
             body: Container(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
@@ -198,8 +202,8 @@ class _ProfileReviewPageCompanyState extends State<ProfileReviewPageCompany> {
                       children: [
                         GradientButton(
                           text: "Confirm",
-                          buttonColor1: Color.fromARGB(255, 0, 23, 226),
-                          buttonColor2: Color.fromARGB(255, 97, 178, 245),
+                          buttonColor1: Color.fromARGB(255, 10, 36, 114),
+                          buttonColor2: Color.fromARGB(255, 135, 226, 242),
                           shadowColor: Colors.grey.shade500,
                           offsetX: 4,
                           offsetY: 4,
@@ -209,8 +213,7 @@ class _ProfileReviewPageCompanyState extends State<ProfileReviewPageCompany> {
                                 await SharedPreferences.getInstance();
                             await createProfile();
                             await prefs.setString("email", widget.email);
-                            await prefs.setString(
-                                "password", widget.password);
+                            await prefs.setString("password", widget.password);
                             await prefs.setString(
                                 "companyName", widget.companyName);
                             await prefs.setString("companyRegistration",
@@ -222,14 +225,13 @@ class _ProfileReviewPageCompanyState extends State<ProfileReviewPageCompany> {
                                 "tradingAs", widget.tradingAs);
                             await prefs.setString("service", widget.service);
                             await prefs.setString("loggedIn", "true");
-    
+
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => PreDocUploadPage(
-                                          profileType: "company",
-                                          applicantId: applicant_id!
-                                        )));
+                                        profileType: "company",
+                                        applicantId: applicant_id!)));
                           },
                         ),
                       ],

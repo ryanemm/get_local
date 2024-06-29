@@ -7,7 +7,8 @@ import 'package:loader_overlay/loader_overlay.dart';
 class PreDocUploadPage extends StatefulWidget {
   final String profileType;
   final String applicantId;
-  const PreDocUploadPage({super.key, required this.profileType, required this.applicantId});
+  const PreDocUploadPage(
+      {super.key, required this.profileType, required this.applicantId});
 
   @override
   State<PreDocUploadPage> createState() => _PreDocUploadPageState();
@@ -42,8 +43,8 @@ class _PreDocUploadPageState extends State<PreDocUploadPage> {
             children: [
               GradientButton(
                 text: "Proceed to Upload",
-                buttonColor1: Color.fromARGB(255, 0, 23, 226),
-                buttonColor2: Color.fromARGB(255, 97, 178, 245),
+                buttonColor1: const Color.fromARGB(255, 19, 53, 61),
+                buttonColor2: const Color.fromARGB(255, 179, 237, 169),
                 shadowColor: Colors.grey.shade500,
                 offsetX: 4,
                 offsetY: 4,

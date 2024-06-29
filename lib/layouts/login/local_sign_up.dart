@@ -49,7 +49,7 @@ class _LocalSignUpState extends State<LocalSignUp> {
   String _chosenModel = "title";
   DateTime selectedDate = DateTime.now();
   bool OTPVerified = false;
-  bool showOTPError = false; 
+  bool showOTPError = false;
 
   Future<void> selectDate(BuildContext context) async {
     final pickedDate = await showDatePicker(
@@ -69,12 +69,11 @@ class _LocalSignUpState extends State<LocalSignUp> {
     }
   }
 
-    Future requestOTP() async {
+  Future requestOTP() async {
     var url = "http://139.144.77.133/getLocalDemo/otp_mailer.php";
     context.loaderOverlay.show();
     var response = await http.post(Uri.parse(url), body: {
       "email": email,
-
     });
 
     // var data = json.decode(response.body);
@@ -97,13 +96,11 @@ class _LocalSignUpState extends State<LocalSignUp> {
     }*/
   }
 
-    Future<OTPResult> checkOTP() async {
+  Future<OTPResult> checkOTP() async {
     var url = "http://139.144.77.133/getLocalDemo/otp_checker.php";
     context.loaderOverlay.show();
-    var response = await http.post(Uri.parse(url), body: {
-      "email": email,
-      "otp": OTP
-    });
+    var response =
+        await http.post(Uri.parse(url), body: {"email": email, "otp": OTP});
 
     Map<String, dynamic> parsedJson = jsonDecode(response.body);
     OTPResult result = OTPResult.fromJson(parsedJson);
@@ -152,7 +149,7 @@ class _LocalSignUpState extends State<LocalSignUp> {
                       "Email",
                       const Icon(
                         Icons.email_outlined,
-                        color: Color.fromARGB(255, 0, 23, 226),
+                        color: const Color.fromARGB(255, 19, 53, 61),
                       )),
                 ),
               ),
@@ -182,7 +179,7 @@ class _LocalSignUpState extends State<LocalSignUp> {
                       "Password",
                       const Icon(
                         Icons.lock_outline,
-                        color: Color.fromARGB(255, 0, 23, 226),
+                        color: const Color.fromARGB(255, 19, 53, 61),
                       )),
                 ),
               ),
@@ -222,18 +219,18 @@ class _LocalSignUpState extends State<LocalSignUp> {
                     "OTP",
                     const Icon(
                       Icons.pin_rounded,
-                      color: Color.fromARGB(255, 0, 23, 226),
+                      color: const Color.fromARGB(255, 19, 53, 61),
                     )),
               ),
             ),
-            SizedBox(height: 16), 
-            showOTPError == true ? 
-              Text("Incorrect OTP entered", 
-                  style: GoogleFonts.montserrat(
-                  fontSize: 16, 
-                  fontWeight: FontWeight.bold,
-                  color: Colors.red)) : 
-              Container()
+            SizedBox(height: 16),
+            showOTPError == true
+                ? Text("Incorrect OTP entered",
+                    style: GoogleFonts.montserrat(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.red))
+                : Container()
           ],
         ),
       ),
@@ -264,7 +261,7 @@ class _LocalSignUpState extends State<LocalSignUp> {
                       "Name",
                       const Icon(
                         Icons.abc_outlined,
-                        color: Color.fromARGB(255, 0, 23, 226),
+                        color: const Color.fromARGB(255, 19, 53, 61),
                       )),
                 ),
               ),
@@ -288,7 +285,7 @@ class _LocalSignUpState extends State<LocalSignUp> {
                       "Surname",
                       const Icon(
                         Icons.abc_outlined,
-                        color: Color.fromARGB(255, 0, 23, 226),
+                        color: const Color.fromARGB(255, 19, 53, 61),
                       )),
                 ),
               ),
@@ -322,7 +319,7 @@ class _LocalSignUpState extends State<LocalSignUp> {
                         "Address",
                         const Icon(
                           Icons.house_outlined,
-                          color: Color.fromARGB(255, 0, 23, 226),
+                          color: const Color.fromARGB(255, 19, 53, 61),
                         )),
                   ),
                 ),
@@ -346,7 +343,7 @@ class _LocalSignUpState extends State<LocalSignUp> {
                         "Phone Number",
                         const Icon(
                           Icons.phone_android_outlined,
-                          color: Color.fromARGB(255, 0, 23, 226),
+                          color: const Color.fromARGB(255, 19, 53, 61),
                         )),
                   ),
                 ),
@@ -382,7 +379,7 @@ class _LocalSignUpState extends State<LocalSignUp> {
                           children: [
                             Icon(
                               Icons.calendar_month_outlined,
-                              color: Color.fromARGB(255, 0, 23, 226),
+                              color: const Color.fromARGB(255, 19, 53, 61),
                             ),
                             SizedBox(width: 8),
                             Text(
@@ -494,9 +491,9 @@ class _LocalSignUpState extends State<LocalSignUp> {
     Widget signUpStage = stages[currentIndex];
     return LoaderOverlay(
         child: Scaffold(
-          appBar: AppBar(
-            backgroundColor: Colors.grey[50],
-            leading:   GestureDetector(
+            appBar: AppBar(
+              backgroundColor: Colors.grey[50],
+              leading: GestureDetector(
                 onTap: () {
                   print("Back button tapped");
                   Navigator.pop(context);
@@ -508,143 +505,140 @@ class _LocalSignUpState extends State<LocalSignUp> {
                   ),
                 ),
               ),
-          ),
+            ),
             body: Container(
-      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
-   
-      color: Colors.grey[50],
-      child: Form(
-        //key: _formKey,
-        child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-            
-              Expanded(child: Container()),
-                              
-                                Text(
-                                  "Let's create your profile",
-                                  style: GoogleFonts.montserrat(
-                fontSize: 24, fontWeight: FontWeight.bold),
-                                ),
-                                Text(
-                                  "Just a few quick steps",
-                                  style: GoogleFonts.montserrat(
-                fontSize: 16, fontWeight: FontWeight.normal),
-                                ),
-              SizedBox(height: 36),
-              AnimatedSwitcher(
-                  duration: const Duration(milliseconds: 500),
-                  child: signUpStage,
-                  switchInCurve: Curves.easeIn,
-                  switchOutCurve: Curves.easeOut,
-                  transitionBuilder:
-                      (Widget child, Animation<double> animation) {
-                    final offsetAnimation = Tween<Offset>(
-                      begin: Offset(currentIndex == 0 ? -1.0 : 1.0, 0.0),
-                      end: Offset(0.0, 0.0),
-                    ).animate(animation);
-                    return SlideTransition(
-                        position: offsetAnimation, child: child);
-                  }
-                  // ScaleTransition(child: child, scale: animation),
-                  ),
-              const SizedBox(height: 32),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  GradientButton(
-                    function: () {
-                      setState(() {
-                      
-                        currentIndex - 1 >= 0
-                            ? currentIndex = currentIndex - 1
-                            : () {};
-                        signUpStage = stages[currentIndex];
-                        print("gradient button clicked");
-                        print(currentIndex);
-                      });
-                    },
-                    buttonColor1: Color.fromARGB(255, 10, 36, 114),
-                    buttonColor2: Color.fromARGB(255, 135, 226, 242),
-                    shadowColor: Colors.grey.shade500,
-                    offsetX: 4,
-                    offsetY: 4,
-                    text: "Previous",
-                    width: 120.00,
-                  ),
-                  SizedBox(width: 16),
-                  GradientButton(
-                    function: () async{
-                        if (currentIndex == 0) {
-                          email = emailController.text;
-                          await requestOTP();
-                          currentIndex + 1 < totalStages
-                          ? currentIndex = currentIndex + 1
-                          : () {};
-                          signUpStage = stages[currentIndex];
-                          print("next button clicked");
-                          print(currentIndex);
-                        } else if (currentIndex == 1) {
-                          OTP = OTPController.text;
-                          await checkOTP();
-                          if (OTPVerified == true) {currentIndex + 1 < totalStages
-                            ? currentIndex = currentIndex + 1
-                            : () {};
-                            signUpStage = stages[currentIndex];
-                            print("next button clicked");
-                            print(currentIndex);
-                            } else {
-                              OTPController.text = "";
-                            }
-                        } else if (currentIndex == 4) {
-                            email = emailController.text;
-                            password = passController.text;
-                            name = nameController.text;
-                            surname = surnameController.text;
-                            address = addressController.text;
-                            phoneNumber = phoneNumberController.text;
+              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
+              color: Colors.grey[50],
+              child: Form(
+                //key: _formKey,
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Expanded(child: Container()),
+                      Text(
+                        "Let's create your profile",
+                        style: GoogleFonts.montserrat(
+                            fontSize: 24, fontWeight: FontWeight.bold),
+                      ),
+                      Text(
+                        "Just a few quick steps",
+                        style: GoogleFonts.montserrat(
+                            fontSize: 16, fontWeight: FontWeight.normal),
+                      ),
+                      SizedBox(height: 36),
+                      AnimatedSwitcher(
+                          duration: const Duration(milliseconds: 500),
+                          child: signUpStage,
+                          switchInCurve: Curves.easeIn,
+                          switchOutCurve: Curves.easeOut,
+                          transitionBuilder:
+                              (Widget child, Animation<double> animation) {
+                            final offsetAnimation = Tween<Offset>(
+                              begin:
+                                  Offset(currentIndex == 0 ? -1.0 : 1.0, 0.0),
+                              end: Offset(0.0, 0.0),
+                            ).animate(animation);
+                            return SlideTransition(
+                                position: offsetAnimation, child: child);
+                          }
+                          // ScaleTransition(child: child, scale: animation),
+                          ),
+                      const SizedBox(height: 32),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          GradientButton(
+                            function: () {
+                              setState(() {
+                                currentIndex - 1 >= 0
+                                    ? currentIndex = currentIndex - 1
+                                    : () {};
+                                signUpStage = stages[currentIndex];
+                                print("gradient button clicked");
+                                print(currentIndex);
+                              });
+                            },
+                            buttonColor1: const Color.fromARGB(255, 19, 53, 61),
+                            buttonColor2:
+                                const Color.fromARGB(255, 179, 237, 169),
+                            shadowColor: Colors.grey.shade500,
+                            offsetX: 4,
+                            offsetY: 4,
+                            text: "Previous",
+                            width: 120.00,
+                          ),
+                          SizedBox(width: 16),
+                          GradientButton(
+                            function: () async {
+                              if (currentIndex == 0) {
+                                email = emailController.text;
+                                await requestOTP();
+                                currentIndex + 1 < totalStages
+                                    ? currentIndex = currentIndex + 1
+                                    : () {};
+                                signUpStage = stages[currentIndex];
+                                print("next button clicked");
+                                print(currentIndex);
+                              } else if (currentIndex == 1) {
+                                OTP = OTPController.text;
+                                await checkOTP();
+                                if (OTPVerified == true) {
+                                  currentIndex + 1 < totalStages
+                                      ? currentIndex = currentIndex + 1
+                                      : () {};
+                                  signUpStage = stages[currentIndex];
+                                  print("next button clicked");
+                                  print(currentIndex);
+                                } else {
+                                  OTPController.text = "";
+                                }
+                              } else if (currentIndex == 4) {
+                                email = emailController.text;
+                                password = passController.text;
+                                name = nameController.text;
+                                surname = surnameController.text;
+                                address = addressController.text;
+                                phoneNumber = phoneNumberController.text;
 
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => ProfileReviewPage(
-                                        email: email!,
-                                        password: password!,
-                                        name: name!,
-                                        surname: surname!,
-                                        address: address!,
-                                        phoneNumber: phoneNumber!,
-                                        dateOfBirth: dateOfBirth!,
-                                        job: _chosenModel,
-                                      )));
-                        } else {
-                            currentIndex + 1 < totalStages
-                            ? currentIndex = currentIndex + 1
-                            : () {};
-                            signUpStage = stages[currentIndex];
-                            print("next button clicked");
-                            print(currentIndex);
-                        }
-                     
-                        setState(() {
-                          
-                        });
-                  
-                    },
-                    buttonColor1: Color.fromARGB(255, 10, 36, 114),
-                    buttonColor2: Color.fromARGB(255, 135, 226, 242),
-                    shadowColor: Colors.grey.shade500,
-                    offsetX: 4,
-                    offsetY: 4,
-                    text: currentIndex < 4 ? "Next" : "Finish",
-                    width: 120.00,
-                  ),
-                ],
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => ProfileReviewPage(
+                                              email: email!,
+                                              password: password!,
+                                              name: name!,
+                                              surname: surname!,
+                                              address: address!,
+                                              phoneNumber: phoneNumber!,
+                                              dateOfBirth: dateOfBirth!,
+                                              job: _chosenModel,
+                                            )));
+                              } else {
+                                currentIndex + 1 < totalStages
+                                    ? currentIndex = currentIndex + 1
+                                    : () {};
+                                signUpStage = stages[currentIndex];
+                                print("next button clicked");
+                                print(currentIndex);
+                              }
+
+                              setState(() {});
+                            },
+                            buttonColor1: const Color.fromARGB(255, 19, 53, 61),
+                            buttonColor2:
+                                const Color.fromARGB(255, 179, 237, 169),
+                            shadowColor: Colors.grey.shade500,
+                            offsetX: 4,
+                            offsetY: 4,
+                            text: currentIndex < 4 ? "Next" : "Finish",
+                            width: 120.00,
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 60),
+                    ]),
               ),
-              const SizedBox(height: 60),
-            ]),
-      ),
-    )));
+            )));
   }
 }

@@ -56,11 +56,11 @@ class _ProfileReviewPageState extends State<ProfileReviewPage> {
       print("Profile Created");
       print(response.body);
 
-    List applicant_ids = json.decode(response.body);
-    var formatted =
-      applicant_ids.map((account) => ApplicantId.fromJson(account)).toList();
-    applicant_id = formatted[0].id;
-     
+      List applicant_ids = json.decode(response.body);
+      var formatted = applicant_ids
+          .map((account) => ApplicantId.fromJson(account))
+          .toList();
+      applicant_id = formatted[0].id;
     }
     if (response.body.contains("Incorrect")) {
       print("Check you the details and verify they are correct");
@@ -195,8 +195,9 @@ class _ProfileReviewPageState extends State<ProfileReviewPage> {
                       children: [
                         GradientButton(
                           text: "Confirm",
-                          buttonColor1: Color.fromARGB(255, 0, 23, 226),
-                          buttonColor2: Color.fromARGB(255, 97, 178, 245),
+                          buttonColor1: const Color.fromARGB(255, 19, 53, 61),
+                          buttonColor2:
+                              const Color.fromARGB(255, 179, 237, 169),
                           shadowColor: Colors.grey.shade500,
                           offsetX: 4,
                           offsetY: 4,
@@ -221,9 +222,8 @@ class _ProfileReviewPageState extends State<ProfileReviewPage> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => PreDocUploadPage(
-                                          profileType: "local",
-                                          applicantId: applicant_id!
-                                        )));
+                                        profileType: "local",
+                                        applicantId: applicant_id!)));
                           },
                         ),
                       ],
