@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get_local/components/gradient_button.dart';
+import 'package:get_local/layouts/home/home_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 
@@ -22,16 +24,39 @@ class _AwaitingApprovalPageState extends State<AwaitingApprovalPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              Expanded(child: Container()),
               Text("Thank you for completing for your profile!",
                   textAlign: TextAlign.center,
                   style: GoogleFonts.montserrat(
                       fontSize: 16, fontWeight: FontWeight.bold)),
               SizedBox(height: 16),
               Text(
-                  "We will now review your profile and verify the documents you provided. We usually respond within 24 hours.",
+                  "We will now review your profile and verify the documents you provided. You are able to use GetLocals with limited features until your documents have been verified. We usually respond within 24 hours.",
                   textAlign: TextAlign.center,
                   style: GoogleFonts.montserrat(
-                      fontSize: 16, fontWeight: FontWeight.normal))
+                      fontSize: 16, fontWeight: FontWeight.normal)),
+              Expanded(child: Container()),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  GradientButton(
+                    text: "Continue",
+                    buttonColor1: const Color.fromARGB(255, 19, 53, 61),
+                    buttonColor2: const Color.fromARGB(255, 179, 237, 169),
+                    shadowColor: Colors.grey.shade500,
+                    offsetX: 4,
+                    offsetY: 4,
+                    width: 120.00,
+                    function: () async {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => HomeScreen()));
+                    },
+                  ),
+                  SizedBox(height: 200)
+                ],
+              ),
             ],
           ),
         ),
