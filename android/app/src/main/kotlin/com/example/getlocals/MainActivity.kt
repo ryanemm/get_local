@@ -1,4 +1,4 @@
-package com.example.get_local
+package com.getlocals
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -61,6 +61,10 @@ class _ProfileReviewPageState extends State<ProfileReviewPage> {
           .map((account) => ApplicantId.fromJson(account))
           .toList();
       applicant_id = formatted[0].id;
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setString("email", widget.email);
+      await prefs.setString("name", widget.name);
+      await prefs.setString("surname", widget.surname);
     }
     if (response.body.contains("Incorrect")) {
       print("Check you the details and verify they are correct");
