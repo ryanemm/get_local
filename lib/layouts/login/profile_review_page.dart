@@ -65,6 +65,7 @@ class _ProfileReviewPageState extends State<ProfileReviewPage> {
       await prefs.setString("email", widget.email);
       await prefs.setString("name", widget.name);
       await prefs.setString("surname", widget.surname);
+      await prefs.setString("loggedIn", "true");
     }
     if (response.body.contains("Incorrect")) {
       print("Check you the details and verify they are correct");
