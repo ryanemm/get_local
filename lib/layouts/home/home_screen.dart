@@ -13,8 +13,16 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeScreen extends StatefulWidget {
   final String accountType;
+  String? name;
+  String? surname;
+  String? email;
 
-  const HomeScreen({super.key, required this.accountType});
+  HomeScreen(
+      {super.key,
+      required this.accountType,
+      this.surname,
+      this.email,
+      this.name});
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
@@ -74,9 +82,9 @@ class _HomeScreenState extends State<HomeScreen> {
       NotificationsScreen(),
       widget.accountType == "local"
           ? ProfileScreen(
-              name: name!,
-              surname: surname!,
-              email: email!,
+              name: widget.name!,
+              surname: widget.surname!,
+              email: widget.email!,
             )
           : ProfileScreenCompany(),
     ];
@@ -87,25 +95,25 @@ class _HomeScreenState extends State<HomeScreen> {
       PersistentBottomNavBarItem(
         icon: const Icon(Icons.home),
         title: "Home",
-        activeColorPrimary: Colors.white,
+        activeColorPrimary: Colors.amber,
         inactiveColorPrimary: Colors.grey,
       ),
       PersistentBottomNavBarItem(
         icon: const Icon(Icons.work),
         title: "Listings",
-        activeColorPrimary: Color.fromARGB(255, 31, 69, 77),
+        activeColorPrimary: Colors.amber,
         inactiveColorPrimary: Colors.grey,
       ),
       PersistentBottomNavBarItem(
         icon: const Icon(Icons.notifications),
         title: "Notifications",
-        activeColorPrimary: Color.fromARGB(255, 31, 69, 77),
+        activeColorPrimary: Colors.amber,
         inactiveColorPrimary: Colors.grey,
       ),
       PersistentBottomNavBarItem(
         icon: const Icon(Icons.person),
         title: "Profile",
-        activeColorPrimary: Color.fromARGB(255, 31, 69, 77),
+        activeColorPrimary: Colors.amber,
         inactiveColorPrimary: Colors.grey,
       ),
     ];
@@ -174,7 +182,7 @@ class _HomeScreenState extends State<HomeScreen> {
               items: _navBarsItems(),
               confineInSafeArea: true,
               backgroundColor:
-                  Color.fromARGB(255, 0, 7, 45), // Default is Colors.white.
+                  Color.fromARGB(255, 31, 69, 77), // Default is Colors.white.
               handleAndroidBackButtonPress: true, // Default is true.
               resizeToAvoidBottomInset:
                   true, // This needs to be true if you want to move up the screen when the keyboard appears.
