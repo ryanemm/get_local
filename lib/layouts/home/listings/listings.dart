@@ -34,14 +34,11 @@ class _ListingsScreenState extends State<ListingsScreen> {
 
   Future<List<Listing>> getListings() async {
     print("getting posts");
-   const jsonEndpoint =
-          "http://139.144.77.133/getLocalDemo/get_listings.php";
-    
+    const jsonEndpoint = "http://139.144.77.133/getLocalDemo/get_listings.php";
+
     Object requestBody = "";
 
     try {
-      
-
       final response = await post(
         Uri.parse(jsonEndpoint),
         body: "",

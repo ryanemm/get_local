@@ -95,26 +95,26 @@ class _HomeScreenState extends State<HomeScreen> {
       PersistentBottomNavBarItem(
         icon: const Icon(Icons.home),
         title: "Home",
-        activeColorPrimary: Colors.amber,
-        inactiveColorPrimary: Colors.grey,
+        activeColorPrimary: Color.fromARGB(255, 253, 228, 0),
+        inactiveColorPrimary: Colors.grey[200],
       ),
       PersistentBottomNavBarItem(
         icon: const Icon(Icons.work),
         title: "Listings",
-        activeColorPrimary: Colors.amber,
-        inactiveColorPrimary: Colors.grey,
+        activeColorPrimary: Color.fromARGB(255, 253, 228, 0),
+        inactiveColorPrimary: Colors.grey[200],
       ),
       PersistentBottomNavBarItem(
         icon: const Icon(Icons.notifications),
         title: "Notifications",
-        activeColorPrimary: Colors.amber,
-        inactiveColorPrimary: Colors.grey,
+        activeColorPrimary: Color.fromARGB(255, 253, 228, 0),
+        inactiveColorPrimary: Colors.grey[200],
       ),
       PersistentBottomNavBarItem(
         icon: const Icon(Icons.person),
         title: "Profile",
-        activeColorPrimary: Colors.amber,
-        inactiveColorPrimary: Colors.grey,
+        activeColorPrimary: Color.fromARGB(255, 253, 228, 0),
+        inactiveColorPrimary: Colors.grey[200],
       ),
     ];
   }
@@ -160,13 +160,13 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           const SizedBox(width: 8),
         ],
-        backgroundColor: Color.fromARGB(255, 31, 69, 77),
+        backgroundColor: Color.fromARGB(255, 22, 44, 49),
       ),
       body: Column(
         children: [
           Container(
             height: 24,
-            color: Color.fromARGB(255, 31, 69, 77),
+            color: Color.fromARGB(255, 22, 44, 49),
             child: Container(
               decoration: BoxDecoration(
                   color: Colors.white,
@@ -182,7 +182,7 @@ class _HomeScreenState extends State<HomeScreen> {
               items: _navBarsItems(),
               confineInSafeArea: true,
               backgroundColor:
-                  Color.fromARGB(255, 31, 69, 77), // Default is Colors.white.
+                  Color.fromARGB(255, 22, 44, 49), // Default is Colors.white.
               handleAndroidBackButtonPress: true, // Default is true.
               resizeToAvoidBottomInset:
                   true, // This needs to be true if you want to move up the screen when the keyboard appears.

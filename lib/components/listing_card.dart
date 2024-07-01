@@ -62,22 +62,30 @@ class _ListingCardState extends State<ListingCard> {
                 boxShadow: [
                   BoxShadow(
                       offset: Offset(1, 1),
-                      color: Colors.grey.shade300,
-                      blurRadius: 2,
-                      spreadRadius: 1),
+                      color: Colors.grey.shade200,
+                      blurRadius: 6,
+                      spreadRadius: 0),
                   BoxShadow(
                       offset: Offset(-1, -1),
                       color: Colors.grey.shade200,
-                      blurRadius: 2,
-                      spreadRadius: 0.5)
+                      blurRadius: 6,
+                      spreadRadius: 0)
                 ]),
             child:
                 Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
               Container(
                 width: 50,
-                height:50,
-                decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(10)), color: Color.fromARGB(255, 19, 234, 27)),
-                child: Center(child: Text("BE", style: GoogleFonts.montserrat(color: Colors.black),),),),
+                height: 50,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(10)),
+                    color: Color.fromARGB(255, 247, 243, 165)),
+                child: Center(
+                  child: Text(
+                    "BE",
+                    style: GoogleFonts.montserrat(color: Colors.black),
+                  ),
+                ),
+              ),
               SizedBox(width: 8),
               Expanded(
                   flex: 4,
@@ -94,7 +102,7 @@ class _ListingCardState extends State<ListingCard> {
                               overflow: TextOverflow.ellipsis,
                               style: GoogleFonts.montserrat(
                                   color: Colors.black,
-                                  fontSize: 12,
+                                  fontSize: 16,
                                   fontWeight: FontWeight.bold),
                             ),
                           ),
@@ -103,15 +111,15 @@ class _ListingCardState extends State<ListingCard> {
                       ),
                       Text(widget.company,
                           style: GoogleFonts.montserrat(
-                              color: Colors.grey[600], fontSize: 12)),
+                              color: Colors.grey[600], fontSize: 16)),
                       Row(
                         children: [
                           Text("Start: ",
                               style: GoogleFonts.montserrat(
-                                  color: Colors.grey[600], fontSize: 12)),
+                                  color: Colors.grey[600], fontSize: 16)),
                           Text(displayStartDate!,
                               style: GoogleFonts.montserrat(
-                                  color: Colors.grey[600], fontSize: 12)),
+                                  color: Colors.grey[600], fontSize: 16)),
                           Expanded(child: Container()),
                           Row(
                             children: [

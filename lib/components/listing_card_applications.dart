@@ -19,10 +19,12 @@ class ListingCardApplications extends StatefulWidget {
       this.id,
       this.job,
       this.startDate,
-      this.endDate, this.applications});
+      this.endDate,
+      this.applications});
 
   @override
-  State<ListingCardApplications> createState() => _ListingCardApplicationsState();
+  State<ListingCardApplications> createState() =>
+      _ListingCardApplicationsState();
 }
 
 class _ListingCardApplicationsState extends State<ListingCardApplications> {
@@ -74,11 +76,14 @@ class _ListingCardApplicationsState extends State<ListingCardApplications> {
                       blurRadius: 2,
                       spreadRadius: 0.5)
                 ]),
-            child:
-                Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Container(height: 50, 
-              width: 50, 
-              decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular((10))), color: Colors.grey), child: Icon(Icons.engineering),
+            child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              Container(
+                height: 50,
+                width: 50,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular((10))),
+                    color: Colors.grey),
+                child: Icon(Icons.engineering),
               ),
               SizedBox(width: 8),
               Expanded(
@@ -100,29 +105,40 @@ class _ListingCardApplicationsState extends State<ListingCardApplications> {
                                   fontWeight: FontWeight.bold),
                             ),
                           ),
-                  
                         ],
                       ),
-                      Text("Piet Retief",      style: GoogleFonts.montserrat(
-                                  color: Colors.grey[900], fontSize: 14)),
-                                  SizedBox(height: 16),
+                      Text("Piet Retief",
+                          style: GoogleFonts.montserrat(
+                              color: Colors.grey[900], fontSize: 14)),
+                      SizedBox(height: 16),
                       Row(
                         children: [
                           Text(widget.applications!,
                               style: GoogleFonts.montserrat(
-                                  color: Color.fromARGB(255, 63, 191, 72), fontSize: 14)),
-                                  widget.applications == "1" ? Text(" application ",      style: GoogleFonts.montserrat(
-                                  color: Color.fromARGB(255, 63, 191, 72), fontSize: 14)) : Text(" applications ",      style: GoogleFonts.montserrat(
-                                  color: Color.fromARGB(255, 63, 191, 72), fontSize: 14)),
-                                  Expanded(child: Container()),
-                                  Container(
-                                    height: 32,
-                                    width: 32,
-                                    decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(16)), color: Color.fromARGB(255, 194,242,76)),
-                                    child: Icon(Icons.chevron_right_outlined, color: Colors.black),)
+                                  color: Color.fromARGB(255, 63, 191, 72),
+                                  fontSize: 14)),
+                          widget.applications == "1"
+                              ? Text(" application ",
+                                  style: GoogleFonts.montserrat(
+                                      color: Color.fromARGB(255, 63, 191, 72),
+                                      fontSize: 14))
+                              : Text(" applications ",
+                                  style: GoogleFonts.montserrat(
+                                      color: Color.fromARGB(255, 63, 191, 72),
+                                      fontSize: 14)),
+                          Expanded(child: Container()),
+                          Container(
+                            height: 32,
+                            width: 32,
+                            decoration: BoxDecoration(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(16)),
+                                color: Color.fromARGB(255, 253, 228, 0)),
+                            child: Icon(Icons.chevron_right_outlined,
+                                color: Colors.black),
+                          )
                         ],
                       ),
-                    
                     ],
                   )),
             ]),

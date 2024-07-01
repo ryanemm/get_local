@@ -32,7 +32,7 @@ class _ListingsScreenCompanyState extends State<ListingsScreenCompany> {
 
   @override
   void initState() {
-    timer = Timer.periodic(const Duration(seconds: 360), (Timer t) {
+    timer = Timer.periodic(const Duration(seconds: 720), (Timer t) {
       getListings();
       setState(() {});
     });
