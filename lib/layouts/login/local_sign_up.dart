@@ -196,7 +196,7 @@ class _LocalSignUpState extends State<LocalSignUp> {
               textAlign: TextAlign.center,
               "We have sent a One Time Pin to your email address. Enter to verify your email address",
               style: GoogleFonts.montserrat(
-                  fontSize: 12, fontWeight: FontWeight.normal),
+                  fontSize: 16, fontWeight: FontWeight.normal),
             ),
             SizedBox(height: 16),
             Container(

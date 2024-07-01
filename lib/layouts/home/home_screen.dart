@@ -5,6 +5,7 @@ import 'package:get_local/layouts/home/listings/listings_company.dart';
 import 'package:get_local/layouts/login/login_screen.dart';
 import 'package:get_local/layouts/notifications/notifications.dart';
 import 'package:get_local/layouts/profile/profile_screen.dart';
+import 'package:get_local/layouts/profile/profile_screen_company.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:load_switch/load_switch.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
@@ -21,7 +22,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   PersistentTabController _controller = PersistentTabController();
   bool switchValue = false;
-  String accoutType = "company";
+  String? accountType = "";
   String companyId = "1";
   String? email;
   String? name;
@@ -43,7 +44,7 @@ class _HomeScreenState extends State<HomeScreen> {
     SharedPreferences userDetails = await SharedPreferences.getInstance();
     name = userDetails.getString("name");
     email = userDetails.getString("email");
-
+    accountType = userDetails.getString("accountType");
     surname = userDetails.getString("surname");
     print("Email: $email");
     print("Name: $name");
@@ -65,13 +66,19 @@ class _HomeScreenState extends State<HomeScreen> {
   List<Widget> _buildScreens() {
     return [
       const Feed(),
-      accoutType == "local"
+      accountType == "local"
           ? const ListingsScreen(accountType: "local")
           : ListingsScreenCompany(
               companyId: companyId,
             ),
       NotificationsScreen(),
-      const ProfileScreen(accountType: "local"),
+      widget.accountType == "local"
+          ? ProfileScreen(
+              name: name!,
+              surname: surname!,
+              email: email!,
+            )
+          : ProfileScreenCompany(),
     ];
   }
 
