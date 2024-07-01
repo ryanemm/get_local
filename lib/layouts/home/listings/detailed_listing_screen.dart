@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get_local/components/gradient_button.dart';
 import 'package:get_local/components/image_button.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -48,6 +49,18 @@ class _DetailedListingScreenState extends State<DetailedListingScreen> {
     }
   }
 
+  void showToast(String message) {
+    Fluttertoast.showToast(
+      msg: message,
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.BOTTOM,
+      timeInSecForIosWeb: 1,
+      backgroundColor: Colors.black,
+      textColor: Colors.white,
+      fontSize: 16.0,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     Size screenSize = MediaQuery.of(context).size;
@@ -59,6 +72,7 @@ class _DetailedListingScreenState extends State<DetailedListingScreen> {
     print(displayEndDate);
     return Scaffold(
       body: Container(
+        color: Colors.white,
         padding: EdgeInsets.symmetric(horizontal: 16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -107,7 +121,7 @@ class _DetailedListingScreenState extends State<DetailedListingScreen> {
                               overflow: TextOverflow.ellipsis,
                               style: GoogleFonts.montserrat(
                                   color: Colors.black,
-                                  fontSize: 12,
+                                  fontSize: 16,
                                   fontWeight: FontWeight.bold),
                             ),
                           ),
@@ -117,7 +131,7 @@ class _DetailedListingScreenState extends State<DetailedListingScreen> {
                         widget.company,
                         style: GoogleFonts.montserrat(
                             color: Colors.black,
-                            fontSize: 12,
+                            fontSize: 16,
                             fontWeight: FontWeight.normal),
                       ),
                     ],
@@ -151,30 +165,30 @@ class _DetailedListingScreenState extends State<DetailedListingScreen> {
                     children: [
                       Text("Start Date: ",
                           style: GoogleFonts.montserrat(
-                              color: Colors.grey[600], fontSize: 12)),
+                              color: Colors.grey[600], fontSize: 16)),
                       Text(displayStartDate!,
                           style: GoogleFonts.montserrat(
-                              color: Colors.grey[600], fontSize: 12)),
+                              color: Colors.grey[600], fontSize: 16)),
                     ],
                   ),
                   Row(
                     children: [
                       Text("End Date: ",
                           style: GoogleFonts.montserrat(
-                              color: Colors.grey[600], fontSize: 12)),
+                              color: Colors.grey[600], fontSize: 16)),
                       Text(displayEndDate!,
                           style: GoogleFonts.montserrat(
-                              color: Colors.grey[600], fontSize: 12)),
+                              color: Colors.grey[600], fontSize: 16)),
                     ],
                   ),
                   Row(
                     children: [
                       Text("Location: ",
                           style: GoogleFonts.montserrat(
-                              color: Colors.grey[600], fontSize: 12)),
+                              color: Colors.grey[600], fontSize: 16)),
                       Text("Piet Retief",
                           style: GoogleFonts.montserrat(
-                              color: Colors.grey[600], fontSize: 12)),
+                              color: Colors.grey[600], fontSize: 16)),
                     ],
                   ),
                   SizedBox(height: 16),
@@ -182,7 +196,7 @@ class _DetailedListingScreenState extends State<DetailedListingScreen> {
                     children: [
                       Text("Interested in this? ",
                           style: GoogleFonts.montserrat(
-                              color: Colors.grey[600], fontSize: 12)),
+                              color: Colors.grey[600], fontSize: 16)),
                       Icon(Icons.arrow_forward),
                       Expanded(
                         child: Container(),
@@ -191,13 +205,14 @@ class _DetailedListingScreenState extends State<DetailedListingScreen> {
                         function: () {
                           apply();
                         },
-                        buttonColor1: Color.fromARGB(255, 0, 23, 226),
-                        buttonColor2: Color.fromARGB(255, 97, 178, 245),
+                        buttonColor1: Color.fromARGB(255, 253, 228, 0),
+                        buttonColor2: Color.fromARGB(255, 253, 228, 0),
                         shadowColor: Colors.grey.shade500,
                         offsetX: 4,
                         offsetY: 4,
                         text: "Apply",
                         width: 100.00,
+                        textColor: Colors.black,
                       ),
                     ],
                   )
