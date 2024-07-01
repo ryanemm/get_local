@@ -5,7 +5,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 
 class AwaitingApprovalPage extends StatefulWidget {
-  const AwaitingApprovalPage({super.key});
+  final String accountType;
+  const AwaitingApprovalPage({super.key, required this.accountType});
 
   @override
   State<AwaitingApprovalPage> createState() => _AwaitingApprovalPageState();
@@ -51,7 +52,8 @@ class _AwaitingApprovalPageState extends State<AwaitingApprovalPage> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => HomeScreen()));
+                              builder: (context) =>
+                                  HomeScreen(accountType: widget.accountType)));
                     },
                   ),
                   SizedBox(height: 200)

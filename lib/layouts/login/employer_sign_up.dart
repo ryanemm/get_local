@@ -43,11 +43,10 @@ class _EmployerSignUpState extends State<EmployerSignUp> {
   bool showOTPError = false;
   bool OTPVerified = false;
 
-   Future requestOTP() async {
+  Future requestOTP() async {
     var url = "http://139.144.77.133/getLocalDemo/otp_mailer.php";
     var response = await http.post(Uri.parse(url), body: {
       "email": email,
-
     });
 
     // var data = json.decode(response.body);
@@ -69,12 +68,10 @@ class _EmployerSignUpState extends State<EmployerSignUp> {
     }*/
   }
 
-    Future<OTPResult> checkOTP() async {
+  Future<OTPResult> checkOTP() async {
     var url = "http://139.144.77.133/getLocalDemo/otp_checker.php";
-    var response = await http.post(Uri.parse(url), body: {
-      "email": email,
-      "otp": OTP
-    });
+    var response =
+        await http.post(Uri.parse(url), body: {"email": email, "otp": OTP});
 
     Map<String, dynamic> parsedJson = jsonDecode(response.body);
     OTPResult result = OTPResult.fromJson(parsedJson);
@@ -196,14 +193,14 @@ class _EmployerSignUpState extends State<EmployerSignUp> {
                     )),
               ),
             ),
-            SizedBox(height: 16), 
-            showOTPError == true ? 
-              Text("Incorrect OTP entered", 
-                  style: GoogleFonts.montserrat(
-                  fontSize: 16, 
-                  fontWeight: FontWeight.bold,
-                  color: Colors.red)) : 
-              Container()
+            SizedBox(height: 16),
+            showOTPError == true
+                ? Text("Incorrect OTP entered",
+                    style: GoogleFonts.montserrat(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.red))
+                : Container()
           ],
         ),
       ),
@@ -382,9 +379,9 @@ class _EmployerSignUpState extends State<EmployerSignUp> {
     Widget signUpStage = stages[currentIndex];
     return LoaderOverlay(
         child: Scaffold(
-          appBar: AppBar(
-                   backgroundColor: Colors.grey[50],
-            leading:   GestureDetector(
+            appBar: AppBar(
+              backgroundColor: Colors.grey[50],
+              leading: GestureDetector(
                 onTap: () {
                   print("Back button tapped");
                   Navigator.pop(context);
@@ -396,146 +393,142 @@ class _EmployerSignUpState extends State<EmployerSignUp> {
                   ),
                 ),
               ),
-          ),
+            ),
             body: Container(
-      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
-      height: double.infinity,
-      color: Colors.grey[50],
-      child: Form(
-        //key: _formKey,
-        child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-       
-                    
-                                Text(
-                                  "Let's create your profile",
-                                  style: GoogleFonts.montserrat(
-                fontSize: 24, fontWeight: FontWeight.bold),
-                                ),
-                                Text(
-                                  "Just a few quick steps",
-                                  style: GoogleFonts.montserrat(
-                fontSize: 16, fontWeight: FontWeight.normal),
-                                ),
-              SizedBox(height: 36),
-              AnimatedSwitcher(
-                  duration: const Duration(milliseconds: 500),
-                  child: signUpStage,
-                  switchInCurve: Curves.easeIn,
-                  switchOutCurve: Curves.easeOut,
-                  transitionBuilder:
-                      (Widget child, Animation<double> animation) {
-                    final offsetAnimation = Tween<Offset>(
-                      begin: Offset(currentIndex == 0 ? -1.0 : 1.0, 0.0),
-                      end: Offset(0.0, 0.0),
-                    ).animate(animation);
-                    return SlideTransition(
-                        position: offsetAnimation, child: child);
-                  }
-                  // ScaleTransition(child: child, scale: animation),sdfd
-                  ),
-              const SizedBox(height: 32),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  GradientButton(
-                    function: () {
-                      setState(() {
-                      
-                        currentIndex - 1 >= 0
-                            ? currentIndex = currentIndex - 1
-                            : () {};
-                        signUpStage = stages[currentIndex];
-                        print("gradient button clicked");
-                        print(currentIndex);
-                      });
-                    },
-                    buttonColor1: Color.fromARGB(255, 10, 36, 114),
-                    buttonColor2: Color.fromARGB(255, 135, 226, 242),
-                    shadowColor: Colors.grey.shade500,
-                    offsetX: 4,
-                    offsetY: 4,
-                    text: "Previous",
-                    width: 120.00,
-                  ),
-                  GradientButton(
-                    function: () async{
-                       if (currentIndex == 0) {
-                          email = emailController.text;
-                          await requestOTP();
-                          currentIndex + 1 < totalStages
-                          ? currentIndex = currentIndex + 1
-                          : () {};
-                          signUpStage = stages[currentIndex];
-                          print("next button clicked");
-                          print(currentIndex);
-                        } else if (currentIndex == 1) {
-                          OTP = OTPController.text;
-                          await checkOTP();
-                          if (OTPVerified == true) {currentIndex + 1 < totalStages
-                            ? currentIndex = currentIndex + 1
-                            : () {};
-                            signUpStage = stages[currentIndex];
-                            print("next button clicked");
-                            print(currentIndex);
-                            } else {
-                              OTPController.text = "";
-                            }
-                        } else if (currentIndex == 4) {
-                            email = emailController.text;
-                            companyName = companyNameController.text;
-                            companyRegistration =
-                              companyRegistrationController.text;
-                            address = addressController.text;
-                            phoneNumber = phoneNumberController.text;
-                            tradingAs = tradingAsController.text;
-                            service = serviceController.text;
-                            password = passController.text;
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      ProfileReviewPageCompany(
-                                        email: email!,
-                                        companyName: companyName!,
-                                        companyRegistration:
-                                            companyRegistration!,
-                                        address: address!,
-                                        phoneNumber: phoneNumber!,
-                                        tradingAs: tradingAs!,
-                                        service: service!,
-                                        password: password!,
-                                      )));
-                        } else {
-                            currentIndex + 1 < totalStages
-                            ? currentIndex = currentIndex + 1
-                            : () {};
-                            signUpStage = stages[currentIndex];
-                            print("next button clicked");
-                            print(currentIndex);
-                        }
+              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
+              height: double.infinity,
+              color: Colors.grey[50],
+              child: Form(
+                //key: _formKey,
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Text(
+                        "Let's create your profile",
+                        style: GoogleFonts.montserrat(
+                            fontSize: 24, fontWeight: FontWeight.bold),
+                      ),
+                      Text(
+                        "Just a few quick steps",
+                        style: GoogleFonts.montserrat(
+                            fontSize: 16, fontWeight: FontWeight.normal),
+                      ),
+                      SizedBox(height: 36),
+                      AnimatedSwitcher(
+                          duration: const Duration(milliseconds: 500),
+                          child: signUpStage,
+                          switchInCurve: Curves.easeIn,
+                          switchOutCurve: Curves.easeOut,
+                          transitionBuilder:
+                              (Widget child, Animation<double> animation) {
+                            final offsetAnimation = Tween<Offset>(
+                              begin:
+                                  Offset(currentIndex == 0 ? -1.0 : 1.0, 0.0),
+                              end: Offset(0.0, 0.0),
+                            ).animate(animation);
+                            return SlideTransition(
+                                position: offsetAnimation, child: child);
+                          }
+                          // ScaleTransition(child: child, scale: animation),sdfd
+                          ),
+                      const SizedBox(height: 32),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          GradientButton(
+                            function: () {
+                              setState(() {
+                                currentIndex - 1 >= 0
+                                    ? currentIndex = currentIndex - 1
+                                    : () {};
+                                signUpStage = stages[currentIndex];
+                                print("gradient button clicked");
+                                print(currentIndex);
+                              });
+                            },
+                            buttonColor1: Color.fromARGB(255, 10, 36, 114),
+                            buttonColor2: Color.fromARGB(255, 135, 226, 242),
+                            shadowColor: Colors.grey.shade500,
+                            offsetX: 4,
+                            offsetY: 4,
+                            text: "Previous",
+                            width: 120.00,
+                          ),
+                          GradientButton(
+                            function: () async {
+                              if (currentIndex == 0) {
+                                email = emailController.text;
+                                await requestOTP();
+                                currentIndex + 1 < totalStages
+                                    ? currentIndex = currentIndex + 1
+                                    : () {};
+                                signUpStage = stages[currentIndex];
+                                print("next button clicked");
+                                print(currentIndex);
+                              } else if (currentIndex == 1) {
+                                OTP = OTPController.text;
+                                await checkOTP();
+                                if (OTPVerified == true) {
+                                  currentIndex + 1 < totalStages
+                                      ? currentIndex = currentIndex + 1
+                                      : () {};
+                                  signUpStage = stages[currentIndex];
+                                  print("next button clicked");
+                                  print(currentIndex);
+                                } else {
+                                  OTPController.text = "";
+                                }
+                              } else if (currentIndex == 4) {
+                                email = emailController.text;
+                                companyName = companyNameController.text;
+                                companyRegistration =
+                                    companyRegistrationController.text;
+                                address = addressController.text;
+                                phoneNumber = phoneNumberController.text;
+                                tradingAs = tradingAsController.text;
+                                service = serviceController.text;
+                                password = passController.text;
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            ProfileReviewPageCompany(
+                                                email: email!,
+                                                companyName: companyName!,
+                                                companyRegistration:
+                                                    companyRegistration!,
+                                                address: address!,
+                                                phoneNumber: phoneNumber!,
+                                                tradingAs: tradingAs!,
+                                                service: service!,
+                                                password: password!,
+                                                accountType: "employer")));
+                              } else {
+                                currentIndex + 1 < totalStages
+                                    ? currentIndex = currentIndex + 1
+                                    : () {};
+                                signUpStage = stages[currentIndex];
+                                print("next button clicked");
+                                print(currentIndex);
+                              }
 
-                        setState(() {
-                          
-                        });
-                      
-                    },
-                   buttonColor1: Color.fromARGB(255, 10, 36, 114),
-                    buttonColor2: Color.fromARGB(255, 135, 226, 242),
-                    shadowColor: Colors.grey.shade500,
-                    offsetX: 4,
-                    offsetY: 4,
-                    text: currentIndex < 4 ? "Next" : "Finish",
-                    width: 120.00,
-                  ),
-                ],
+                              setState(() {});
+                            },
+                            buttonColor1: Color.fromARGB(255, 10, 36, 114),
+                            buttonColor2: Color.fromARGB(255, 135, 226, 242),
+                            shadowColor: Colors.grey.shade500,
+                            offsetX: 4,
+                            offsetY: 4,
+                            text: currentIndex < 4 ? "Next" : "Finish",
+                            width: 120.00,
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 60),
+                    ]),
               ),
-              const SizedBox(height: 60),
-            ]),
-      ),
-    )));
+            )));
     ;
   }
 }

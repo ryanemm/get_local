@@ -605,15 +605,15 @@ class _LocalSignUpState extends State<LocalSignUp> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) => ProfileReviewPage(
-                                              email: email!,
-                                              password: password!,
-                                              name: name!,
-                                              surname: surname!,
-                                              address: address!,
-                                              phoneNumber: phoneNumber!,
-                                              dateOfBirth: dateOfBirth!,
-                                              job: _chosenModel,
-                                            )));
+                                            email: email!,
+                                            password: password!,
+                                            name: name!,
+                                            surname: surname!,
+                                            address: address!,
+                                            phoneNumber: phoneNumber!,
+                                            dateOfBirth: dateOfBirth!,
+                                            job: _chosenModel,
+                                            accountType: "local")));
                               } else {
                                 currentIndex + 1 < totalStages
                                     ? currentIndex = currentIndex + 1

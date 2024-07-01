@@ -12,26 +12,35 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   String loggedIn = "";
-  String? sharedPrefLoggenIn;
+  String accountType = "";
+  String? sharedPrefLoggedIn;
+  String? sharedPrefAccountType;
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
       statusBarBrightness: Brightness.dark,
       systemNavigationBarColor: Color.fromARGB(255, 0, 7, 45),
       systemNavigationBarIconBrightness: Brightness.dark));
 
   SharedPreferences startPrefs = await SharedPreferences.getInstance();
-  sharedPrefLoggenIn = startPrefs.getString("loggedIn");
-  if (sharedPrefLoggenIn != null) {
-    loggedIn = sharedPrefLoggenIn;
+  sharedPrefLoggedIn = startPrefs.getString("loggedIn");
+  sharedPrefAccountType = startPrefs.getString("accountType");
+  if (sharedPrefLoggedIn != null && sharedPrefAccountType != null) {
+    loggedIn = sharedPrefLoggedIn;
+    accountType = sharedPrefAccountType;
   }
 
-  runApp(MyApp(loggedIn: loggedIn));
+  runApp(MyApp(
+    loggedIn: loggedIn,
+    accountType: accountType,
+  ));
 }
 
 class MyApp extends StatelessWidget {
   final String loggedIn;
+  final String accountType;
   const MyApp({
     super.key,
     required this.loggedIn,
+    required this.accountType,
   });
 
   // This widget is the root of your application.
@@ -44,7 +53,11 @@ class MyApp extends StatelessWidget {
       theme: ThemeData.light(
         useMaterial3: true,
       ),
-      home: loggedIn == "true" ? HomeScreen() : LoginScreen(),
+      home: loggedIn == "true"
+          ? HomeScreen(
+              accountType: accountType,
+            )
+          : LoginScreen(),
     );
   }
 }

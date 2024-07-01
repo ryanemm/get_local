@@ -19,6 +19,7 @@ class ProfileReviewPageCompany extends StatefulWidget {
   final String phoneNumber;
   final String tradingAs;
   final String service;
+  final String accountType;
   const ProfileReviewPageCompany(
       {super.key,
       required this.email,
@@ -28,7 +29,8 @@ class ProfileReviewPageCompany extends StatefulWidget {
       required this.phoneNumber,
       required this.tradingAs,
       required this.service,
-      required this.password});
+      required this.password,
+      required this.accountType});
 
   @override
   State<ProfileReviewPageCompany> createState() =>
@@ -230,8 +232,10 @@ class _ProfileReviewPageCompanyState extends State<ProfileReviewPageCompany> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => PreDocUploadPage(
-                                        profileType: "company",
-                                        applicantId: applicant_id!)));
+                                          profileType: "company",
+                                          applicantId: applicant_id!,
+                                          accountType: widget.accountType,
+                                        )));
                           },
                         ),
                       ],

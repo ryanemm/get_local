@@ -16,8 +16,12 @@ import 'package:http/http.dart' as http;
 class UploadDocumentsPage extends StatefulWidget {
   final String profileType;
   final String applicantId;
+  final String accountType;
   const UploadDocumentsPage(
-      {super.key, required this.profileType, required this.applicantId});
+      {super.key,
+      required this.profileType,
+      required this.applicantId,
+      required this.accountType});
 
   @override
   State<UploadDocumentsPage> createState() => _UploadDocumentsPageState();
@@ -181,7 +185,9 @@ class _UploadDocumentsPageState extends State<UploadDocumentsPage> {
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                AwaitingApprovalPage()));
+                                                AwaitingApprovalPage(
+                                                    accountType:
+                                                        widget.accountType)));
                                   },
                                 ),
                                 SizedBox(height: 16),

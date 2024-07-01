@@ -18,6 +18,7 @@ class ProfileReviewPage extends StatefulWidget {
   final String phoneNumber;
   final String dateOfBirth;
   final String job;
+  final String accountType;
   const ProfileReviewPage(
       {super.key,
       required this.email,
@@ -27,7 +28,8 @@ class ProfileReviewPage extends StatefulWidget {
       required this.phoneNumber,
       required this.dateOfBirth,
       required this.job,
-      required this.password});
+      required this.password,
+      required this.accountType});
 
   @override
   State<ProfileReviewPage> createState() => _ProfileReviewPageState();
@@ -66,6 +68,7 @@ class _ProfileReviewPageState extends State<ProfileReviewPage> {
       await prefs.setString("name", widget.name);
       await prefs.setString("surname", widget.surname);
       await prefs.setString("loggedIn", "true");
+      await prefs.setString("accountType", "local");
     }
     if (response.body.contains("Incorrect")) {
       print("Check you the details and verify they are correct");
@@ -228,7 +231,8 @@ class _ProfileReviewPageState extends State<ProfileReviewPage> {
                                 MaterialPageRoute(
                                     builder: (context) => PreDocUploadPage(
                                         profileType: "local",
-                                        applicantId: applicant_id!)));
+                                        applicantId: applicant_id!,
+                                        accountType: widget.accountType)));
                           },
                         ),
                       ],

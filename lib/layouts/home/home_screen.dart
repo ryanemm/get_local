@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get_local/layouts/home/feed.dart';
 import 'package:get_local/layouts/home/listings/listings.dart';
 import 'package:get_local/layouts/home/listings/listings_company.dart';
+import 'package:get_local/layouts/login/login_screen.dart';
 import 'package:get_local/layouts/notifications/notifications.dart';
 import 'package:get_local/layouts/profile/profile_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -10,6 +11,9 @@ import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeScreen extends StatefulWidget {
+  final String accountType;
+
+  const HomeScreen({super.key, required this.accountType});
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
@@ -44,6 +48,7 @@ class _HomeScreenState extends State<HomeScreen> {
     print("Email: $email");
     print("Name: $name");
     print("Surname: $surname");
+    print(widget.accountType);
   }
 
   Future<void> logout() async {
@@ -52,6 +57,8 @@ class _HomeScreenState extends State<HomeScreen> {
     await userDetails.setString("name", "");
     await userDetails.setString("surname", "");
     await userDetails.setString("loggedIn", "false");
+    Navigator.pop(
+        context, MaterialPageRoute(builder: (context) => LoginScreen()));
     print("User logged out");
   }
 
@@ -121,7 +128,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         centerTitle: true,
         title: Text(
-          "GetLocal",
+          "GetLocals",
           style: GoogleFonts.aboreto(
               fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
         ),
