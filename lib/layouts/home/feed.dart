@@ -44,12 +44,12 @@ class _FeedState extends State<Feed> {
       switch (response.statusCode) {
         case 200:
           List posts = json.decode(response.body);
-          print(posts);
+          //print(posts);
 
           var formatted = posts.map((post) => Post.fromJson(post)).toList();
-          print(formatted);
+          //print(formatted);
 
-          print(formatted);
+          //print(formatted);
 
           return formatted;
         default:
@@ -126,7 +126,6 @@ class _FeedState extends State<Feed> {
                           },
                         ),
                       ),
-                  
                     ],
                   ),
                 );

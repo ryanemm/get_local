@@ -4,6 +4,7 @@ import 'package:get_local/layouts/home/listings/listings.dart';
 import 'package:get_local/layouts/home/listings/listings_company.dart';
 import 'package:get_local/layouts/login/login_screen.dart';
 import 'package:get_local/layouts/notifications/notifications.dart';
+import 'package:get_local/layouts/notifications/notifications_unverified.dart';
 import 'package:get_local/layouts/profile/profile_screen.dart';
 import 'package:get_local/layouts/profile/profile_screen_company.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -19,6 +20,7 @@ class HomeScreen extends StatefulWidget {
   String? companyName;
   String? id;
   String? service;
+  String? approved;
 
   HomeScreen(
       {super.key,
@@ -28,7 +30,8 @@ class HomeScreen extends StatefulWidget {
       this.name,
       this.companyName,
       this.id,
-      this.service});
+      this.service,
+      this.approved});
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
@@ -74,6 +77,7 @@ class _HomeScreenState extends State<HomeScreen> {
     await userDetails.setString("companyName", "");
     await userDetails.setString("service", "");
     await userDetails.setString("loggedIn", "false");
+    await userDetails.setString("approved", "");
     Navigator.pop(
         context, MaterialPageRoute(builder: (context) => LoginScreen()));
     print("User logged out");
@@ -85,9 +89,13 @@ class _HomeScreenState extends State<HomeScreen> {
       accountType == "local"
           ? const ListingsScreen()
           : ListingsScreenCompany(
-              companyId: widget.id,
+              id: widget.id,
             ),
-      NotificationsScreen(),
+      widget.approved == "true"
+          ? NotificationsScreen(
+              id: widget.id!,
+            )
+          : NotificationsUnverified(id: widget.id!),
       widget.accountType == "local"
           ? ProfileScreen(
               name: widget.name!,

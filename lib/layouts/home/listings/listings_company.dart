@@ -14,8 +14,8 @@ import 'package:loader_overlay/loader_overlay.dart';
 import 'package:scroll_to_hide/scroll_to_hide.dart';
 
 class ListingsScreenCompany extends StatefulWidget {
-  final String? companyId;
-  const ListingsScreenCompany({super.key, this.companyId});
+  final String? id;
+  const ListingsScreenCompany({super.key, this.id});
 
   @override
   State<ListingsScreenCompany> createState() => _ListingsScreenCompanyState();
@@ -32,10 +32,13 @@ class _ListingsScreenCompanyState extends State<ListingsScreenCompany> {
 
   @override
   void initState() {
-    timer = Timer.periodic(const Duration(seconds: 720), (Timer t) {
-      getListings();
-      setState(() {});
-    });
+    if (widget.id != "") {
+      timer = Timer.periodic(const Duration(seconds: 720), (Timer t) {
+        getListings();
+        setState(() {});
+      });
+    }
+
     _scrollController.addListener(_onScroll);
     super.initState();
   }
@@ -84,7 +87,7 @@ class _ListingsScreenCompanyState extends State<ListingsScreenCompany> {
     const jsonEndpoint =
         "http://139.144.77.133/getLocalDemo/get_company_listings.php";
 
-    Object requestBody = {"companyId": widget.companyId};
+    Object requestBody = {"companyId": widget.id};
 
     try {
       final response = await post(

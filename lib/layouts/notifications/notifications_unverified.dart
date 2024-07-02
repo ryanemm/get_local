@@ -7,15 +7,16 @@ import 'package:get_local/models/events.dart';
 import 'package:http/http.dart' show post;
 import 'package:loader_overlay/loader_overlay.dart';
 
-class NotificationsScreen extends StatefulWidget {
+class NotificationsUnverified extends StatefulWidget {
   final String id;
-  const NotificationsScreen({super.key, required this.id});
+  const NotificationsUnverified({super.key, required this.id});
 
   @override
-  State<NotificationsScreen> createState() => _NotificationsScreenState();
+  State<NotificationsUnverified> createState() =>
+      _NotificationsUnverifiedState();
 }
 
-class _NotificationsScreenState extends State<NotificationsScreen> {
+class _NotificationsUnverifiedState extends State<NotificationsUnverified> {
   Timer? timer;
   List<Event> events = [];
 
@@ -31,7 +32,8 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
   Future<List<Event>> getEvents() async {
     print("fetching events");
     try {
-      const jsonEndpoint = "http://139.144.77.133/getLocalDemo/get_events.php";
+      const jsonEndpoint =
+          "http://139.144.77.133/getLocalDemo/get_events_unverified.php";
 
       final response = await post(
         Uri.parse(jsonEndpoint),

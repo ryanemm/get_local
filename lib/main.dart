@@ -19,6 +19,7 @@ Future<void> main() async {
   String companyName = "";
   String id = "";
   String service = "";
+  String approved = "";
   String? sharedPrefLoggedIn;
   String? sharedPrefAccountType;
   String? sharedPrefEmail;
@@ -27,6 +28,7 @@ Future<void> main() async {
   String? sharedPrefCompanyName;
   String? sharedPrefId;
   String? sharedPrefService;
+  String? sharedPrefApproved;
 
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
       statusBarBrightness: Brightness.dark,
@@ -36,38 +38,46 @@ Future<void> main() async {
   SharedPreferences startPrefs = await SharedPreferences.getInstance();
   sharedPrefLoggedIn = startPrefs.getString("loggedIn");
 
-  if (sharedPrefLoggedIn != null) {
+  if (sharedPrefLoggedIn != null && sharedPrefLoggedIn == "true") {
     sharedPrefAccountType = startPrefs.getString("accountType");
     if (sharedPrefAccountType == "local") {
       sharedPrefName = startPrefs.getString("name");
       sharedPrefSurname = startPrefs.getString("surname");
       sharedPrefEmail = startPrefs.getString("email");
       sharedPrefId = startPrefs.getString("id");
+      sharedPrefApproved = startPrefs.getString("approved");
       email = sharedPrefEmail!;
       name = sharedPrefName!;
       surname = sharedPrefSurname!;
-      id = sharedPrefId!;
+      approved = sharedPrefApproved!;
+      if (sharedPrefId != null) {
+        id = sharedPrefId!;
+      }
     } else if (sharedPrefAccountType == "employer") {
       sharedPrefId = startPrefs.getString("id");
       sharedPrefService = startPrefs.getString("service");
       sharedPrefCompanyName = startPrefs.getString("companyName");
       sharedPrefEmail = startPrefs.getString("email");
+      sharedPrefApproved = startPrefs.getString("approved");
       id = sharedPrefId!;
       service = sharedPrefService!;
       companyName = sharedPrefCompanyName!;
       email = sharedPrefEmail!;
+      approved = sharedPrefApproved!;
     }
   }
 
   runApp(MyApp(
-      loggedIn: loggedIn,
-      accountType: accountType,
-      email: email,
-      name: name,
-      surname: surname,
-      companyName: companyName,
-      service: service,
-      id: id));
+    loggedIn: loggedIn,
+    accountType: accountType,
+    email: email,
+    name: name,
+    surname: surname,
+    companyName: companyName,
+    service: service,
+    id: id,
+    approved: approved,
+  ));
 }
 
 class MyApp extends StatelessWidget {
@@ -79,6 +89,7 @@ class MyApp extends StatelessWidget {
   final String companyName;
   final String service;
   final String id;
+  final String approved;
   const MyApp({
     super.key,
     required this.loggedIn,
@@ -89,12 +100,13 @@ class MyApp extends StatelessWidget {
     required this.companyName,
     required this.service,
     required this.id,
+    required this.approved,
   });
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    print(loggedIn);
+    print("Logged in: $loggedIn");
     return MaterialApp(
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
@@ -110,7 +122,7 @@ class MyApp extends StatelessWidget {
               companyName: companyName,
               service: service,
               id: id,
-            )
+              approved: approved)
           : LoginScreen(),
     );
   }

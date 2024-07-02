@@ -227,6 +227,7 @@ class _ProfileReviewPageCompanyState extends State<ProfileReviewPageCompany> {
                                 "tradingAs", widget.tradingAs);
                             await prefs.setString("service", widget.service);
                             await prefs.setString("loggedIn", "true");
+                            await prefs.setString("approved", "false");
 
                             Navigator.push(
                                 context,
