@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
 
 class ProfileScreenCompany extends StatefulWidget {
-  const ProfileScreenCompany({super.key});
+  final String companyName;
+  final String service;
+  final String email;
+  const ProfileScreenCompany(
+      {super.key,
+      required this.companyName,
+      required this.service,
+      required this.email});
 
   @override
   State<ProfileScreenCompany> createState() => _ProfileScreenCompanyState();

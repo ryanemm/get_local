@@ -9,9 +9,9 @@ import 'package:http/http.dart' show post;
 import 'package:loader_overlay/loader_overlay.dart';
 
 class ListingsScreen extends StatefulWidget {
-  final String accountType;
-  final String? companyId;
-  const ListingsScreen({super.key, required this.accountType, this.companyId});
+  const ListingsScreen({
+    super.key,
+  });
 
   @override
   State<ListingsScreen> createState() => _ListingsScreenState();

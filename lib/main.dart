@@ -108,7 +108,9 @@ class MyApp extends StatelessWidget {
               surname: surname,
               email: email,
               companyName: companyName,
-              service: service)
+              service: service,
+              id: id,
+            )
           : LoginScreen(),
     );
   }

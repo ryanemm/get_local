@@ -18,13 +18,17 @@ class HomeScreen extends StatefulWidget {
   String? email;
   String? companyName;
   String? id;
+  String? service;
 
   HomeScreen(
       {super.key,
       required this.accountType,
       this.surname,
       this.email,
-      this.name});
+      this.name,
+      this.companyName,
+      this.id,
+      this.service});
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
@@ -33,7 +37,7 @@ class _HomeScreenState extends State<HomeScreen> {
   PersistentTabController _controller = PersistentTabController();
   bool switchValue = false;
   String? accountType = "";
-  String companyId = "1";
+
   String? email;
   String? name;
   String? surname;
@@ -67,6 +71,8 @@ class _HomeScreenState extends State<HomeScreen> {
     await userDetails.setString("email", "");
     await userDetails.setString("name", "");
     await userDetails.setString("surname", "");
+    await userDetails.setString("companyName", "");
+    await userDetails.setString("service", "");
     await userDetails.setString("loggedIn", "false");
     Navigator.pop(
         context, MaterialPageRoute(builder: (context) => LoginScreen()));
@@ -77,9 +83,9 @@ class _HomeScreenState extends State<HomeScreen> {
     return [
       const Feed(),
       accountType == "local"
-          ? const ListingsScreen(accountType: "local")
+          ? const ListingsScreen()
           : ListingsScreenCompany(
-              companyId: companyId,
+              companyId: widget.id,
             ),
       NotificationsScreen(),
       widget.accountType == "local"
@@ -88,7 +94,10 @@ class _HomeScreenState extends State<HomeScreen> {
               surname: widget.surname!,
               email: widget.email!,
             )
-          : ProfileScreenCompany(),
+          : ProfileScreenCompany(
+              companyName: widget.companyName!,
+              service: widget.service!,
+              email: widget.service!),
     ];
   }
 
