@@ -16,11 +16,17 @@ Future<void> main() async {
   String name = "";
   String surname = "";
   String email = "";
+  String companyName = "";
+  String id = "";
+  String service = "";
   String? sharedPrefLoggedIn;
   String? sharedPrefAccountType;
   String? sharedPrefEmail;
   String? sharedPrefName;
   String? sharedPrefSurname;
+  String? sharedPrefCompanyName;
+  String? sharedPrefId;
+  String? sharedPrefService;
 
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
       statusBarBrightness: Brightness.dark,
@@ -29,29 +35,39 @@ Future<void> main() async {
 
   SharedPreferences startPrefs = await SharedPreferences.getInstance();
   sharedPrefLoggedIn = startPrefs.getString("loggedIn");
-  sharedPrefAccountType = startPrefs.getString("accountType");
-  sharedPrefName = startPrefs.getString("name");
-  sharedPrefSurname = startPrefs.getString("surname");
-  sharedPrefEmail = startPrefs.getString("email");
-  if (sharedPrefLoggedIn != null &&
-      sharedPrefAccountType != null &&
-      sharedPrefEmail != null &&
-      sharedPrefName != null &&
-      sharedPrefSurname != null) {
-    loggedIn = sharedPrefLoggedIn;
-    accountType = sharedPrefAccountType;
-    email = sharedPrefEmail;
-    name = sharedPrefName;
-    surname = sharedPrefSurname;
+
+  if (sharedPrefLoggedIn != null) {
+    sharedPrefAccountType = startPrefs.getString("accountType");
+    if (sharedPrefAccountType == "local") {
+      sharedPrefName = startPrefs.getString("name");
+      sharedPrefSurname = startPrefs.getString("surname");
+      sharedPrefEmail = startPrefs.getString("email");
+      sharedPrefId = startPrefs.getString("id");
+      email = sharedPrefEmail!;
+      name = sharedPrefName!;
+      surname = sharedPrefSurname!;
+      id = sharedPrefId!;
+    } else if (sharedPrefAccountType == "employer") {
+      sharedPrefId = startPrefs.getString("id");
+      sharedPrefService = startPrefs.getString("service");
+      sharedPrefCompanyName = startPrefs.getString("companyName");
+      sharedPrefEmail = startPrefs.getString("email");
+      id = sharedPrefId!;
+      service = sharedPrefService!;
+      companyName = sharedPrefCompanyName!;
+      email = sharedPrefEmail!;
+    }
   }
 
   runApp(MyApp(
-    loggedIn: loggedIn,
-    accountType: accountType,
-    email: email,
-    name: name,
-    surname: surname,
-  ));
+      loggedIn: loggedIn,
+      accountType: accountType,
+      email: email,
+      name: name,
+      surname: surname,
+      companyName: companyName,
+      service: service,
+      id: id));
 }
 
 class MyApp extends StatelessWidget {
@@ -60,6 +76,9 @@ class MyApp extends StatelessWidget {
   final String name;
   final String surname;
   final String email;
+  final String companyName;
+  final String service;
+  final String id;
   const MyApp({
     super.key,
     required this.loggedIn,
@@ -67,6 +86,9 @@ class MyApp extends StatelessWidget {
     required this.name,
     required this.surname,
     required this.email,
+    required this.companyName,
+    required this.service,
+    required this.id,
   });
 
   // This widget is the root of your application.
@@ -79,12 +101,14 @@ class MyApp extends StatelessWidget {
       theme: ThemeData.light(
         useMaterial3: true,
       ),
-      home: (loggedIn == "true" && accountType == "local")
+      home: (loggedIn == "true")
           ? HomeScreen(
               accountType: accountType,
               name: name,
               surname: surname,
-              email: email)
+              email: email,
+              companyName: companyName,
+              service: service)
           : LoginScreen(),
     );
   }

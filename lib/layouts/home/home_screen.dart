@@ -16,6 +16,8 @@ class HomeScreen extends StatefulWidget {
   String? name;
   String? surname;
   String? email;
+  String? companyName;
+  String? id;
 
   HomeScreen(
       {super.key,

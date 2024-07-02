@@ -72,25 +72,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
           children: [
             Row(
               children: [
-                GestureDetector(
-                  onTap: () {
-                    print("Back button tapped");
-                    Navigator.pop(context);
-                  },
-                  child: Container(
-                    height: 30,
-                    width: 30,
-                    decoration: const BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(15)),
-                        color: Color.fromARGB(84, 148, 147, 147)),
-                    child: Center(
-                      child: Icon(
-                        Icons.arrow_back,
-                        color: Colors.black,
-                      ),
-                    ),
-                  ),
-                ),
                 SizedBox(width: 8),
                 Container(
                   height: 60,
