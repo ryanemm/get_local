@@ -172,9 +172,11 @@ class _UploadDocumentsPageState extends State<UploadDocumentsPage> {
                                 GradientButton(
                                   text: "Submit",
                                   buttonColor1:
-                                      const Color.fromARGB(255, 19, 53, 61),
+                                      Color.fromARGB(255, 253, 228, 0),
                                   buttonColor2:
-                                      const Color.fromARGB(255, 179, 237, 169),
+                                      Color.fromARGB(255, 194, 176, 9),
+                                  textColor:
+                                      const Color.fromARGB(255, 19, 53, 61),
                                   shadowColor: Colors.grey.shade500,
                                   offsetX: 4,
                                   offsetY: 4,
