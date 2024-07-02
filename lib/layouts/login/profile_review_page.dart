@@ -98,10 +98,13 @@ class _ProfileReviewPageState extends State<ProfileReviewPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
+                    Expanded(
+                      child: Container(),
+                    ),
                     Text(
                         "Please review your details and confirm they are correct.",
                         style: GoogleFonts.montserrat(
-                            fontSize: 14, fontWeight: FontWeight.bold)),
+                            fontSize: 16, fontWeight: FontWeight.bold)),
                     SizedBox(height: 32),
                     Table(
                       children: [
@@ -198,34 +201,21 @@ class _ProfileReviewPageState extends State<ProfileReviewPage> {
                         ]),
                       ],
                     ),
-                    SizedBox(height: 64),
+                    Expanded(child: Container()),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         GradientButton(
                           text: "Confirm",
-                          buttonColor1: const Color.fromARGB(255, 19, 53, 61),
-                          buttonColor2:
-                              const Color.fromARGB(255, 179, 237, 169),
+                          buttonColor1: Color.fromARGB(255, 253, 228, 0),
+                          buttonColor2: Color.fromARGB(255, 194, 176, 9),
+                          textColor: const Color.fromARGB(255, 19, 53, 61),
                           shadowColor: Colors.grey.shade500,
                           offsetX: 4,
                           offsetY: 4,
                           width: 120.00,
                           function: () async {
-                            // SharedPreferences prefs =
-                            // await SharedPreferences.getInstance();
                             await createProfile();
-                            /*await prefs.setString("email", widget.email);
-                            await prefs.setString("password", widget.password);
-                            await prefs.setString("name", widget.name);
-                            await prefs.setString("surname", widget.surname);
-                            await prefs.setString("address", widget.address);
-                            await prefs.setString(
-                                "phoneNumber", widget.phoneNumber);
-                            await prefs.setString(
-                                "tradingAs", widget.dateOfBirth);
-                            await prefs.setString("job", widget.job);
-                            await prefs.setString("loggedIn", "true");*/
 
                             Navigator.push(
                                 context,
@@ -237,6 +227,9 @@ class _ProfileReviewPageState extends State<ProfileReviewPage> {
                           },
                         ),
                       ],
+                    ),
+                    SizedBox(
+                      height: 64,
                     )
                   ],
                 ))));

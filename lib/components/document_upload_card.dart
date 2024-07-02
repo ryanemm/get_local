@@ -80,8 +80,9 @@ class _DocumentUploadCardState extends State<DocumentUploadCard> {
           SizedBox(height: 16),
           GradientButton(
               text: "Browse",
-              buttonColor1: const Color.fromARGB(255, 19, 53, 61),
-              buttonColor2: const Color.fromARGB(255, 179, 237, 169),
+              buttonColor1: Color.fromARGB(255, 253, 228, 0),
+              buttonColor2: Color.fromARGB(255, 194, 176, 9),
+              textColor: const Color.fromARGB(255, 19, 53, 61),
               shadowColor: Colors.grey.shade500,
               offsetX: 4,
               offsetY: 4,
