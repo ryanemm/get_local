@@ -40,16 +40,23 @@ Future<void> main() async {
 
   if (sharedPrefLoggedIn != null && sharedPrefLoggedIn == "true") {
     sharedPrefAccountType = startPrefs.getString("accountType");
+    accountType = sharedPrefAccountType!;
     if (sharedPrefAccountType == "local") {
       sharedPrefName = startPrefs.getString("name");
       sharedPrefSurname = startPrefs.getString("surname");
       sharedPrefEmail = startPrefs.getString("email");
       sharedPrefId = startPrefs.getString("id");
       sharedPrefApproved = startPrefs.getString("approved");
+      sharedPrefLoggedIn = startPrefs.getString("loggedIn");
       email = sharedPrefEmail!;
       name = sharedPrefName!;
       surname = sharedPrefSurname!;
       approved = sharedPrefApproved!;
+      loggedIn = sharedPrefLoggedIn!;
+      print(email);
+      print(name);
+      print(surname);
+      print(accountType);
       if (sharedPrefId != null) {
         id = sharedPrefId!;
       }
@@ -59,11 +66,13 @@ Future<void> main() async {
       sharedPrefCompanyName = startPrefs.getString("companyName");
       sharedPrefEmail = startPrefs.getString("email");
       sharedPrefApproved = startPrefs.getString("approved");
+      sharedPrefLoggedIn = startPrefs.getString("loggedIn");
       id = sharedPrefId!;
       service = sharedPrefService!;
       companyName = sharedPrefCompanyName!;
       email = sharedPrefEmail!;
       approved = sharedPrefApproved!;
+      loggedIn = sharedPrefLoggedIn!;
     }
   }
 
@@ -107,6 +116,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     print("Logged in: $loggedIn");
+
     return MaterialApp(
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,

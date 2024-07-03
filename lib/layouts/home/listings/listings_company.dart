@@ -83,7 +83,7 @@ class _ListingsScreenCompanyState extends State<ListingsScreenCompany> {
   }
 
   Future<List<Listing>> getListings() async {
-    print("getting posts");
+    print("getting posts for company");
     const jsonEndpoint =
         "http://139.144.77.133/getLocalDemo/get_company_listings.php";
 

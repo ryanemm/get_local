@@ -39,8 +39,8 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   PersistentTabController _controller = PersistentTabController();
   bool switchValue = false;
-  String? accountType = "";
-
+  String? accountType;
+  String? approved;
   String? email;
   String? name;
   String? surname;
@@ -48,7 +48,9 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    getUserDetails();
+    accountType = widget.accountType;
+    print(accountType);
+    //getUserDetails();
     _controller = PersistentTabController(initialIndex: 0);
   }
 
@@ -63,10 +65,12 @@ class _HomeScreenState extends State<HomeScreen> {
     email = userDetails.getString("email");
     accountType = userDetails.getString("accountType");
     surname = userDetails.getString("surname");
+    approved = userDetails.getString("approved");
     print("Email: $email");
     print("Name: $name");
     print("Surname: $surname");
-    print(widget.accountType);
+    print("Account Type: $accountType");
+    print("Approved: $approved");
   }
 
   Future<void> logout() async {
@@ -87,8 +91,10 @@ class _HomeScreenState extends State<HomeScreen> {
   List<Widget> _buildScreens() {
     return [
       const Feed(),
-      accountType == "local"
-          ? const ListingsScreen()
+      widget.accountType == "local"
+          ? ListingsScreen(
+              approved: widget.approved!,
+            )
           : ListingsScreenCompany(
               id: widget.id,
             ),

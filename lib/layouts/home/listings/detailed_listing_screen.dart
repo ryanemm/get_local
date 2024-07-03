@@ -15,6 +15,7 @@ class DetailedListingScreen extends StatefulWidget {
   final String? job;
   final String? startDate;
   final String? endDate;
+  final String approved;
   const DetailedListingScreen(
       {super.key,
       required this.id,
@@ -22,7 +23,8 @@ class DetailedListingScreen extends StatefulWidget {
       required this.companyId,
       this.job,
       this.startDate,
-      this.endDate});
+      this.endDate,
+      required this.approved});
 
   @override
   State<DetailedListingScreen> createState() => _DetailedListingScreenState();
@@ -205,8 +207,8 @@ class _DetailedListingScreenState extends State<DetailedListingScreen> {
                         function: () {
                           apply();
                         },
-                        buttonColor1: Color.fromARGB(255, 253, 228, 0),
-                        buttonColor2: Color.fromARGB(255, 253, 228, 0),
+                        buttonColor1: Color.fromARGB(255, 132, 132, 130),
+                        buttonColor2: Color.fromARGB(255, 132, 132, 130),
                         shadowColor: Colors.grey.shade500,
                         offsetX: 4,
                         offsetY: 4,
@@ -215,10 +217,21 @@ class _DetailedListingScreenState extends State<DetailedListingScreen> {
                         textColor: Colors.black,
                       ),
                     ],
-                  )
+                  ),
+                  SizedBox(height: 16),
                 ],
               ),
-            )
+            ),
+            Expanded(child: Container()),
+            widget.approved == "false"
+                ? Text(
+                    "You are not able to apply to jobs until your account has been verified.",
+                    style: GoogleFonts.montserrat(
+                        fontSize: 16, color: Color.fromARGB(255, 2, 50, 10)),
+                    textAlign: TextAlign.center,
+                  )
+                : Container(),
+            Expanded(child: Container())
           ],
         ),
       ),

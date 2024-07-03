@@ -10,8 +10,11 @@ import 'package:http/http.dart' show post;
 import 'package:loader_overlay/loader_overlay.dart';
 
 class ListingsScreen extends StatefulWidget {
+  final String approved;
+
   const ListingsScreen({
     super.key,
+    required this.approved,
   });
 
   @override
@@ -34,7 +37,7 @@ class _ListingsScreenState extends State<ListingsScreen> {
   }
 
   Future<List<Listing>> getListings() async {
-    print("getting posts");
+    print("getting posts for locals");
     const jsonEndpoint = "http://139.144.77.133/getLocalDemo/get_listings.php";
 
     Object requestBody = "";
@@ -131,13 +134,13 @@ class _ListingsScreenState extends State<ListingsScreen> {
                           itemCount: listings.length,
                           itemBuilder: (context, index) {
                             return ListingCard(
-                              id: listings[index].id,
-                              company: listings[index].company,
-                              companyId: listings[index].companyId,
-                              job: listings[index].job!,
-                              startDate: listings[index].startDate!,
-                              endDate: listings[index].endDate!,
-                            );
+                                id: listings[index].id,
+                                company: listings[index].company,
+                                companyId: listings[index].companyId,
+                                job: listings[index].job!,
+                                startDate: listings[index].startDate!,
+                                endDate: listings[index].endDate!,
+                                approved: widget.approved);
                           },
                         ),
                       ),
