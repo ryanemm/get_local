@@ -8,11 +8,13 @@ class ProfileScreen extends StatefulWidget {
   final String name;
   final String surname;
   final String email;
+  final String approved;
   const ProfileScreen(
       {super.key,
       required this.name,
       required this.surname,
-      required this.email});
+      required this.email,
+      required this.approved});
 
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();
@@ -90,7 +92,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         Text(
                           widget.name,
                           style: GoogleFonts.montserrat(
-                              color: Colors.black,
+                              color: Color.fromARGB(255, 2, 50, 10),
                               fontSize: 16,
                               fontWeight: FontWeight.bold),
                         ),
@@ -160,22 +162,34 @@ class _ProfileScreenState extends State<ProfileScreen> {
             Text(
               "Recent Work",
               style: GoogleFonts.montserrat(
-                  fontSize: 16, color: Color.fromARGB(255, 2, 50, 10)),
+                  fontSize: 16,
+                  color: Color.fromARGB(255, 2, 50, 10),
+                  fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 16),
-            Expanded(
-              child: ListView.builder(
-                itemCount: workHistoryItems.length,
-                itemBuilder: (context, index) {
-                  return WorkHistoryCard(
-                    title: workHistoryItems[index].title,
-                    description: workHistoryItems[index].description,
-                    duration: workHistoryItems[index].duration,
-                    company: workHistoryItems[index].company,
-                  );
-                },
-              ),
-            ),
+            widget.approved == "true"
+                ? Expanded(
+                    child: ListView.builder(
+                      itemCount: workHistoryItems.length,
+                      itemBuilder: (context, index) {
+                        return WorkHistoryCard(
+                          title: workHistoryItems[index].title,
+                          description: workHistoryItems[index].description,
+                          duration: workHistoryItems[index].duration,
+                          company: workHistoryItems[index].company,
+                        );
+                      },
+                    ),
+                  )
+                : Expanded(
+                    child: Center(
+                    child: Text(
+                        "Once you have been hired and start working your work history will show up here ",
+                        style: GoogleFonts.montserrat(
+                            fontSize: 16,
+                            color: Color.fromARGB(255, 2, 50, 10)),
+                        textAlign: TextAlign.center),
+                  ))
           ],
         ),
       ),

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_toggle_tab/flutter_toggle_tab.dart';
 import 'package:get_local/components/listing_card.dart';
 import 'package:get_local/models/listing.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' show post;
 import 'package:loader_overlay/loader_overlay.dart';
 
@@ -90,6 +91,14 @@ class _ListingsScreenState extends State<ListingsScreen> {
                   color: Colors.white,
                   child: Column(
                     children: [
+                      Text(
+                        "Listings",
+                        style: GoogleFonts.montserrat(
+                            fontSize: 24,
+                            color: Color.fromARGB(255, 2, 50, 10),
+                            fontWeight: FontWeight.bold),
+                      ),
+                      SizedBox(height: 16),
                       FlutterToggleTab(
                         selectedBackgroundColors: [Colors.white],
                         unSelectedBackgroundColors: [

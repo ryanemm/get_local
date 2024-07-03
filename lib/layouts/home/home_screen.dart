@@ -102,7 +102,7 @@ class _HomeScreenState extends State<HomeScreen> {
               name: widget.name!,
               surname: widget.surname!,
               email: widget.email!,
-            )
+              approved: widget.approved!)
           : ProfileScreenCompany(
               companyName: widget.companyName!,
               service: widget.service!,

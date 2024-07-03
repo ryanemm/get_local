@@ -84,13 +84,28 @@ class _NotificationsUnverifiedState extends State<NotificationsUnverified> {
                 return Container(
                   padding: EdgeInsets.symmetric(horizontal: 16),
                   color: Colors.white,
-                  child: Center(
-                    child: Text(
-                      "All notifications for job invites will show here when you are selected for a job you applied for.\n \nOnce your account is activated you will also be notified here and on the email address you signed up",
-                      style: GoogleFonts.montserrat(
-                          fontSize: 16, fontWeight: FontWeight.normal),
-                      textAlign: TextAlign.center,
-                    ),
+                  child: Column(
+                    children: [
+                      Text(
+                        "Notifications",
+                        style: GoogleFonts.montserrat(
+                            fontSize: 24,
+                            color: Color.fromARGB(255, 2, 50, 10),
+                            fontWeight: FontWeight.bold),
+                      ),
+                      Expanded(
+                        child: Container(),
+                      ),
+                      Text(
+                        "All notifications for job invites will show here when you are selected for a job you applied for.\n \nOnce your account is activated you will also be notified here and on the email address you signed up",
+                        style: GoogleFonts.montserrat(
+                            fontSize: 16, fontWeight: FontWeight.normal),
+                        textAlign: TextAlign.center,
+                      ),
+                      Expanded(
+                        child: Container(),
+                      )
+                    ],
                   ),
                 );
               } else if (events.isNotEmpty) {
