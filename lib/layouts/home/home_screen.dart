@@ -71,13 +71,14 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Future<void> logout() async {
     SharedPreferences userDetails = await SharedPreferences.getInstance();
-    await userDetails.setString("email", "");
+    userDetails.clear();
+    /*await userDetails.setString("email", "");
     await userDetails.setString("name", "");
     await userDetails.setString("surname", "");
     await userDetails.setString("companyName", "");
     await userDetails.setString("service", "");
     await userDetails.setString("loggedIn", "false");
-    await userDetails.setString("approved", "");
+    await userDetails.setString("approved", "");*/
     Navigator.pop(
         context, MaterialPageRoute(builder: (context) => LoginScreen()));
     print("User logged out");

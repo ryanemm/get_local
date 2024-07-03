@@ -86,9 +86,10 @@ class _NotificationsUnverifiedState extends State<NotificationsUnverified> {
                   color: Colors.white,
                   child: Center(
                     child: Text(
-                      "All notifications for job invites will show here when you are selected for a job you applied for.\n Once your activated you will also be notified here and on the email address you signed up",
+                      "All notifications for job invites will show here when you are selected for a job you applied for.\n \nOnce your account is activated you will also be notified here and on the email address you signed up",
                       style: GoogleFonts.montserrat(
-                          fontSize: 16, fontWeight: FontWeight.bold),
+                          fontSize: 16, fontWeight: FontWeight.normal),
+                      textAlign: TextAlign.center,
                     ),
                   ),
                 );
