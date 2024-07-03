@@ -17,11 +17,19 @@ class UploadDocumentsPage extends StatefulWidget {
   final String profileType;
   final String applicantId;
   final String accountType;
-  const UploadDocumentsPage(
+  String? name;
+  String? surname;
+  String? email;
+  String? approved;
+  UploadDocumentsPage(
       {super.key,
       required this.profileType,
       required this.applicantId,
-      required this.accountType});
+      required this.accountType,
+      this.name,
+      this.surname,
+      this.email,
+      this.approved});
 
   @override
   State<UploadDocumentsPage> createState() => _UploadDocumentsPageState();
@@ -188,8 +196,14 @@ class _UploadDocumentsPageState extends State<UploadDocumentsPage> {
                                         MaterialPageRoute(
                                             builder: (context) =>
                                                 AwaitingApprovalPage(
+                                                    applicantId:
+                                                        widget.applicantId,
                                                     accountType:
-                                                        widget.accountType)));
+                                                        widget.accountType,
+                                                    name: widget.name,
+                                                    surname: widget.surname,
+                                                    email: widget.email,
+                                                    approved: "false")));
                                   },
                                 ),
                                 SizedBox(height: 16),

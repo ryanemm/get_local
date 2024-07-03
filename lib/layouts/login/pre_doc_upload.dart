@@ -8,11 +8,19 @@ class PreDocUploadPage extends StatefulWidget {
   final String profileType;
   final String applicantId;
   final String accountType;
-  const PreDocUploadPage(
+  String? name;
+  String? surname;
+  String? email;
+  String? approved;
+  PreDocUploadPage(
       {super.key,
       required this.profileType,
       required this.applicantId,
-      required this.accountType});
+      required this.accountType,
+      this.name,
+      this.surname,
+      this.email,
+      this.approved});
 
   @override
   State<PreDocUploadPage> createState() => _PreDocUploadPageState();
@@ -55,13 +63,25 @@ class _PreDocUploadPageState extends State<PreDocUploadPage> {
                 offsetY: 4,
                 width: 200.00,
                 function: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => UploadDocumentsPage(
-                              profileType: widget.profileType,
-                              applicantId: widget.applicantId,
-                              accountType: widget.accountType)));
+                  widget.accountType == "local"
+                      ? Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => UploadDocumentsPage(
+                                  profileType: widget.profileType,
+                                  applicantId: widget.applicantId,
+                                  accountType: widget.accountType,
+                                  name: widget.name,
+                                  surname: widget.surname,
+                                  email: widget.email,
+                                  approved: "false")))
+                      : Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => UploadDocumentsPage(
+                                  profileType: widget.profileType,
+                                  applicantId: widget.applicantId,
+                                  accountType: widget.accountType)));
                 },
               ),
             ],

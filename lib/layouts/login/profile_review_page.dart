@@ -1,9 +1,11 @@
 import 'dart:convert';
 
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:get_local/components/gradient_button.dart';
 import 'package:get_local/layouts/login/pre_doc_upload.dart';
 import 'package:get_local/models/apllicant_id.dart';
+import 'package:get_local/widgets/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 import 'package:http/http.dart' as http;
@@ -69,7 +71,7 @@ class _ProfileReviewPageState extends State<ProfileReviewPage> {
       await prefs.setString("surname", widget.surname);
       await prefs.setString("loggedIn", "true");
       await prefs.setString("accountType", "local");
-      await prefs.setString("verified", "false");
+      await prefs.setString("approved", "false");
     }
     if (response.body.contains("Incorrect")) {
       print("Check you the details and verify they are correct");
@@ -223,7 +225,11 @@ class _ProfileReviewPageState extends State<ProfileReviewPage> {
                                     builder: (context) => PreDocUploadPage(
                                         profileType: "local",
                                         applicantId: applicant_id!,
-                                        accountType: widget.accountType)));
+                                        accountType: widget.accountType,
+                                        name: widget.name,
+                                        surname: widget.surname,
+                                        email: widget.email,
+                                        approved: "false")));
                           },
                         ),
                       ],

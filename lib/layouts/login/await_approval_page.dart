@@ -6,7 +6,20 @@ import 'package:loader_overlay/loader_overlay.dart';
 
 class AwaitingApprovalPage extends StatefulWidget {
   final String accountType;
-  const AwaitingApprovalPage({super.key, required this.accountType});
+  final String applicantId;
+
+  String? name;
+  String? surname;
+  String? email;
+  String? approved;
+  AwaitingApprovalPage(
+      {super.key,
+      required this.accountType,
+      this.name,
+      this.surname,
+      this.email,
+      this.approved,
+      required this.applicantId});
 
   @override
   State<AwaitingApprovalPage> createState() => _AwaitingApprovalPageState();
@@ -53,8 +66,13 @@ class _AwaitingApprovalPageState extends State<AwaitingApprovalPage> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) =>
-                                  HomeScreen(accountType: widget.accountType)));
+                              builder: (context) => HomeScreen(
+                                  accountType: widget.accountType,
+                                  name: widget.name,
+                                  surname: widget.surname,
+                                  email: widget.email,
+                                  id: widget.applicantId,
+                                  approved: widget.approved)));
                     },
                   ),
                   SizedBox(height: 200)

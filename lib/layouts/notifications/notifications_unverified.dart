@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get_local/components/event_card.dart';
 import 'package:get_local/models/events.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' show post;
 import 'package:loader_overlay/loader_overlay.dart';
 
@@ -79,7 +80,19 @@ class _NotificationsUnverifiedState extends State<NotificationsUnverified> {
               events = snapshot.data!;
               print("Snapshot contains data");
 
-              if (events.isNotEmpty) {
+              if (events.isEmpty) {
+                return Container(
+                  padding: EdgeInsets.symmetric(horizontal: 16),
+                  color: Colors.white,
+                  child: Center(
+                    child: Text(
+                      "All notifications for job invites will show here when you are selected for a job you applied for.\n Once your activated you will also be notified here and on the email address you signed up",
+                      style: GoogleFonts.montserrat(
+                          fontSize: 16, fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                );
+              } else if (events.isNotEmpty) {
                 return Container(
                   padding: EdgeInsets.symmetric(horizontal: 16),
                   color: Colors.white,
