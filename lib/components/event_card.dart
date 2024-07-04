@@ -94,7 +94,7 @@ class _EventCardState extends State<EventCard> {
                       SizedBox(height: 16),
                       Row(
                         children: [
-                          Text(widget.time!,
+                          Text("Tap to begin using your account",
                               style: GoogleFonts.montserrat(
                                   color: Color.fromARGB(255, 63, 191, 72),
                                   fontSize: 14)),

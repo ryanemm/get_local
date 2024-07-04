@@ -3,14 +3,22 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:get_local/components/event_card.dart';
+import 'package:get_local/models/apllicant_id.dart';
 import 'package:get_local/models/events.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' show post;
 import 'package:loader_overlay/loader_overlay.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class NotificationsUnverified extends StatefulWidget {
   final String id;
-  const NotificationsUnverified({super.key, required this.id});
+  final String email;
+  final String password;
+  const NotificationsUnverified(
+      {super.key,
+      required this.id,
+      required this.email,
+      required this.password});
 
   @override
   State<NotificationsUnverified> createState() =>
@@ -20,6 +28,7 @@ class NotificationsUnverified extends StatefulWidget {
 class _NotificationsUnverifiedState extends State<NotificationsUnverified> {
   Timer? timer;
   List<Event> events = [];
+  String? user_id;
 
   @override
   void initState() {
@@ -60,6 +69,26 @@ class _NotificationsUnverifiedState extends State<NotificationsUnverified> {
       print("Caught an exception: ");
       //return Future.error(e.toString());
       rethrow;
+    }
+  }
+
+  Future getUserId() async {
+    print("fetching events");
+
+    const jsonEndpoint = "http://139.144.77.133/getLocalDemo/get_user_id.php";
+
+    final response = await post(
+      Uri.parse(jsonEndpoint),
+      body: {"email": widget.email, "password": widget.password},
+    );
+
+    if (response.statusCode == 200) {
+      List user_ids = json.decode(response.body);
+      var formatted =
+          user_ids.map((account) => ApplicantId.fromJson(account)).toList();
+      user_id = formatted[0].id;
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setString("id", user_id!);
     }
   }
 

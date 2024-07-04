@@ -20,6 +20,7 @@ Future<void> main() async {
   String id = "";
   String service = "";
   String approved = "";
+  String password = "";
   String? sharedPrefLoggedIn;
   String? sharedPrefAccountType;
   String? sharedPrefEmail;
@@ -29,6 +30,7 @@ Future<void> main() async {
   String? sharedPrefId;
   String? sharedPrefService;
   String? sharedPrefApproved;
+  String? sharedPrefPassword;
 
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
       statusBarBrightness: Brightness.dark,
@@ -48,11 +50,13 @@ Future<void> main() async {
       sharedPrefId = startPrefs.getString("id");
       sharedPrefApproved = startPrefs.getString("approved");
       sharedPrefLoggedIn = startPrefs.getString("loggedIn");
+      sharedPrefPassword = startPrefs.getString("password");
       email = sharedPrefEmail!;
       name = sharedPrefName!;
       surname = sharedPrefSurname!;
       approved = sharedPrefApproved!;
       loggedIn = sharedPrefLoggedIn!;
+      password = sharedPrefPassword!;
       print(email);
       print(name);
       print(surname);
@@ -78,16 +82,16 @@ Future<void> main() async {
   }
 
   runApp(MyApp(
-    loggedIn: loggedIn,
-    accountType: accountType,
-    email: email,
-    name: name,
-    surname: surname,
-    companyName: companyName,
-    service: service,
-    id: id,
-    approved: approved,
-  ));
+      loggedIn: loggedIn,
+      accountType: accountType,
+      email: email,
+      name: name,
+      surname: surname,
+      companyName: companyName,
+      service: service,
+      id: id,
+      approved: approved,
+      password: password));
 }
 
 class MyApp extends StatelessWidget {
@@ -100,6 +104,7 @@ class MyApp extends StatelessWidget {
   final String service;
   final String id;
   final String approved;
+  final String password;
   const MyApp({
     super.key,
     required this.loggedIn,
@@ -111,6 +116,7 @@ class MyApp extends StatelessWidget {
     required this.service,
     required this.id,
     required this.approved,
+    required this.password,
   });
 
   // This widget is the root of your application.
@@ -133,6 +139,7 @@ class MyApp extends StatelessWidget {
               companyName: companyName,
               service: service,
               id: id,
+              password: password,
               approved: approved)
           : LoginScreen(),
     );

@@ -17,6 +17,7 @@ class UploadDocumentsPage extends StatefulWidget {
   final String profileType;
   final String applicantId;
   final String accountType;
+  String? password;
   String? name;
   String? surname;
   String? email;
@@ -29,6 +30,7 @@ class UploadDocumentsPage extends StatefulWidget {
       this.name,
       this.surname,
       this.email,
+      this.password,
       this.approved});
 
   @override
@@ -203,6 +205,7 @@ class _UploadDocumentsPageState extends State<UploadDocumentsPage> {
                                                     name: widget.name,
                                                     surname: widget.surname,
                                                     email: widget.email,
+                                                    password: widget.password,
                                                     approved: "false")));
                                   },
                                 ),

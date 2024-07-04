@@ -8,6 +8,7 @@ class PreDocUploadPage extends StatefulWidget {
   final String profileType;
   final String applicantId;
   final String accountType;
+  String? password;
   String? name;
   String? surname;
   String? email;
@@ -20,7 +21,8 @@ class PreDocUploadPage extends StatefulWidget {
       this.name,
       this.surname,
       this.email,
-      this.approved});
+      this.approved,
+      this.password});
 
   @override
   State<PreDocUploadPage> createState() => _PreDocUploadPageState();
@@ -74,6 +76,7 @@ class _PreDocUploadPageState extends State<PreDocUploadPage> {
                                   name: widget.name,
                                   surname: widget.surname,
                                   email: widget.email,
+                                  password: widget.password,
                                   approved: "false")))
                       : Navigator.push(
                           context,
