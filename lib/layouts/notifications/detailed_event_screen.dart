@@ -2,9 +2,14 @@ import 'package:flutter/material.dart';
 
 class DetailedEventScreen extends StatefulWidget {
   final String title;
-  final String detailedContent;
-  final String dateTimestamp;
-  const DetailedEventScreen({super.key, required this.title, required this.detailedContent, required this.dateTimestamp});
+  final String notification;
+  final String time;
+  const DetailedEventScreen({
+    super.key,
+    required this.title,
+    required this.notification,
+    required this.time,
+  });
 
   @override
   State<DetailedEventScreen> createState() => _DetailedEventScreenState();

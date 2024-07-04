@@ -90,8 +90,8 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                           itemBuilder: (context, index) {
                             return EventCard(
                               title: events[index].title!,
-                              detailedContent: events[index].detailedContent!,
-                              dateTimestamp: events[index].dateTimestamp,
+                              notification: events[index].notification!,
+                              time: events[index].time,
                             );
                           },
                         ),

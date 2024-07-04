@@ -27,6 +27,8 @@ class _NotificationsUnverifiedState extends State<NotificationsUnverified> {
       getEvents();
       setState(() {});
     });
+    print("ID: ");
+    print(widget.id);
     super.initState();
   }
 
@@ -121,8 +123,8 @@ class _NotificationsUnverifiedState extends State<NotificationsUnverified> {
                           itemBuilder: (context, index) {
                             return EventCard(
                               title: events[index].title!,
-                              detailedContent: events[index].detailedContent!,
-                              dateTimestamp: events[index].dateTimestamp,
+                              notification: events[index].notification,
+                              time: events[index].time,
                             );
                           },
                         ),

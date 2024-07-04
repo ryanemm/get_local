@@ -72,6 +72,7 @@ class _ProfileReviewPageState extends State<ProfileReviewPage> {
       await prefs.setString("loggedIn", "true");
       await prefs.setString("accountType", "local");
       await prefs.setString("approved", "false");
+      await prefs.setString("id", applicant_id!);
     }
     if (response.body.contains("Incorrect")) {
       print("Check you the details and verify they are correct");

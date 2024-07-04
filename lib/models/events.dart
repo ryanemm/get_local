@@ -1,20 +1,19 @@
 class Event {
   final String? title;
-  final String detailedContent;
-  final String dateTimestamp;
+  final String notification;
+  final String time;
 
-  Event(
-      {required this.title,
-      required this.detailedContent,
-      required this.dateTimestamp,
-});
+  Event({
+    required this.title,
+    required this.notification,
+    required this.time,
+  });
 
   factory Event.fromJson(Map<String, dynamic> jsonData) {
     return Event(
       title: jsonData['title'],
-      detailedContent: jsonData['detailedContent'],
-      dateTimestamp: jsonData['dateTimestamp'],
- 
+      notification: jsonData['notification'],
+      time: jsonData['time'],
     );
   }
 }

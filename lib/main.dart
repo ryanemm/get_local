@@ -60,6 +60,7 @@ Future<void> main() async {
       if (sharedPrefId != null) {
         id = sharedPrefId!;
       }
+      print(id);
     } else if (sharedPrefAccountType == "employer") {
       sharedPrefId = startPrefs.getString("id");
       sharedPrefService = startPrefs.getString("service");
