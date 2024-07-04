@@ -83,7 +83,7 @@ class _HomeScreenState extends State<HomeScreen> {
     await userDetails.setString("service", "");
     await userDetails.setString("loggedIn", "false");
     await userDetails.setString("approved", "");*/
-    Navigator.pop(
+    Navigator.push(
         context, MaterialPageRoute(builder: (context) => LoginScreen()));
     print("User logged out");
   }
