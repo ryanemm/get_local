@@ -129,25 +129,25 @@ class _HomeScreenState extends State<HomeScreen> {
       PersistentBottomNavBarItem(
         icon: const Icon(Icons.home),
         title: "Home",
-        activeColorPrimary: Color.fromARGB(255, 253, 228, 0),
+        activeColorPrimary: Color.fromARGB(255, 255, 207, 47),
         inactiveColorPrimary: Colors.grey[200],
       ),
       PersistentBottomNavBarItem(
         icon: const Icon(Icons.work),
         title: "Listings",
-        activeColorPrimary: Color.fromARGB(255, 253, 228, 0),
+        activeColorPrimary: Color.fromARGB(255, 255, 207, 47),
         inactiveColorPrimary: Colors.grey[200],
       ),
       PersistentBottomNavBarItem(
         icon: const Icon(Icons.notifications),
         title: "Notifications",
-        activeColorPrimary: Color.fromARGB(255, 253, 228, 0),
+        activeColorPrimary: Color.fromARGB(255, 255, 207, 47),
         inactiveColorPrimary: Colors.grey[200],
       ),
       PersistentBottomNavBarItem(
         icon: const Icon(Icons.person),
         title: "Profile",
-        activeColorPrimary: Color.fromARGB(255, 253, 228, 0),
+        activeColorPrimary: Color.fromARGB(255, 255, 207, 47),
         inactiveColorPrimary: Colors.grey[200],
       ),
     ];

@@ -93,15 +93,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           widget.name,
                           style: GoogleFonts.montserrat(
                               color: Color.fromARGB(255, 2, 50, 10),
-                              fontSize: 16,
+                              fontSize: 24,
                               fontWeight: FontWeight.bold),
                         ),
-                        SizedBox(width: 2),
+                        SizedBox(width: 6),
                         Text(
                           widget.surname,
                           style: GoogleFonts.montserrat(
                               color: Colors.black,
-                              fontSize: 16,
+                              fontSize: 24,
                               fontWeight: FontWeight.bold),
                         ),
                       ],
@@ -138,7 +138,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       Icon(
                         Icons.upload,
                         size: 40,
-                        color: Color.fromARGB(255, 253, 228, 0),
+                        color: Color.fromARGB(255, 255, 207, 47),
                       ),
                       Text(
                         "Certificates",
@@ -158,7 +158,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ]),
               ),
             ),
-            SizedBox(height: 32),
+            SizedBox(height: 40),
             Text(
               "Recent Work",
               style: GoogleFonts.montserrat(
@@ -166,20 +166,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   color: Color.fromARGB(255, 2, 50, 10),
                   fontWeight: FontWeight.bold),
             ),
-            SizedBox(height: 16),
+            SizedBox(height: 8),
             widget.approved == "true"
-                ? Expanded(
-                    child: ListView.builder(
-                      itemCount: workHistoryItems.length,
-                      itemBuilder: (context, index) {
-                        return WorkHistoryCard(
-                          title: workHistoryItems[index].title,
-                          description: workHistoryItems[index].description,
-                          duration: workHistoryItems[index].duration,
-                          company: workHistoryItems[index].company,
-                        );
-                      },
-                    ),
+                ? Image.asset(
+                    "assets/images/worker_graphic.jpg",
+                    width: screenSize.width * 0.6,
                   )
                 : Expanded(
                     child: Center(
@@ -189,7 +180,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             fontSize: 16,
                             color: Color.fromARGB(255, 2, 50, 10)),
                         textAlign: TextAlign.center),
-                  ))
+                  )),
+            Text(
+                "Once you have been hired and start working your work history will show up here ",
+                style: GoogleFonts.montserrat(
+                    fontSize: 16, color: Color.fromARGB(255, 2, 50, 10)),
+                textAlign: TextAlign.center)
           ],
         ),
       ),

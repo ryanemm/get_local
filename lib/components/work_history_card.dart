@@ -94,9 +94,10 @@ class _WorkHistoryCardState extends State<WorkHistoryCard> {
                             height: 32,
                             width: 32,
                             decoration: BoxDecoration(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(16)),
-                                color: Color.fromARGB(255, 253, 228, 0)),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(16)),
+                              color: Color.fromARGB(255, 255, 207, 47),
+                            ),
                             child: Icon(Icons.chevron_right_outlined,
                                 color: Colors.black),
                           )
