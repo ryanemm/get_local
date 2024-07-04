@@ -21,6 +21,7 @@ class HomeScreen extends StatefulWidget {
   String? id;
   String? service;
   String? approved;
+  String? password;
 
   HomeScreen(
       {super.key,
@@ -28,6 +29,7 @@ class HomeScreen extends StatefulWidget {
       this.surname,
       this.email,
       this.name,
+      this.password,
       this.companyName,
       this.id,
       this.service,
@@ -102,7 +104,8 @@ class _HomeScreenState extends State<HomeScreen> {
           ? NotificationsScreen(
               id: widget.id!,
             )
-          : NotificationsUnverified(id: widget.id!),
+          : NotificationsUnverified(
+              id: widget.id!, email: widget.email!, password: widget.password!),
       widget.accountType == "local"
           ? ProfileScreen(
               name: widget.name!,

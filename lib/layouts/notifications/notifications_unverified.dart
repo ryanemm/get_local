@@ -116,6 +116,13 @@ class _NotificationsUnverifiedState extends State<NotificationsUnverified> {
                   color: Colors.white,
                   child: Column(
                     children: [
+                      Text(
+                        "Notifications",
+                        style: GoogleFonts.montserrat(
+                            fontSize: 24,
+                            color: Color.fromARGB(255, 2, 50, 10),
+                            fontWeight: FontWeight.bold),
+                      ),
                       SizedBox(height: 20),
                       Expanded(
                         child: ListView.builder(

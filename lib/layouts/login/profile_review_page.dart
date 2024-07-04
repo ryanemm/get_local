@@ -67,6 +67,7 @@ class _ProfileReviewPageState extends State<ProfileReviewPage> {
       applicant_id = formatted[0].id;
       SharedPreferences prefs = await SharedPreferences.getInstance();
       await prefs.setString("email", widget.email);
+      await prefs.setString("password", widget.password);
       await prefs.setString("name", widget.name);
       await prefs.setString("surname", widget.surname);
       await prefs.setString("loggedIn", "true");
@@ -230,6 +231,7 @@ class _ProfileReviewPageState extends State<ProfileReviewPage> {
                                         name: widget.name,
                                         surname: widget.surname,
                                         email: widget.email,
+                                        password: widget.password,
                                         approved: "false")));
                           },
                         ),
