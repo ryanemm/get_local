@@ -46,6 +46,7 @@ class _DetailedListingScreenState extends State<DetailedListingScreen> {
 
     if (response.statusCode == 200) {
       print("Successfully applied for job!");
+      showToast("Application Sent!");
     } else {
       print("An error occured please try again");
     }
@@ -54,10 +55,10 @@ class _DetailedListingScreenState extends State<DetailedListingScreen> {
   void showToast(String message) {
     Fluttertoast.showToast(
       msg: message,
-      toastLength: Toast.LENGTH_SHORT,
-      gravity: ToastGravity.BOTTOM,
+      toastLength: Toast.LENGTH_LONG,
+      gravity: ToastGravity.CENTER,
       timeInSecForIosWeb: 1,
-      backgroundColor: Colors.black,
+      backgroundColor: Color.fromARGB(255, 22, 44, 49),
       textColor: Colors.white,
       fontSize: 16.0,
     );
