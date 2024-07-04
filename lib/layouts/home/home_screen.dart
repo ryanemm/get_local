@@ -105,7 +105,12 @@ class _HomeScreenState extends State<HomeScreen> {
               id: widget.id!,
             )
           : NotificationsUnverified(
-              id: widget.id!, email: widget.email!, password: widget.password!),
+              id: widget.id!,
+              email: widget.email!,
+              password: widget.password!,
+              accountType: widget.accountType,
+              name: widget.name!,
+              surname: widget.surname!),
       widget.accountType == "local"
           ? ProfileScreen(
               name: widget.name!,

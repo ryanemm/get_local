@@ -207,8 +207,12 @@ class _DetailedListingScreenState extends State<DetailedListingScreen> {
                         function: () {
                           apply();
                         },
-                        buttonColor1: Color.fromARGB(255, 132, 132, 130),
-                        buttonColor2: Color.fromARGB(255, 132, 132, 130),
+                        buttonColor1: widget.approved == "true"
+                            ? Color.fromARGB(255, 253, 228, 0)
+                            : Color.fromARGB(255, 132, 132, 130),
+                        buttonColor2: widget.approved == "true"
+                            ? Color.fromARGB(255, 194, 176, 9)
+                            : Color.fromARGB(255, 132, 132, 130),
                         shadowColor: Colors.grey.shade500,
                         offsetX: 4,
                         offsetY: 4,

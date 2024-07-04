@@ -3,22 +3,30 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:get_local/components/event_card.dart';
+import 'package:get_local/layouts/home/home_screen.dart';
 import 'package:get_local/models/apllicant_id.dart';
 import 'package:get_local/models/events.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' show post;
 import 'package:loader_overlay/loader_overlay.dart';
+import 'package:restart_app/restart_app.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class NotificationsUnverified extends StatefulWidget {
   final String id;
   final String email;
   final String password;
+  final String accountType;
+  final String name;
+  final String surname;
   const NotificationsUnverified(
       {super.key,
       required this.id,
       required this.email,
-      required this.password});
+      required this.password,
+      required this.accountType,
+      required this.name,
+      required this.surname});
 
   @override
   State<NotificationsUnverified> createState() =>
@@ -32,7 +40,7 @@ class _NotificationsUnverifiedState extends State<NotificationsUnverified> {
 
   @override
   void initState() {
-    timer = Timer.periodic(const Duration(seconds: 60), (Timer t) {
+    timer = Timer.periodic(const Duration(seconds: 20), (Timer t) {
       getEvents();
       setState(() {});
     });
@@ -73,7 +81,7 @@ class _NotificationsUnverifiedState extends State<NotificationsUnverified> {
   }
 
   Future getUserId() async {
-    print("fetching events");
+    print("fetching user ID");
 
     const jsonEndpoint = "http://139.144.77.133/getLocalDemo/get_user_id.php";
 
@@ -87,8 +95,25 @@ class _NotificationsUnverifiedState extends State<NotificationsUnverified> {
       var formatted =
           user_ids.map((account) => ApplicantId.fromJson(account)).toList();
       user_id = formatted[0].id;
+      print("Account ID: $user_id");
+      print("saving ID and changing verification state");
       SharedPreferences prefs = await SharedPreferences.getInstance();
       await prefs.setString("id", user_id!);
+      await prefs.setString("approved", "true");
+
+      Restart.restartApp();
+
+      /*Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => HomeScreen(
+                  id: user_id,
+                  accountType: widget.accountType,
+                  name: widget.name,
+                  surname: widget.surname,
+                  email: widget.email,
+                  password: widget.password,
+                  approved: "true")));*/
     }
   }
 
@@ -161,6 +186,9 @@ class _NotificationsUnverifiedState extends State<NotificationsUnverified> {
                               title: events[index].title!,
                               notification: events[index].notification,
                               time: events[index].time,
+                              function: () {
+                                getUserId();
+                              },
                             );
                           },
                         ),

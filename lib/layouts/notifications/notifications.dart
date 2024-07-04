@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get_local/components/event_card.dart';
 import 'package:get_local/models/events.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' show post;
 import 'package:loader_overlay/loader_overlay.dart';
 
@@ -92,10 +93,47 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                               title: events[index].title!,
                               notification: events[index].notification!,
                               time: events[index].time,
+                              function: () {},
                             );
                           },
                         ),
                       ),
+                    ],
+                  ),
+                );
+              } else if (events.isEmpty) {
+                return Container(
+                  padding: EdgeInsets.symmetric(horizontal: 16),
+                  color: Colors.white,
+                  width: double.infinity,
+                  child: Column(
+                    children: [
+                      Text(
+                        "Notifications",
+                        style: GoogleFonts.montserrat(
+                            fontSize: 24,
+                            color: Color.fromARGB(255, 2, 50, 10),
+                            fontWeight: FontWeight.bold),
+                      ),
+                      Expanded(flex: 1, child: Container()),
+                      Image.asset("assets/images/waiting_graphic.png"),
+                      Text(
+                        "Nothing to see here...yet",
+                        style: GoogleFonts.montserrat(
+                            fontSize: 24,
+                            color: Color.fromARGB(255, 49, 50, 49),
+                            fontWeight: FontWeight.w600),
+                      ),
+                      SizedBox(height: 8),
+                      Text(
+                        "Don't worry. Once you start applying for jobs you willbe notified of the feedback right here",
+                        style: GoogleFonts.montserrat(
+                            fontSize: 16,
+                            color: Color.fromARGB(255, 49, 50, 49),
+                            fontWeight: FontWeight.normal),
+                        textAlign: TextAlign.center,
+                      ),
+                      Expanded(flex: 3, child: Container()),
                     ],
                   ),
                 );
