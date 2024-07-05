@@ -8,6 +8,7 @@ class AccountDetailsCompany {
   final String phoneNumber;
   final String tradingAs;
   final String service;
+  final String accountType;
 
   const AccountDetailsCompany(
       this.id,
@@ -18,7 +19,8 @@ class AccountDetailsCompany {
       this.address,
       this.phoneNumber,
       this.tradingAs,
-      this.service);
+      this.service,
+      this.accountType);
 
   AccountDetailsCompany.fromJson(Map<String, dynamic> json)
       : id = json['id'],
@@ -29,7 +31,8 @@ class AccountDetailsCompany {
         phoneNumber = json['phoneNumber'],
         tradingAs = json['tradingAs'],
         service = json['service'],
-        password = json['password'];
+        password = json['password'],
+        accountType = json['accountType'];
 
   /*factory AccountDetails.fromJson(Map<String, dynamic> jsonData) {
     return AccountDetails(

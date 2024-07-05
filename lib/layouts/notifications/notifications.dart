@@ -126,7 +126,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                       ),
                       SizedBox(height: 8),
                       Text(
-                        "Don't worry. Once you start applying for jobs you willbe notified of the feedback right here",
+                        "Don't worry. Once you start applying for jobs you will be notified of the feedback right here",
                         style: GoogleFonts.montserrat(
                             fontSize: 16,
                             color: Color.fromARGB(255, 49, 50, 49),

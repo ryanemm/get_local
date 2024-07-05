@@ -120,7 +120,7 @@ class _EmployerSignUpState extends State<EmployerSignUp> {
                       "Email",
                       const Icon(
                         Icons.email_outlined,
-                        color: Color.fromARGB(255, 0, 23, 226),
+                        color: const Color.fromARGB(255, 19, 53, 61),
                       )),
                 ),
               ),
@@ -149,7 +149,7 @@ class _EmployerSignUpState extends State<EmployerSignUp> {
                       "Password",
                       const Icon(
                         Icons.lock_outline,
-                        color: Color.fromARGB(255, 0, 23, 226),
+                        color: const Color.fromARGB(255, 19, 53, 61),
                       )),
                 ),
               ),
@@ -231,7 +231,7 @@ class _EmployerSignUpState extends State<EmployerSignUp> {
                       "Company Name",
                       const Icon(
                         Icons.abc_outlined,
-                        color: Color.fromARGB(255, 0, 23, 226),
+                        color: const Color.fromARGB(255, 19, 53, 61),
                       )),
                 ),
               ),
@@ -255,7 +255,7 @@ class _EmployerSignUpState extends State<EmployerSignUp> {
                       "Trading As",
                       const Icon(
                         Icons.abc_outlined,
-                        color: Color.fromARGB(255, 0, 23, 226),
+                        color: const Color.fromARGB(255, 19, 53, 61),
                       )),
                 ),
               ),
@@ -289,7 +289,7 @@ class _EmployerSignUpState extends State<EmployerSignUp> {
                         "Address",
                         const Icon(
                           Icons.house_outlined,
-                          color: Color.fromARGB(255, 0, 23, 226),
+                          color: const Color.fromARGB(255, 19, 53, 61),
                         )),
                   ),
                 ),
@@ -313,7 +313,7 @@ class _EmployerSignUpState extends State<EmployerSignUp> {
                         "Company Registration Number",
                         const Icon(
                           Icons.phone_android_outlined,
-                          color: Color.fromARGB(255, 0, 23, 226),
+                          color: const Color.fromARGB(255, 19, 53, 61),
                         )),
                   ),
                 ),
@@ -369,7 +369,7 @@ class _EmployerSignUpState extends State<EmployerSignUp> {
                         "Contact Number",
                         const Icon(
                           Icons.work,
-                          color: Color.fromARGB(255, 0, 23, 226),
+                          color: const Color.fromARGB(255, 19, 53, 61),
                         )),
                   ),
                 ),
@@ -447,8 +447,9 @@ class _EmployerSignUpState extends State<EmployerSignUp> {
                                 print(currentIndex);
                               });
                             },
-                            buttonColor1: Color.fromARGB(255, 10, 36, 114),
-                            buttonColor2: Color.fromARGB(255, 135, 226, 242),
+                            buttonColor1: Color.fromARGB(255, 253, 228, 0),
+                            buttonColor2: Color.fromARGB(255, 194, 176, 9),
+                            textColor: const Color.fromARGB(255, 19, 53, 61),
                             shadowColor: Colors.grey.shade500,
                             offsetX: 4,
                             offsetY: 4,
@@ -515,8 +516,9 @@ class _EmployerSignUpState extends State<EmployerSignUp> {
 
                               setState(() {});
                             },
-                            buttonColor1: Color.fromARGB(255, 10, 36, 114),
-                            buttonColor2: Color.fromARGB(255, 135, 226, 242),
+                            buttonColor1: Color.fromARGB(255, 253, 228, 0),
+                            buttonColor2: Color.fromARGB(255, 194, 176, 9),
+                            textColor: const Color.fromARGB(255, 19, 53, 61),
                             shadowColor: Colors.grey.shade500,
                             offsetX: 4,
                             offsetY: 4,

@@ -1,9 +1,12 @@
+import 'dart:convert';
+
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get_local/components/image_button.dart';
 import 'package:get_local/layouts/home/home_screen.dart';
 import 'package:get_local/layouts/login/sign_up_screen.dart';
+import 'package:get_local/models/account_details_company.dart';
 import 'package:get_local/widgets/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
@@ -34,11 +37,11 @@ class _LoginScreenState extends State<LoginScreen> {
     print("updated shared preferences");
   }
 
-  /*Future login() async {
+  Future login() async {
     print("attempting login...");
-    assert(EmailValidator.validate(
+    /*assert(EmailValidator.validate(
       emailController.text.trim(),
-    ));
+    ));*/
     Future.delayed(const Duration(milliseconds: 300), () {
       context.loaderOverlay.show();
     });
@@ -52,30 +55,44 @@ class _LoginScreenState extends State<LoginScreen> {
     List data = json.decode(response.body);
     print("Raw data =>");
     print(data);
-    var deviceDetails =
-        data.map((device) => DeviceDetails.fromJson(device)).toList();
+    var accountDetails =
+        data.map((device) => AccountDetailsCompany.fromJson(device)).toList();
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    if (deviceDetails.isNotEmpty) {
-      print("No. of devices: ");
-      print(deviceDetails.length);
-      print(deviceDetails);
-      List<String> deviceList = [];
-      int deviceListLength = deviceDetails.length;
-      for (int i = 0; i < deviceListLength; i++) {
-        String rawJson = jsonEncode(deviceDetails[i].toMap());
-        deviceList.add(rawJson);
-      }
-      print(deviceList);
-      if (Platform.isAndroid) {
-        registerDeviceToken();
-      }
-      prefs.setStringList("devices", deviceList);
-      prefs.setBool("loggedIn", true);
+    if (accountDetails.isNotEmpty) {
+      print("No. of accounts: ");
+      print(accountDetails.length);
+      print(accountDetails);
+
+      List accounts = json.decode(response.body);
+      print(accounts);
+
+      var formatted = accounts
+          .map((account) => AccountDetailsCompany.fromJson(account))
+          .toList();
+      print(formatted);
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setString("email", formatted[0].email);
+      await prefs.setString("password", formatted[0].password);
+      await prefs.setString("companyName", formatted[0].companyName);
+      await prefs.setString(
+          "companyRegistration", formatted[0].companyRegistration);
+      await prefs.setString("loggedIn", "true");
+      await prefs.setString("accountType", formatted[0].accountType);
+      await prefs.setString("approved", "true");
+      await prefs.setString("id", formatted[0].id);
+
+      //prefs.setBool("loggedIn", true);
       Navigator.push(
           context,
           MaterialPageRoute(
               builder: (context) => HomeScreen(
-                    
+                    accountType: formatted[0].accountType,
+                    email: formatted[0].email,
+                    password: formatted[0].password,
+                    companyName: formatted[0].companyName,
+                    id: formatted[0].id,
+                    service: formatted[0].service,
+                    approved: "true",
                   )));
     } else {
       context.loaderOverlay.hide();
@@ -84,7 +101,8 @@ class _LoginScreenState extends State<LoginScreen> {
         passController.clear();
       });
     }
-  }*/
+    context.loaderOverlay.hide();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -95,7 +113,7 @@ class _LoginScreenState extends State<LoginScreen> {
         appBar: AppBar(
           toolbarHeight: 0,
           elevation: 0,
-          backgroundColor: const Color.fromARGB(255, 19, 53, 61),
+          backgroundColor: const Color.fromARGB(255, 22, 44, 49),
         ),
         resizeToAvoidBottomInset: false,
         body: Column(
@@ -245,7 +263,9 @@ class _LoginScreenState extends State<LoginScreen> {
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           ImageButton(
-                            function: () {},
+                            function: () {
+                              login();
+                            },
                             buttonColor1: Color.fromARGB(255, 253, 228, 0),
                             buttonColor2: Color.fromARGB(255, 194, 176, 9),
                             shadowColor: Colors.grey.shade500,
