@@ -18,6 +18,7 @@ class ProfileScreenCompany extends StatefulWidget {
 class _ProfileScreenCompanyState extends State<ProfileScreenCompany> {
   @override
   Widget build(BuildContext context) {
+    Size screenSize = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: Colors.white,
       body: Container(
@@ -140,6 +141,61 @@ class _ProfileScreenCompanyState extends State<ProfileScreenCompany> {
                     fontWeight: FontWeight.normal),
                 textAlign: TextAlign.justify,
               ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Container(
+                  padding: EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(12)),
+                      color: Color.fromARGB(255, 253, 242, 141)),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Text(
+                        "Add photos",
+                        style: GoogleFonts.montserrat(
+                            color: Color.fromARGB(255, 2, 50, 10),
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      Icon(Icons.add)
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: 16),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                ClipRRect(
+                  borderRadius: const BorderRadius.all(Radius.circular(16)),
+                  child: Container(
+                    height: screenSize.height * 0.20,
+                    width: screenSize.height * 0.20,
+                    decoration: BoxDecoration(
+                        image: DecorationImage(
+                            image:
+                                AssetImage("assets/images/stone_crushing.jpg"),
+                            fit: BoxFit.cover)),
+                    child: Container(),
+                  ),
+                ),
+                ClipRRect(
+                  borderRadius: const BorderRadius.all(Radius.circular(16)),
+                  child: Container(
+                    height: screenSize.height * 0.20,
+                    width: screenSize.height * 0.20,
+                    decoration: BoxDecoration(
+                        image: DecorationImage(
+                            image: AssetImage("assets/images/filtering.jpeg"),
+                            fit: BoxFit.cover)),
+                    child: Container(),
+                  ),
+                ),
+              ],
             )
           ],
         ),
