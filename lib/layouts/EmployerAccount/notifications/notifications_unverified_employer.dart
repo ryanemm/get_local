@@ -12,27 +12,25 @@ import 'package:loader_overlay/loader_overlay.dart';
 import 'package:restart_app/restart_app.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class NotificationsUnverified extends StatefulWidget {
+class NotificationsUnverifiedEmployer extends StatefulWidget {
   final String id;
   final String email;
   final String password;
 
-  final String name;
-  final String surname;
-  const NotificationsUnverified(
-      {super.key,
-      required this.id,
-      required this.email,
-      required this.password,
-      required this.name,
-      required this.surname});
+  const NotificationsUnverifiedEmployer({
+    super.key,
+    required this.id,
+    required this.email,
+    required this.password,
+  });
 
   @override
-  State<NotificationsUnverified> createState() =>
-      _NotificationsUnverifiedState();
+  State<NotificationsUnverifiedEmployer> createState() =>
+      _NotificationsUnverifiedEmployerState();
 }
 
-class _NotificationsUnverifiedState extends State<NotificationsUnverified> {
+class _NotificationsUnverifiedEmployerState
+    extends State<NotificationsUnverifiedEmployer> {
   Timer? timer;
   List<Event> events = [];
   String? user_id;

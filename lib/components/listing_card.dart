@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:get_local/layouts/home/listings/detailed_listing_screen.dart';
+import 'package:get_local/layouts/LocalAccount/listings/detailed_listing_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
