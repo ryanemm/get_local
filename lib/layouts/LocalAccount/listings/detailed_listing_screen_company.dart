@@ -14,48 +14,52 @@ import 'package:http/http.dart' show post;
 import 'package:loader_overlay/loader_overlay.dart';
 
 class DetailedListingScreenCompany extends StatefulWidget {
-    final String? companyId;
-      final String company;
+  final String? companyId;
+  final String company;
 
   final String? job;
   final String? startDate;
   final String? endDate;
   final String? id;
   final String? applications;
-  const DetailedListingScreenCompany({super.key, this.companyId, required this.company, this.job, this.startDate, this.endDate, this.id, this.applications});
+  const DetailedListingScreenCompany(
+      {super.key,
+      this.companyId,
+      required this.company,
+      this.job,
+      this.startDate,
+      this.endDate,
+      this.id,
+      this.applications});
 
   @override
-  State<DetailedListingScreenCompany> createState() => _DetailedListingsScreenCompanyState();
+  State<DetailedListingScreenCompany> createState() =>
+      _DetailedListingsScreenCompanyState();
 }
 
-class _DetailedListingsScreenCompanyState extends State<DetailedListingScreenCompany> {
-
-    Timer? timer;
+class _DetailedListingsScreenCompanyState
+    extends State<DetailedListingScreenCompany> {
+  Timer? timer;
   List<Application> applications = [];
 
   int _tabTextIconIndexSelected = 0;
 
-    @override
+  @override
   void initState() {
-    
     timer = Timer.periodic(const Duration(seconds: 60), (Timer t) {
       getApplications();
-      
     });
     super.initState();
   }
 
   Future<List<Application>> getApplications() async {
     print("getting applications");
-    const jsonEndpoint = "http://139.144.77.133/getLocalDemo/getApplications.php";
-    
-    Object requestBody = {
-      "listingId": widget.id
-    };
-    
-    try {
-      
+    const jsonEndpoint =
+        "http://139.144.77.133/getLocalDemo/getApplications.php";
 
+    Object requestBody = {"listingId": widget.id};
+
+    try {
       final response = await post(
         Uri.parse(jsonEndpoint),
         body: requestBody,
@@ -81,6 +85,7 @@ class _DetailedListingsScreenCompanyState extends State<DetailedListingScreenCom
       rethrow;
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return LoaderOverlay(
@@ -107,62 +112,80 @@ class _DetailedListingsScreenCompanyState extends State<DetailedListingScreenCom
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                              GestureDetector(
-                  onTap: () {
-                    print("Back button tapped");
-                    Navigator.pop(context);
-                  },
-                  child: Container(
-                    height: 30,
-                    width: 30,
-                    decoration: const BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(15)),
-                        color: Color.fromARGB(84, 148, 147, 147)),
-                    child: Center(
-                      child: Icon(
-                        Icons.arrow_back,
-                        color: Colors.black,
+                      GestureDetector(
+                        onTap: () {
+                          print("Back button tapped");
+                          Navigator.pop(context);
+                        },
+                        child: Container(
+                          height: 30,
+                          width: 30,
+                          decoration: const BoxDecoration(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(15)),
+                              color: Color.fromARGB(84, 148, 147, 147)),
+                          child: Center(
+                            child: Icon(
+                              Icons.arrow_back,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                ),
-                SizedBox(height: 8),
-                      Text(widget.job!,    style: GoogleFonts.montserrat(
-                                  color: Colors.grey[900], fontSize: 24)),
                       SizedBox(height: 8),
-                      Row( crossAxisAlignment: CrossAxisAlignment.start,
+                      Text(
+                        widget.job!,
+                        style: GoogleFonts.montserrat(
+                            color: Color.fromARGB(255, 2, 50, 10),
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      SizedBox(height: 8),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Container(height: 50, 
-                          width: 50, 
-                          decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular((10))), color: Colors.grey),
-                          child: Icon(Icons.engineering_outlined),),
-                                  SizedBox(width: 8),    
-                                        Text("Piet Retief", style: GoogleFonts.montserrat(
+                          Container(
+                            height: 50,
+                            width: 50,
+                            decoration: BoxDecoration(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular((10))),
+                                color: Colors.grey),
+                            child: Icon(Icons.engineering_outlined),
+                          ),
+                          SizedBox(width: 8),
+                          Text("Piet Retief",
+                              style: GoogleFonts.montserrat(
                                   color: Colors.grey[900], fontSize: 16)),
-                                  Expanded(child: Container()),
-                                  Row(
-                                    children: [
-                                      Text(widget.applications!),
-                                      widget.applications == "1" ? Text(" application", style: GoogleFonts.montserrat(
-                                  color: Colors.grey[900], fontSize: 16)) : Text(" applications", style: GoogleFonts.montserrat(
-                                  color: Colors.grey[900], fontSize: 16))
-                                    ],
-                                  )
+                          Expanded(child: Container()),
+                          Row(
+                            children: [
+                              Text(widget.applications!),
+                              widget.applications == "1"
+                                  ? Text(" application",
+                                      style: GoogleFonts.montserrat(
+                                          color: Colors.grey[900],
+                                          fontSize: 16))
+                                  : Text(" applications",
+                                      style: GoogleFonts.montserrat(
+                                          color: Colors.grey[900],
+                                          fontSize: 16))
+                            ],
+                          )
                         ],
                       ),
-    SizedBox(height: 24),
+                      SizedBox(height: 24),
                       Expanded(
                         child: Container(
-                          
                           child: ListView.builder(
                             itemCount: applications.length,
                             itemBuilder: (context, index) {
                               return ApplicationCard(
-                                applicationId: applications[index].applicationId,
+                                applicationId:
+                                    applications[index].applicationId,
                                 companyId: applications[index].companyId!,
                                 listingId: applications[index].listingId,
                                 userId: applications[index].userId,
-                              
                               );
                             },
                           ),

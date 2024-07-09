@@ -36,9 +36,8 @@ class _ApplicationCardState extends State<ApplicationCard> {
               context,
               MaterialPageRoute(
                 builder: (context) => ApplicantProfileScreen(
-                  applicationId: widget.applicationId!,
-                  listingId: widget.listingId!
-                ),
+                    applicationId: widget.applicationId!,
+                    listingId: widget.listingId!),
               ),
             );
           },
@@ -71,9 +70,10 @@ class _ApplicationCardState extends State<ApplicationCard> {
                   width: 50,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.all(Radius.circular(10)),
-                    color: Colors.grey,
+                    color: Color.fromARGB(255, 179, 193, 182),
                   ),
-                  child: Icon(Icons.person_3_outlined),
+                  child: Icon(Icons.person_3_outlined,
+                      color: Color.fromARGB(255, 255, 231, 18)),
                 ),
                 SizedBox(width: 8),
                 Expanded(
@@ -120,10 +120,12 @@ class _ApplicationCardState extends State<ApplicationCard> {
                             height: 32,
                             width: 32,
                             decoration: BoxDecoration(
-                              borderRadius: BorderRadius.all(Radius.circular(16)),
-                              color: Color.fromARGB(255, 194, 242, 76),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(16)),
+                              color: Color.fromARGB(255, 255, 207, 47),
                             ),
-                            child: Icon(Icons.chevron_right_outlined, color: Colors.black),
+                            child: Icon(Icons.chevron_right_outlined,
+                                color: Colors.black),
                           ),
                         ],
                       ),
