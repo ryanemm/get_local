@@ -112,7 +112,7 @@ class _NotificationsUnverifiedEmployerState
                         child: Container(),
                       ),
                       Text(
-                        "All notifications for job invites will show here when you are selected for a job you applied for.\n \nOnce your account is activated you will also be notified here and on the email address you signed up",
+                        "All your notifications, including applications from job candidates will show show up here.\n \nOnce your account is activated you will also be notified here and on the email address you signed up with.",
                         style: GoogleFonts.montserrat(
                             fontSize: 16, fontWeight: FontWeight.normal),
                         textAlign: TextAlign.center,
