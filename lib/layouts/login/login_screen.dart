@@ -7,6 +7,7 @@ import 'package:get_local/components/image_button.dart';
 import 'package:get_local/layouts/home/home_screen.dart';
 import 'package:get_local/layouts/login/sign_up_screen.dart';
 import 'package:get_local/models/account_details_company.dart';
+import 'package:get_local/models/account_details_local.dart';
 import 'package:get_local/widgets/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
@@ -55,45 +56,88 @@ class _LoginScreenState extends State<LoginScreen> {
     List data = json.decode(response.body);
     print("Raw data =>");
     print(data);
-    var accountDetails =
-        data.map((device) => AccountDetailsCompany.fromJson(device)).toList();
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    if (accountDetails.isNotEmpty) {
-      print("No. of accounts: ");
-      print(accountDetails.length);
-      print(accountDetails);
-
-      List accounts = json.decode(response.body);
-      print(accounts);
-
-      var formatted = accounts
+    if (data.contains("employer")) {
+      var accountDetails = data
           .map((account) => AccountDetailsCompany.fromJson(account))
           .toList();
-      print(formatted);
       SharedPreferences prefs = await SharedPreferences.getInstance();
-      await prefs.setString("email", formatted[0].email);
-      await prefs.setString("password", formatted[0].password);
-      await prefs.setString("companyName", formatted[0].companyName);
-      await prefs.setString(
-          "companyRegistration", formatted[0].companyRegistration);
-      await prefs.setString("loggedIn", "true");
-      await prefs.setString("accountType", formatted[0].accountType);
-      await prefs.setString("approved", "true");
-      await prefs.setString("id", formatted[0].id);
+      if (accountDetails.isNotEmpty) {
+        print("No. of accounts: ");
+        print(accountDetails.length);
+        print(accountDetails);
 
-      //prefs.setBool("loggedIn", true);
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => HomeScreen(
-                    accountType: formatted[0].accountType,
-                    email: formatted[0].email,
-                    password: formatted[0].password,
-                    companyName: formatted[0].companyName,
-                    id: formatted[0].id,
-                    service: formatted[0].service,
-                    approved: "true",
-                  )));
+        List accounts = json.decode(response.body);
+        print(accounts);
+
+        var formatted = accounts
+            .map((account) => AccountDetailsCompany.fromJson(account))
+            .toList();
+        print(formatted);
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        await prefs.setString("email", formatted[0].email);
+        await prefs.setString("password", formatted[0].password);
+        await prefs.setString("companyName", formatted[0].companyName);
+        await prefs.setString(
+            "companyRegistration", formatted[0].companyRegistration);
+        await prefs.setString("loggedIn", "true");
+        await prefs.setString("accountType", formatted[0].accountType);
+        await prefs.setString("approved", "true");
+        await prefs.setString("id", formatted[0].id);
+        //prefs.setBool("loggedIn", true);
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => HomeScreen(
+                      accountType: formatted[0].accountType,
+                      email: formatted[0].email,
+                      password: formatted[0].password,
+                      companyName: formatted[0].companyName,
+                      id: formatted[0].id,
+                      service: formatted[0].service,
+                      approved: formatted[0].verified,
+                    )));
+      }
+    } else if (data.contains("local")) {
+      var accountDetails =
+          data.map((account) => AccountDetailsLocal.fromJson(account)).toList();
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      if (accountDetails.isNotEmpty) {
+        print("No. of accounts: ");
+        print(accountDetails.length);
+        print(accountDetails);
+
+        List accounts = json.decode(response.body);
+        print(accounts);
+
+        var formatted = accounts
+            .map((account) => AccountDetailsLocal.fromJson(account))
+            .toList();
+        print(formatted);
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        await prefs.setString("email", formatted[0].email);
+        await prefs.setString("password", formatted[0].password!);
+        await prefs.setString("name", formatted[0].name);
+        await prefs.setString("surname", formatted[0].surname);
+
+        await prefs.setString("loggedIn", "true");
+        await prefs.setString("accountType", formatted[0].accountType);
+        await prefs.setString("approved", "true");
+        await prefs.setString("id", formatted[0].id);
+        //prefs.setBool("loggedIn", true);
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => HomeScreen(
+                      accountType: formatted[0].accountType,
+                      email: formatted[0].email,
+                      password: formatted[0].password,
+                      name: formatted[0].name,
+                      surname: formatted[0].surname,
+                      id: formatted[0].id,
+                      job: formatted[0].job,
+                      approved: formatted[0].verified,
+                    )));
+      }
     } else {
       context.loaderOverlay.hide();
       setState(() {

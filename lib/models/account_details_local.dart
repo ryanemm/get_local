@@ -9,6 +9,8 @@ class AccountDetailsLocal {
   final String phoneNumber;
   final String dateOfBirth;
   final String job;
+  final String accountType;
+  final String verified;
 
   const AccountDetailsLocal(
     this.id,
@@ -20,6 +22,8 @@ class AccountDetailsLocal {
     this.phoneNumber,
     this.dateOfBirth,
     this.job,
+    this.accountType,
+    this.verified,
   );
 
   AccountDetailsLocal.fromJson(Map<String, dynamic> json)
@@ -31,7 +35,9 @@ class AccountDetailsLocal {
         address = json['address'],
         phoneNumber = json['phoneNumber'],
         dateOfBirth = json['dateOfBirth'],
-        job = json['job'];
+        job = json['job'],
+        accountType = json['accountType'],
+        verified = json['verified'];
 
   /*factory AccountDetails.fromJson(Map<String, dynamic> jsonData) {
     return AccountDetails(
