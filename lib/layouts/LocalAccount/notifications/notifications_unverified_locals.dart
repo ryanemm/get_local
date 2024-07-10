@@ -143,7 +143,7 @@ class _NotificationsUnverifiedLocalsState
                         child: ListView.builder(
                           itemCount: events.length,
                           itemBuilder: (context, index) {
-                            return EventCard(
+                            return EventCardVerification(
                               title: events[index].title!,
                               notification: events[index].notification,
                               time: events[index].time,

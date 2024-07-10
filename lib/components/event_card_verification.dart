@@ -5,13 +5,13 @@ import 'package:get_local/layouts/LocalAccount/notifications/detailed_event_scre
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
-class EventCard extends StatefulWidget {
+class EventCardVerification extends StatefulWidget {
   final String title;
   final String notification;
   final String? time;
   final Function() function;
 
-  const EventCard({
+  const EventCardVerification({
     super.key,
     required this.title,
     required this.notification,
@@ -20,10 +20,10 @@ class EventCard extends StatefulWidget {
   });
 
   @override
-  State<EventCard> createState() => _EventCardState();
+  State<EventCardVerification> createState() => _EventCardVerificationState();
 }
 
-class _EventCardState extends State<EventCard> {
+class _EventCardVerificationState extends State<EventCardVerification> {
   @override
   Widget build(BuildContext context) {
     Size screenSize = MediaQuery.of(context).size;
@@ -85,7 +85,7 @@ class _EventCardState extends State<EventCard> {
                     SizedBox(height: 16),
                     Row(
                       children: [
-                        Text("Tap to view more details",
+                        Text("Tap to begin using your account",
                             style: GoogleFonts.montserrat(
                                 color: Color.fromARGB(255, 63, 191, 72),
                                 fontSize: 14)),
