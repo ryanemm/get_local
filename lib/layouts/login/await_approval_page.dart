@@ -14,6 +14,8 @@ class AwaitingApprovalPage extends StatefulWidget {
   String? password;
   String? approved;
   String? job;
+  String? companyName;
+  String? service;
   AwaitingApprovalPage(
       {super.key,
       required this.accountType,
@@ -23,6 +25,8 @@ class AwaitingApprovalPage extends StatefulWidget {
       this.approved,
       this.password,
       this.job,
+      this.companyName,
+      this.service,
       required this.applicantId});
 
   @override
@@ -77,6 +81,8 @@ class _AwaitingApprovalPageState extends State<AwaitingApprovalPage> {
                                   email: widget.email,
                                   password: widget.password,
                                   job: widget.job,
+                                  companyName: widget.companyName,
+                                  service: widget.service,
                                   id: widget.applicantId,
                                   approved: widget.approved)));
                     },

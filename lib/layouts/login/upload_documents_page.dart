@@ -23,6 +23,8 @@ class UploadDocumentsPage extends StatefulWidget {
   String? email;
   String? approved;
   String? job;
+  String? companyName;
+  String? service;
   UploadDocumentsPage(
       {super.key,
       required this.profileType,
@@ -33,6 +35,8 @@ class UploadDocumentsPage extends StatefulWidget {
       this.email,
       this.password,
       this.job,
+      this.companyName,
+      this.service,
       this.approved});
 
   @override
@@ -156,21 +160,32 @@ class _UploadDocumentsPageState extends State<UploadDocumentsPage> {
                                 GradientButton(
                                   text: "Submit Documents",
                                   buttonColor1:
-                                      Color.fromARGB(255, 10, 36, 114),
+                                      Color.fromARGB(255, 253, 228, 0),
                                   buttonColor2:
-                                      Color.fromARGB(255, 135, 226, 242),
+                                      Color.fromARGB(255, 194, 176, 9),
+                                  textColor:
+                                      const Color.fromARGB(255, 19, 53, 61),
                                   shadowColor: Colors.grey.shade500,
                                   offsetX: 4,
                                   offsetY: 4,
                                   width: 120.00,
                                   function: () async {
                                     await _uploadFile();
-                                    /*Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => PreDocUploadPage(
-                                          profileType: "local",
-                                        )));*/
+
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                AwaitingApprovalPage(
+                                                    applicantId:
+                                                        widget.applicantId,
+                                                    accountType:
+                                                        widget.accountType,
+                                                    email: widget.email,
+                                                    companyName:
+                                                        widget.companyName,
+                                                    service: widget.service,
+                                                    approved: "false")));
                                   },
                                 ),
                                 SizedBox(height: 16),
@@ -209,6 +224,9 @@ class _UploadDocumentsPageState extends State<UploadDocumentsPage> {
                                                     email: widget.email,
                                                     password: widget.password,
                                                     job: widget.job,
+                                                    companyName:
+                                                        widget.companyName,
+                                                    service: widget.service,
                                                     approved: "false")));
                                   },
                                 ),

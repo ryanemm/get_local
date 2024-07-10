@@ -58,13 +58,14 @@ class _ProfileReviewPageCompanyState extends State<ProfileReviewPageCompany> {
     var data = json.decode(response.body);
     print(response.statusCode);
     print(response.body);
+    print(response.statusCode);
 
     if (response.statusCode == 200) {
       print("Profile Created");
       print(response.body);
-      List accountDetails = json.decode(response.body);
-      var formatted = accountDetails
-          .map((account) => AccountDetailsCompany.fromJson(account))
+      List applicant_ids = json.decode(response.body);
+      var formatted = applicant_ids
+          .map((account) => ApplicantId.fromJson(account))
           .toList();
       applicant_id = formatted[0].id;
       SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -221,8 +222,7 @@ class _ProfileReviewPageCompanyState extends State<ProfileReviewPageCompany> {
                           offsetY: 4,
                           width: 120.00,
                           function: () async {
-                            SharedPreferences prefs =
-                                await SharedPreferences.getInstance();
+                            await createProfile();
 
                             Navigator.push(
                                 context,
@@ -231,6 +231,10 @@ class _ProfileReviewPageCompanyState extends State<ProfileReviewPageCompany> {
                                           profileType: "company",
                                           applicantId: applicant_id!,
                                           accountType: widget.accountType,
+                                          companyName: widget.companyName,
+                                          service: widget.service,
+                                          email: widget.email,
+                                          approved: "false",
                                         )));
                           },
                         ),

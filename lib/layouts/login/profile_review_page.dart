@@ -54,8 +54,6 @@ class _ProfileReviewPageState extends State<ProfileReviewPage> {
       "job": widget.job,
     });
 
-    // var data = json.decode(response.body);
-
     if (response.statusCode == 200) {
       print("Profile Created");
       print(response.body);

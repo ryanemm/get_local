@@ -14,6 +14,8 @@ class PreDocUploadPage extends StatefulWidget {
   String? email;
   String? job;
   String? approved;
+  String? companyName;
+  String? service;
   PreDocUploadPage(
       {super.key,
       required this.profileType,
@@ -24,6 +26,8 @@ class PreDocUploadPage extends StatefulWidget {
       this.email,
       this.job,
       this.approved,
+      this.companyName,
+      this.service,
       this.password});
 
   @override
@@ -85,9 +89,14 @@ class _PreDocUploadPageState extends State<PreDocUploadPage> {
                           context,
                           MaterialPageRoute(
                               builder: (context) => UploadDocumentsPage(
-                                  profileType: widget.profileType,
-                                  applicantId: widget.applicantId,
-                                  accountType: widget.accountType)));
+                                    profileType: widget.profileType,
+                                    applicantId: widget.applicantId,
+                                    accountType: widget.accountType,
+                                    companyName: widget.companyName,
+                                    email: widget.email,
+                                    service: widget.service,
+                                    approved: "false",
+                                  )));
                 },
               ),
             ],

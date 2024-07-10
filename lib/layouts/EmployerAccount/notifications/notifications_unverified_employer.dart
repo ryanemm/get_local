@@ -16,13 +16,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 class NotificationsUnverifiedEmployer extends StatefulWidget {
   final String id;
   final String email;
-  final String password;
 
   const NotificationsUnverifiedEmployer({
     super.key,
     required this.id,
     required this.email,
-    required this.password,
   });
 
   @override
@@ -75,43 +73,6 @@ class _NotificationsUnverifiedEmployerState
       print("Caught an exception: ");
       //return Future.error(e.toString());
       rethrow;
-    }
-  }
-
-  Future getUserId() async {
-    print("fetching user ID");
-
-    const jsonEndpoint = "http://139.144.77.133/getLocalDemo/get_user_id.php";
-
-    final response = await post(
-      Uri.parse(jsonEndpoint),
-      body: {"email": widget.email, "password": widget.password},
-    );
-
-    if (response.statusCode == 200) {
-      List user_ids = json.decode(response.body);
-      var formatted =
-          user_ids.map((account) => ApplicantId.fromJson(account)).toList();
-      user_id = formatted[0].id;
-      print("Account ID: $user_id");
-      print("saving ID and changing verification state");
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      await prefs.setString("id", user_id!);
-      await prefs.setString("approved", "true");
-
-      Restart.restartApp();
-
-      /*Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => HomeScreen(
-                  id: user_id,
-                  accountType: widget.accountType,
-                  name: widget.name,
-                  surname: widget.surname,
-                  email: widget.email,
-                  password: widget.password,
-                  approved: "true")));*/
     }
   }
 
@@ -184,9 +145,7 @@ class _NotificationsUnverifiedEmployerState
                               title: events[index].title!,
                               notification: events[index].notification,
                               time: events[index].time,
-                              function: () {
-                                getUserId();
-                              },
+                              function: () {},
                             );
                           },
                         ),

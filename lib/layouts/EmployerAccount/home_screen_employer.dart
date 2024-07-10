@@ -94,7 +94,6 @@ class _HomeScreenEmployerState extends State<HomeScreenEmployer> {
           : NotificationsUnverifiedEmployer(
               id: widget.id!,
               email: widget.email!,
-              password: widget.password!,
             ),
       ProfileScreenCompany(
           companyName: widget.companyName!,
