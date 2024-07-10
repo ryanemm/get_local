@@ -67,6 +67,15 @@ class _ProfileReviewPageCompanyState extends State<ProfileReviewPageCompany> {
           .map((account) => AccountDetailsCompany.fromJson(account))
           .toList();
       applicant_id = formatted[0].id;
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setString("email", widget.email);
+      await prefs.setString("password", widget.password);
+      await prefs.setString("id", applicant_id!);
+      await prefs.setString("service", widget.service);
+      await prefs.setString("companyName", widget.companyName);
+      await prefs.setString("loggedIn", "true");
+      await prefs.setString("accountType", "employer");
+      await prefs.setString("approved", "false");
     }
     if (response.body.contains("Incorrect")) {
       print("Check your the details and verify they are correct");
@@ -204,8 +213,9 @@ class _ProfileReviewPageCompanyState extends State<ProfileReviewPageCompany> {
                       children: [
                         GradientButton(
                           text: "Confirm",
-                          buttonColor1: Color.fromARGB(255, 10, 36, 114),
-                          buttonColor2: Color.fromARGB(255, 135, 226, 242),
+                          buttonColor1: Color.fromARGB(255, 253, 228, 0),
+                          buttonColor2: Color.fromARGB(255, 194, 176, 9),
+                          textColor: const Color.fromARGB(255, 19, 53, 61),
                           shadowColor: Colors.grey.shade500,
                           offsetX: 4,
                           offsetY: 4,
@@ -213,21 +223,6 @@ class _ProfileReviewPageCompanyState extends State<ProfileReviewPageCompany> {
                           function: () async {
                             SharedPreferences prefs =
                                 await SharedPreferences.getInstance();
-                            await createProfile();
-                            await prefs.setString("email", widget.email);
-                            await prefs.setString("password", widget.password);
-                            await prefs.setString(
-                                "companyName", widget.companyName);
-                            await prefs.setString("companyRegistration",
-                                widget.companyRegistration);
-                            await prefs.setString("address", widget.address);
-                            await prefs.setString(
-                                "phoneNumber", widget.phoneNumber);
-                            await prefs.setString(
-                                "tradingAs", widget.tradingAs);
-                            await prefs.setString("service", widget.service);
-                            await prefs.setString("loggedIn", "true");
-                            await prefs.setString("approved", "false");
 
                             Navigator.push(
                                 context,

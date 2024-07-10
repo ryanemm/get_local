@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:get_local/components/event_card.dart';
+import 'package:get_local/components/event_card_verification.dart';
 import 'package:get_local/layouts/home/home_screen.dart';
 import 'package:get_local/models/apllicant_id.dart';
 import 'package:get_local/models/events.dart';

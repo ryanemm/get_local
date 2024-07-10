@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:get_local/components/event_card.dart';
+import 'package:get_local/components/event_card_verification.dart';
 import 'package:get_local/layouts/home/home_screen.dart';
 import 'package:get_local/models/apllicant_id.dart';
 import 'package:get_local/models/events.dart';
@@ -147,7 +147,12 @@ class _NotificationsUnverifiedLocalsState
                               title: events[index].title!,
                               notification: events[index].notification,
                               time: events[index].time,
-                              function: () {},
+                              function: () async {
+                                SharedPreferences prefs =
+                                    await SharedPreferences.getInstance();
+                                await prefs.setString("approved", "true");
+                                Restart.restartApp();
+                              },
                             );
                           },
                         ),

@@ -21,6 +21,7 @@ Future<void> main() async {
   String service = "";
   String approved = "";
   String password = "";
+  String job = "";
   String? sharedPrefLoggedIn;
   String? sharedPrefAccountType;
   String? sharedPrefEmail;
@@ -31,6 +32,7 @@ Future<void> main() async {
   String? sharedPrefService;
   String? sharedPrefApproved;
   String? sharedPrefPassword;
+  String? sharedPrefJob;
 
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
       statusBarBrightness: Brightness.dark,
@@ -51,12 +53,14 @@ Future<void> main() async {
       sharedPrefApproved = startPrefs.getString("approved");
       sharedPrefLoggedIn = startPrefs.getString("loggedIn");
       sharedPrefPassword = startPrefs.getString("password");
+      sharedPrefJob = startPrefs.getString("job");
       email = sharedPrefEmail!;
       name = sharedPrefName!;
       surname = sharedPrefSurname!;
       approved = sharedPrefApproved!;
       loggedIn = sharedPrefLoggedIn!;
       password = sharedPrefPassword!;
+      job = sharedPrefJob!;
       print(email);
       print(name);
       print(surname);
@@ -89,6 +93,7 @@ Future<void> main() async {
       surname: surname,
       companyName: companyName,
       service: service,
+      job: job,
       id: id,
       approved: approved,
       password: password));
@@ -105,19 +110,20 @@ class MyApp extends StatelessWidget {
   final String id;
   final String approved;
   final String password;
-  const MyApp({
-    super.key,
-    required this.loggedIn,
-    required this.accountType,
-    required this.name,
-    required this.surname,
-    required this.email,
-    required this.companyName,
-    required this.service,
-    required this.id,
-    required this.approved,
-    required this.password,
-  });
+  final String job;
+  const MyApp(
+      {super.key,
+      required this.loggedIn,
+      required this.accountType,
+      required this.name,
+      required this.surname,
+      required this.email,
+      required this.companyName,
+      required this.service,
+      required this.id,
+      required this.approved,
+      required this.password,
+      required this.job});
 
   // This widget is the root of your application.
   @override
@@ -141,7 +147,9 @@ class MyApp extends StatelessWidget {
               service: service,
               id: id,
               password: password,
-              approved: approved)
+              approved: approved,
+              job: job,
+            )
           : LoginScreen(),
     );
   }
