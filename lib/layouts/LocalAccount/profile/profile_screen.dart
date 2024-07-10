@@ -9,12 +9,14 @@ class ProfileScreen extends StatefulWidget {
   final String surname;
   final String email;
   final String approved;
+  final String job;
   const ProfileScreen(
       {super.key,
       required this.name,
       required this.surname,
       required this.email,
-      required this.approved});
+      required this.approved,
+      required this.job});
 
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();
@@ -107,7 +109,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ],
                     ),
                     Text(
-                      "Crane Operator",
+                      widget.job,
                       style: GoogleFonts.montserrat(
                           color: Colors.black,
                           fontSize: 16,

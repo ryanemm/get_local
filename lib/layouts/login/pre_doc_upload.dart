@@ -12,6 +12,7 @@ class PreDocUploadPage extends StatefulWidget {
   String? name;
   String? surname;
   String? email;
+  String? job;
   String? approved;
   PreDocUploadPage(
       {super.key,
@@ -21,6 +22,7 @@ class PreDocUploadPage extends StatefulWidget {
       this.name,
       this.surname,
       this.email,
+      this.job,
       this.approved,
       this.password});
 
@@ -77,6 +79,7 @@ class _PreDocUploadPageState extends State<PreDocUploadPage> {
                                   surname: widget.surname,
                                   email: widget.email,
                                   password: widget.password,
+                                  job: widget.job,
                                   approved: "false")))
                       : Navigator.push(
                           context,

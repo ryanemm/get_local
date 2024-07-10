@@ -18,9 +18,16 @@ class HomeScreenLocal extends StatefulWidget {
   String? email;
   String? id;
   String? approved;
+  String? job;
 
   HomeScreenLocal(
-      {super.key, this.surname, this.email, this.name, this.id, this.approved});
+      {super.key,
+      this.surname,
+      this.email,
+      this.name,
+      this.id,
+      this.approved,
+      this.job});
   @override
   _HomeScreenLocalState createState() => _HomeScreenLocalState();
 }
@@ -86,7 +93,8 @@ class _HomeScreenLocalState extends State<HomeScreenLocal> {
           name: widget.name!,
           surname: widget.surname!,
           email: widget.email!,
-          approved: widget.approved!)
+          approved: widget.approved!,
+          job: widget.job!)
     ];
   }
 

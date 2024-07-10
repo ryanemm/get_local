@@ -22,6 +22,7 @@ class UploadDocumentsPage extends StatefulWidget {
   String? surname;
   String? email;
   String? approved;
+  String? job;
   UploadDocumentsPage(
       {super.key,
       required this.profileType,
@@ -31,6 +32,7 @@ class UploadDocumentsPage extends StatefulWidget {
       this.surname,
       this.email,
       this.password,
+      this.job,
       this.approved});
 
   @override
@@ -206,6 +208,7 @@ class _UploadDocumentsPageState extends State<UploadDocumentsPage> {
                                                     surname: widget.surname,
                                                     email: widget.email,
                                                     password: widget.password,
+                                                    job: widget.job,
                                                     approved: "false")));
                                   },
                                 ),

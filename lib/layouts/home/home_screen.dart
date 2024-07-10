@@ -22,6 +22,7 @@ class HomeScreen extends StatefulWidget {
   String? companyName;
   String? id;
   String? service;
+  String? job;
   String? approved;
   String? password;
 
@@ -35,6 +36,7 @@ class HomeScreen extends StatefulWidget {
       this.companyName,
       this.id,
       this.service,
+      this.job,
       this.approved});
   @override
   _HomeScreenState createState() => _HomeScreenState();
@@ -61,12 +63,13 @@ class _HomeScreenState extends State<HomeScreen> {
                 name: widget.name,
                 surname: widget.surname,
                 approved: widget.approved,
-              )
+                job: widget.job)
             : HomeScreenEmployer(
                 id: widget.id,
                 email: widget.email,
                 companyName: widget.companyName,
                 service: widget.service,
+                approved: widget.approved,
               ));
   }
 }

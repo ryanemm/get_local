@@ -70,6 +70,7 @@ class _ProfileReviewPageState extends State<ProfileReviewPage> {
       await prefs.setString("password", widget.password);
       await prefs.setString("name", widget.name);
       await prefs.setString("surname", widget.surname);
+      await prefs.setString("job", widget.job);
       await prefs.setString("loggedIn", "true");
       await prefs.setString("accountType", "local");
       await prefs.setString("approved", "false");
@@ -231,6 +232,7 @@ class _ProfileReviewPageState extends State<ProfileReviewPage> {
                                         name: widget.name,
                                         surname: widget.surname,
                                         email: widget.email,
+                                        job: widget.job,
                                         password: widget.password,
                                         approved: "false")));
                           },
