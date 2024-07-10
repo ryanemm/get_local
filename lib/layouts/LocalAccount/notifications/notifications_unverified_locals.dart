@@ -12,27 +12,26 @@ import 'package:loader_overlay/loader_overlay.dart';
 import 'package:restart_app/restart_app.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class NotificationsUnverified extends StatefulWidget {
+class NotificationsUnverifiedLocals extends StatefulWidget {
   final String id;
   final String email;
-  final String password;
 
   final String name;
   final String surname;
-  const NotificationsUnverified(
+  const NotificationsUnverifiedLocals(
       {super.key,
       required this.id,
       required this.email,
-      required this.password,
       required this.name,
       required this.surname});
 
   @override
-  State<NotificationsUnverified> createState() =>
-      _NotificationsUnverifiedState();
+  State<NotificationsUnverifiedLocals> createState() =>
+      _NotificationsUnverifiedLocalsState();
 }
 
-class _NotificationsUnverifiedState extends State<NotificationsUnverified> {
+class _NotificationsUnverifiedLocalsState
+    extends State<NotificationsUnverifiedLocals> {
   Timer? timer;
   List<Event> events = [];
   String? user_id;
@@ -86,7 +85,7 @@ class _NotificationsUnverifiedState extends State<NotificationsUnverified> {
 
     final response = await post(
       Uri.parse(jsonEndpoint),
-      body: {"email": widget.email, "password": widget.password},
+      body: {"email": widget.email, "password": ""},
     );
 
     if (response.statusCode == 200) {

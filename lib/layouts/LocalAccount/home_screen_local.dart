@@ -4,7 +4,7 @@ import 'package:get_local/layouts/LocalAccount/listings/listings.dart';
 import 'package:get_local/layouts/EmployerAccount/listings/listings_company.dart';
 import 'package:get_local/layouts/login/login_screen.dart';
 import 'package:get_local/layouts/LocalAccount/notifications/notifications.dart';
-import 'package:get_local/layouts/LocalAccount/notifications/notifications_unverified.dart';
+import 'package:get_local/layouts/LocalAccount/notifications/notifications_unverified_locals.dart';
 import 'package:get_local/layouts/LocalAccount/profile/profile_screen.dart';
 import 'package:get_local/layouts/EmployerAccount/profile/profile_screen_company.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -18,16 +18,9 @@ class HomeScreenLocal extends StatefulWidget {
   String? email;
   String? id;
   String? approved;
-  String? password;
 
   HomeScreenLocal(
-      {super.key,
-      this.surname,
-      this.email,
-      this.name,
-      this.password,
-      this.id,
-      this.approved});
+      {super.key, this.surname, this.email, this.name, this.id, this.approved});
   @override
   _HomeScreenLocalState createState() => _HomeScreenLocalState();
 }
@@ -84,10 +77,9 @@ class _HomeScreenLocalState extends State<HomeScreenLocal> {
           ? NotificationsScreen(
               id: widget.id!,
             )
-          : NotificationsUnverified(
+          : NotificationsUnverifiedLocals(
               id: widget.id!,
               email: widget.email!,
-              password: widget.password!,
               name: widget.name!,
               surname: widget.surname!),
       ProfileScreen(

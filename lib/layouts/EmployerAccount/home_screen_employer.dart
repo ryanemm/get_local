@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get_local/layouts/EmployerAccount/notifications/notifications_unverified_employer.dart';
 import 'package:get_local/layouts/home/feed.dart';
-import 'package:get_local/layouts/LocalAccount/listings/listings.dart';
+
 import 'package:get_local/layouts/EmployerAccount/listings/listings_company.dart';
 import 'package:get_local/layouts/login/login_screen.dart';
 import 'package:get_local/layouts/LocalAccount/notifications/notifications.dart';
-import 'package:get_local/layouts/LocalAccount/notifications/notifications_unverified.dart';
-import 'package:get_local/layouts/LocalAccount/profile/profile_screen.dart';
+
 import 'package:get_local/layouts/EmployerAccount/profile/profile_screen_company.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:load_switch/load_switch.dart';
+
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
