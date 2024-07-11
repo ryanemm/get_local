@@ -56,7 +56,8 @@ class _LoginScreenState extends State<LoginScreen> {
     List data = json.decode(response.body);
     print("Raw data =>");
     print(data);
-    if (data.contains("employer")) {
+    if (response.body.contains("employer")) {
+      print("employer account");
       var accountDetails = data
           .map((account) => AccountDetailsCompany.fromJson(account))
           .toList();
@@ -80,6 +81,7 @@ class _LoginScreenState extends State<LoginScreen> {
         await prefs.setString(
             "companyRegistration", formatted[0].companyRegistration);
         await prefs.setString("loggedIn", "true");
+        await prefs.setString("service", formatted[0].service);
         await prefs.setString("accountType", formatted[0].accountType);
         await prefs.setString("approved", "true");
         await prefs.setString("id", formatted[0].id);
@@ -97,7 +99,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       approved: formatted[0].verified,
                     )));
       }
-    } else if (data.contains("local")) {
+    } else if (response.body.contains("local")) {
+      print("local account");
       var accountDetails =
           data.map((account) => AccountDetailsLocal.fromJson(account)).toList();
       SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -121,7 +124,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
         await prefs.setString("loggedIn", "true");
         await prefs.setString("accountType", formatted[0].accountType);
-        await prefs.setString("approved", "true");
+        await prefs.setString("approved", formatted[0].verified);
         await prefs.setString("id", formatted[0].id);
         //prefs.setBool("loggedIn", true);
         Navigator.push(

@@ -10,15 +10,17 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' show post;
 import 'package:loader_overlay/loader_overlay.dart';
 
-class NotificationsScreen extends StatefulWidget {
+class NotificationsScreenCompany extends StatefulWidget {
   final String id;
-  const NotificationsScreen({super.key, required this.id});
+  const NotificationsScreenCompany({super.key, required this.id});
 
   @override
-  State<NotificationsScreen> createState() => _NotificationsScreenState();
+  State<NotificationsScreenCompany> createState() =>
+      _NotificationsScreenCompanyState();
 }
 
-class _NotificationsScreenState extends State<NotificationsScreen> {
+class _NotificationsScreenCompanyState
+    extends State<NotificationsScreenCompany> {
   Timer? timer;
   List<Event> events = [];
 
@@ -41,7 +43,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
     print("fetching events");
     try {
       const jsonEndpoint =
-          "http://139.144.77.133/getLocalDemo/get_events_locals.php";
+          "http://139.144.77.133/getLocalDemo/get_events_companies.php";
 
       final response = await post(
         Uri.parse(jsonEndpoint),

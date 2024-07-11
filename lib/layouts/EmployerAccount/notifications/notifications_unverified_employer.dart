@@ -49,7 +49,7 @@ class _NotificationsUnverifiedEmployerState
     print("fetching events");
     try {
       const jsonEndpoint =
-          "http://139.144.77.133/getLocalDemo/get_events_unverified.php";
+          "http://139.144.77.133/getLocalDemo/get_events_unverified_companies.php";
 
       final response = await post(
         Uri.parse(jsonEndpoint),
