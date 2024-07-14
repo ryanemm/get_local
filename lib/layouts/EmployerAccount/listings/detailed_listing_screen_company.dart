@@ -186,6 +186,7 @@ class _DetailedListingsScreenCompanyState
                                 companyId: applications[index].companyId!,
                                 listingId: applications[index].listingId,
                                 userId: applications[index].userId,
+                                name: applications[index].name,
                               );
                             },
                           ),

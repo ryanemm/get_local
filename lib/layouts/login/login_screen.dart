@@ -83,7 +83,7 @@ class _LoginScreenState extends State<LoginScreen> {
         await prefs.setString("loggedIn", "true");
         await prefs.setString("service", formatted[0].service);
         await prefs.setString("accountType", formatted[0].accountType);
-        await prefs.setString("approved", "true");
+        await prefs.setString("approved", formatted[0].verified);
         await prefs.setString("id", formatted[0].id);
         //prefs.setBool("loggedIn", true);
         Navigator.push(

@@ -130,6 +130,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     print("Logged in: $loggedIn");
     print("Verified: $approved");
+    print("ID: $id");
 
     return MaterialApp(
       title: 'Flutter Demo',

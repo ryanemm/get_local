@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get_local/layouts/LocalAccount/listings/detailed_listing_screen.dart';
 import 'package:get_local/layouts/login/login_screen.dart';
-import 'package:get_local/layouts/LocalAccount/profile/applicant_profile_screen.dart';
+import 'package:get_local/layouts/EmployerAccount/listings/applicant_profile_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
@@ -10,14 +10,15 @@ class ApplicationCard extends StatefulWidget {
   final String companyId;
   final String? listingId;
   final String? userId;
+  String? name;
 
-  const ApplicationCard({
-    super.key,
-    required this.companyId,
-    this.applicationId,
-    this.listingId,
-    this.userId,
-  });
+  ApplicationCard(
+      {super.key,
+      required this.companyId,
+      this.applicationId,
+      this.listingId,
+      this.userId,
+      this.name});
 
   @override
   State<ApplicationCard> createState() => _ApplicationCardState();
@@ -82,29 +83,38 @@ class _ApplicationCardState extends State<ApplicationCard> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Text(
-                            "User account: ",
-                            overflow: TextOverflow.ellipsis,
-                            style: GoogleFonts.montserrat(
-                              color: Colors.black,
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
+                      widget.name != null
+                          ? Text(
+                              widget.name!,
+                              style: GoogleFonts.montserrat(
+                                color: Colors.black,
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            )
+                          : Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "User account: ",
+                                  overflow: TextOverflow.ellipsis,
+                                  style: GoogleFonts.montserrat(
+                                    color: Colors.black,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                Text(
+                                  widget.userId!,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: GoogleFonts.montserrat(
+                                    color: Colors.black,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ],
                             ),
-                          ),
-                          Text(
-                            widget.userId!,
-                            overflow: TextOverflow.ellipsis,
-                            style: GoogleFonts.montserrat(
-                              color: Colors.black,
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ],
-                      ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
