@@ -12,6 +12,7 @@ class ListingCardApplications extends StatefulWidget {
   final String? endDate;
   final String? id;
   final String? applications;
+  final String? timestamp;
   const ListingCardApplications(
       {super.key,
       required this.company,
@@ -20,7 +21,8 @@ class ListingCardApplications extends StatefulWidget {
       this.job,
       this.startDate,
       this.endDate,
-      this.applications});
+      this.applications,
+      this.timestamp});
 
   @override
   State<ListingCardApplications> createState() =>

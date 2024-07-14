@@ -11,6 +11,7 @@ class ListingCard extends StatefulWidget {
   final String? endDate;
   final String? id;
   final String approved;
+  final String? timestamp;
   const ListingCard(
       {super.key,
       required this.company,
@@ -19,6 +20,7 @@ class ListingCard extends StatefulWidget {
       this.job,
       this.startDate,
       this.endDate,
+      this.timestamp,
       required this.approved});
 
   @override
