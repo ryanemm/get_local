@@ -9,6 +9,7 @@ class Listing {
   final String? endDate;
   final String? applications;
   final String? timeStamp;
+  final String? interviewDateTime;
 
   Listing(
       {required this.id,
@@ -18,6 +19,7 @@ class Listing {
       required this.startDate,
       required this.endDate,
       this.timeStamp,
+      this.interviewDateTime,
       required this.applications});
 
   factory Listing.fromJson(Map<String, dynamic> jsonData) {
@@ -29,6 +31,7 @@ class Listing {
         startDate: jsonData['startDate'],
         endDate: jsonData['endDate'],
         applications: jsonData['applications'],
-        timeStamp: jsonData['timestamp']);
+        timeStamp: jsonData['timestamp'],
+        interviewDateTime: jsonData['interviewDateTime']);
   }
 }

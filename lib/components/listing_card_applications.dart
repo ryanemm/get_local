@@ -130,7 +130,7 @@ class _ListingCardApplicationsState extends State<ListingCardApplications> {
                                       fontSize: 14)),
                           Expanded(child: Container()),
                           Container(
-                            height: 32,
+                            height: 2,
                             width: 32,
                             decoration: BoxDecoration(
                                 borderRadius:
