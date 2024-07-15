@@ -12,6 +12,7 @@ import 'package:get_local/models/listing.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' show post;
 import 'package:loader_overlay/loader_overlay.dart';
+import 'package:intl/intl.dart';
 
 class DetailedListingScreenCompany extends StatefulWidget {
   final String? companyId;
@@ -22,6 +23,7 @@ class DetailedListingScreenCompany extends StatefulWidget {
   final String? endDate;
   final String? id;
   final String? applications;
+  final String? interviewDateTime;
   const DetailedListingScreenCompany(
       {super.key,
       this.companyId,
@@ -30,6 +32,7 @@ class DetailedListingScreenCompany extends StatefulWidget {
       this.startDate,
       this.endDate,
       this.id,
+      this.interviewDateTime,
       this.applications});
 
   @override
@@ -41,6 +44,7 @@ class _DetailedListingsScreenCompanyState
     extends State<DetailedListingScreenCompany> {
   Timer? timer;
   List<Application> applications = [];
+  DateTime? interviewDate;
 
   int _tabTextIconIndexSelected = 0;
 
@@ -104,6 +108,9 @@ class _DetailedListingsScreenCompanyState
               print(snapshot.data);
               applications = snapshot.data!;
               print("Snapshot contains data");
+              interviewDate = DateTime.parse(widget.interviewDateTime!);
+              String formattedDate =
+                  DateFormat('EEEE, MMMM d').format(interviewDate!);
 
               if (applications.isNotEmpty) {
                 return Container(
@@ -154,24 +161,39 @@ class _DetailedListingsScreenCompanyState
                             child: Icon(Icons.engineering_outlined),
                           ),
                           SizedBox(width: 8),
-                          Text("Piet Retief",
-                              style: GoogleFonts.montserrat(
-                                  color: Colors.grey[900], fontSize: 16)),
-                          Expanded(child: Container()),
-                          Row(
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(widget.applications!),
-                              widget.applications == "1"
-                                  ? Text(" application",
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text("Piet Retief",
                                       style: GoogleFonts.montserrat(
                                           color: Colors.grey[900],
-                                          fontSize: 16))
-                                  : Text(" applications",
-                                      style: GoogleFonts.montserrat(
-                                          color: Colors.grey[900],
-                                          fontSize: 16))
+                                          fontSize: 16)),
+                                  Row(
+                                    children: [
+                                      Text(widget.applications!),
+                                      widget.applications == "1"
+                                          ? Text(" application",
+                                              style: GoogleFonts.montserrat(
+                                                  color: Colors.grey[900],
+                                                  fontSize: 16))
+                                          : Text(" applications",
+                                              style: GoogleFonts.montserrat(
+                                                  color: Colors.grey[900],
+                                                  fontSize: 16))
+                                    ],
+                                  ),
+                                ],
+                              ),
+                              Text("Interview Date: $formattedDate",
+                                  style: GoogleFonts.montserrat(
+                                      color: Colors.grey[900], fontSize: 16))
                             ],
-                          )
+                          ),
                         ],
                       ),
                       SizedBox(height: 24),

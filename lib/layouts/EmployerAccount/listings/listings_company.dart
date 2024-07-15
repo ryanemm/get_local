@@ -187,6 +187,8 @@ class _ListingsScreenCompanyState extends State<ListingsScreenCompany> {
                                 job: listings[index].job!,
                                 startDate: listings[index].startDate!,
                                 endDate: listings[index].endDate!,
+                                interviewDateTime:
+                                    listings[index].interviewDateTime,
                                 applications: listings[index].applications);
                           },
                         ),

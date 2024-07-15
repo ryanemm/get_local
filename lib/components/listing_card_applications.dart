@@ -13,6 +13,7 @@ class ListingCardApplications extends StatefulWidget {
   final String? id;
   final String? applications;
   final String? timestamp;
+  final String? interviewDateTime;
   const ListingCardApplications(
       {super.key,
       required this.company,
@@ -22,6 +23,7 @@ class ListingCardApplications extends StatefulWidget {
       this.startDate,
       this.endDate,
       this.applications,
+      this.interviewDateTime,
       this.timestamp});
 
   @override
@@ -52,13 +54,15 @@ class _ListingCardApplicationsState extends State<ListingCardApplications> {
                 context,
                 MaterialPageRoute(
                     builder: (context) => DetailedListingScreenCompany(
-                        id: widget.id!,
-                        company: widget.company,
-                        companyId: widget.companyId,
-                        job: widget.job,
-                        applications: widget.applications,
-                        startDate: widget.startDate,
-                        endDate: widget.endDate)));
+                          id: widget.id!,
+                          company: widget.company,
+                          companyId: widget.companyId,
+                          job: widget.job,
+                          applications: widget.applications,
+                          startDate: widget.startDate,
+                          endDate: widget.endDate,
+                          interviewDateTime: widget.interviewDateTime,
+                        )));
           },
           child: Container(
             margin: EdgeInsets.symmetric(horizontal: 4),
@@ -130,7 +134,7 @@ class _ListingCardApplicationsState extends State<ListingCardApplications> {
                                       fontSize: 14)),
                           Expanded(child: Container()),
                           Container(
-                            height: 2,
+                            height: 32,
                             width: 32,
                             decoration: BoxDecoration(
                                 borderRadius:
