@@ -24,16 +24,18 @@ class DetailedListingScreenCompany extends StatefulWidget {
   final String? id;
   final String? applications;
   final String? interviewDateTime;
-  const DetailedListingScreenCompany(
-      {super.key,
-      this.companyId,
-      required this.company,
-      this.job,
-      this.startDate,
-      this.endDate,
-      this.id,
-      this.interviewDateTime,
-      this.applications});
+
+  const DetailedListingScreenCompany({
+    super.key,
+    this.companyId,
+    required this.company,
+    this.job,
+    this.startDate,
+    this.endDate,
+    this.id,
+    this.interviewDateTime,
+    this.applications,
+  });
 
   @override
   State<DetailedListingScreenCompany> createState() =>

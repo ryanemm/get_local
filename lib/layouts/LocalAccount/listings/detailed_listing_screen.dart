@@ -16,6 +16,9 @@ class DetailedListingScreen extends StatefulWidget {
   final String? startDate;
   final String? endDate;
   final String approved;
+  final String applicantName;
+  final String applicantSurname;
+  final String userId;
   const DetailedListingScreen(
       {super.key,
       required this.id,
@@ -24,7 +27,10 @@ class DetailedListingScreen extends StatefulWidget {
       this.job,
       this.startDate,
       this.endDate,
-      required this.approved});
+      required this.approved,
+      required this.applicantName,
+      required this.applicantSurname,
+      required this.userId});
 
   @override
   State<DetailedListingScreen> createState() => _DetailedListingScreenState();
@@ -35,13 +41,15 @@ class _DetailedListingScreenState extends State<DetailedListingScreen> {
   String? displayEndDate;
   DateTime? startDate;
   DateTime? endDate;
+  String? name;
 
   Future apply() async {
     var url = "http://139.144.77.133/getLocalDemo/apply.php";
     var response = await post(Uri.parse(url), body: {
       "listingId": widget.id,
-      "userId": "2644",
-      "companyId": widget.companyId
+      "userId": widget.userId,
+      "companyId": widget.companyId,
+      "name": name
     });
 
     if (response.statusCode == 200) {
@@ -66,6 +74,7 @@ class _DetailedListingScreenState extends State<DetailedListingScreen> {
 
   @override
   Widget build(BuildContext context) {
+    name = widget.applicantName + " " + widget.applicantSurname;
     Size screenSize = MediaQuery.of(context).size;
     startDate = DateTime.parse(widget.startDate!);
     endDate = DateTime.parse(widget.endDate!);

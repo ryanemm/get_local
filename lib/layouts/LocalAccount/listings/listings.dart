@@ -11,10 +11,16 @@ import 'package:loader_overlay/loader_overlay.dart';
 
 class ListingsScreen extends StatefulWidget {
   final String approved;
+  final String name;
+  final String surname;
+  final String userId;
 
   const ListingsScreen({
     super.key,
     required this.approved,
+    required this.name,
+    required this.surname,
+    required this.userId,
   });
 
   @override
@@ -86,6 +92,7 @@ class _ListingsScreenState extends State<ListingsScreen> {
               print("snapshot data :");
               print(snapshot.data);
               listings = snapshot.data!;
+              listings = listings.reversed.toList();
               print("Snapshot contains data");
 
               if (listings.isNotEmpty) {
@@ -140,7 +147,10 @@ class _ListingsScreenState extends State<ListingsScreen> {
                                 job: listings[index].job!,
                                 startDate: listings[index].startDate!,
                                 endDate: listings[index].endDate!,
-                                approved: widget.approved);
+                                approved: widget.approved,
+                                applicantName: widget.name,
+                                applicantSurname: widget.surname,
+                                userId: widget.userId);
                           },
                         ),
                       ),

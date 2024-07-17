@@ -121,7 +121,7 @@ class _LoginScreenState extends State<LoginScreen> {
         await prefs.setString("password", formatted[0].password!);
         await prefs.setString("name", formatted[0].name);
         await prefs.setString("surname", formatted[0].surname);
-
+        await prefs.setString("job", formatted[0].job);
         await prefs.setString("loggedIn", "true");
         await prefs.setString("accountType", formatted[0].accountType);
         await prefs.setString("approved", formatted[0].verified);

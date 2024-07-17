@@ -78,8 +78,10 @@ class _HomeScreenLocalState extends State<HomeScreenLocal> {
     return [
       const Feed(),
       ListingsScreen(
-        approved: widget.approved!,
-      ),
+          approved: widget.approved!,
+          name: widget.name!,
+          surname: widget.surname!,
+          userId: widget.id!),
       widget.approved == "true"
           ? NotificationsScreen(
               id: widget.id!,

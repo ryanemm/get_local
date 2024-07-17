@@ -12,6 +12,9 @@ class ListingCard extends StatefulWidget {
   final String? id;
   final String approved;
   final String? timestamp;
+  final String applicantName;
+  final String applicantSurname;
+  final String userId;
   const ListingCard(
       {super.key,
       required this.company,
@@ -21,7 +24,10 @@ class ListingCard extends StatefulWidget {
       this.startDate,
       this.endDate,
       this.timestamp,
-      required this.approved});
+      required this.approved,
+      required this.applicantName,
+      required this.applicantSurname,
+      required this.userId});
 
   @override
   State<ListingCard> createState() => _ListingCardState();
@@ -56,7 +62,10 @@ class _ListingCardState extends State<ListingCard> {
                         job: widget.job,
                         startDate: widget.startDate,
                         endDate: widget.endDate,
-                        approved: widget.approved)));
+                        approved: widget.approved,
+                        applicantName: widget.applicantName,
+                        applicantSurname: widget.applicantSurname,
+                        userId: widget.userId)));
           },
           child: Container(
             margin: EdgeInsets.symmetric(horizontal: 4),
