@@ -3,6 +3,8 @@ import 'package:get_local/components/gradient_button.dart';
 import 'package:get_local/widgets/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:http/http.dart' show post;
+import 'package:fluttertoast/fluttertoast.dart';
 
 class NewListingScreen extends StatefulWidget {
   String? companyName;
@@ -17,11 +19,14 @@ class _NewListingScreenState extends State<NewListingScreen> {
   DateTime selectedDate = DateTime.now();
   DateTime startDateObj = DateTime.now();
   String? startDate;
+  bool startDateSelected = false;
   DateTime endDateObj = DateTime.now();
   String? endDate;
+  bool endDateSelected = false;
   DateTime interviewDateObj = DateTime.now();
   String? interviewDate;
-  String _chosenModel = "Looking for...";
+  bool interviewDateSelected = false;
+  String _selectedJob = "Looking for...";
 
   TextEditingController additionalNotesController = TextEditingController();
 
@@ -41,6 +46,7 @@ class _NewListingScreenState extends State<NewListingScreen> {
             print(startDateObj);
             startDate = DateFormat('dd/MM/yyyy').format(startDateObj);
             print("Start date to set to $startDate");
+            startDateSelected = true;
           });
         }
       case "endDate":
@@ -51,6 +57,7 @@ class _NewListingScreenState extends State<NewListingScreen> {
             print(endDateObj);
             endDate = DateFormat('dd/MM/yyyy').format(endDateObj);
             print("End date set to $endDate");
+            endDateSelected = true;
           });
         }
       case "interviewDate":
@@ -61,9 +68,41 @@ class _NewListingScreenState extends State<NewListingScreen> {
             print(interviewDateObj);
             interviewDate = DateFormat('dd/MM/yyyy').format(interviewDateObj);
             print("Interview date set to $interviewDate");
+            interviewDateSelected = true;
           });
         }
     }
+  }
+
+  Future addListing() async {
+    var url = "http://139.144.77.133/getLocalDemo/add_listing.php";
+    var response = await post(Uri.parse(url), body: {
+      "company": widget.companyName,
+      "companyId": widget.companyId,
+      "job": _selectedJob,
+      "startDate": startDate,
+      "endDate": endDate,
+      "interviewDate": interviewDate
+    });
+
+    if (response.statusCode == 200) {
+      print("Job listing added successfully!");
+      showToast("Application Sent!");
+    } else {
+      print("An error occured please try again");
+    }
+  }
+
+  void showToast(String message) {
+    Fluttertoast.showToast(
+      msg: message,
+      toastLength: Toast.LENGTH_LONG,
+      gravity: ToastGravity.CENTER,
+      timeInSecForIosWeb: 1,
+      backgroundColor: Color.fromARGB(255, 22, 44, 49),
+      textColor: Colors.white,
+      fontSize: 16.0,
+    );
   }
 
   @override
@@ -122,7 +161,7 @@ class _NewListingScreenState extends State<NewListingScreen> {
                   ),
                 ]),
             child: DropdownButton<String>(
-              value: _chosenModel,
+              value: _selectedJob,
               underline: Container(),
               borderRadius: BorderRadius.all(Radius.circular(16)),
               dropdownColor: Color.fromARGB(255, 242, 251, 242),
@@ -179,13 +218,13 @@ class _NewListingScreenState extends State<NewListingScreen> {
               }).toList(),
               onChanged: (String? newValue) {
                 setState(() {
-                  _chosenModel = newValue!;
+                  _selectedJob = newValue!;
 
-                  print(_chosenModel);
+                  print(_selectedJob);
                 });
               },
               hint: Text(
-                "Choose a Car Model",
+                "Select the role you are seeking",
                 style: TextStyle(
                     color: Colors.black,
                     fontSize: 16,
@@ -222,7 +261,7 @@ class _NewListingScreenState extends State<NewListingScreen> {
                       ),
                       SizedBox(width: 8),
                       Text(
-                        "Start Date",
+                        startDateSelected ? startDate! : "Start Date",
                         style: simpleTextStyle(Colors.black),
                       ),
                     ],
@@ -272,7 +311,7 @@ class _NewListingScreenState extends State<NewListingScreen> {
                       ),
                       SizedBox(width: 8),
                       Text(
-                        "End Date",
+                        endDateSelected ? endDate! : "End Date",
                         style: simpleTextStyle(Colors.black),
                       ),
                     ],
@@ -322,7 +361,9 @@ class _NewListingScreenState extends State<NewListingScreen> {
                       ),
                       SizedBox(width: 8),
                       Text(
-                        "Interview Date",
+                        interviewDateSelected
+                            ? interviewDate!
+                            : "Interview Date",
                         style: simpleTextStyle(Colors.black),
                       ),
                     ],
