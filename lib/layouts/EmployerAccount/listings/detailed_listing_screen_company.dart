@@ -217,6 +217,87 @@ class _DetailedListingsScreenCompanyState
                     ],
                   ),
                 );
+              } else if (applications.isEmpty) {
+                return Container(
+                  padding: EdgeInsets.symmetric(horizontal: 16),
+                  color: Colors.white,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Row(
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              print("Back button tapped");
+                              Navigator.pop(context);
+                            },
+                            child: Container(
+                              height: 30,
+                              width: 30,
+                              decoration: const BoxDecoration(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(15)),
+                                  color: Color.fromARGB(84, 148, 147, 147)),
+                              child: Center(
+                                child: Icon(
+                                  Icons.arrow_back,
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ),
+                          ),
+                          SizedBox(width: 16),
+                          Text(
+                            widget.job!,
+                            style: GoogleFonts.montserrat(
+                                fontSize: 24,
+                                color: Color.fromARGB(255, 2, 50, 10),
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 8),
+                      Row(
+                        children: [
+                          SizedBox(width: 46),
+                          Text(
+                            "Interview date: ",
+                            style: GoogleFonts.montserrat(
+                                fontSize: 16,
+                                color: Color.fromARGB(255, 49, 50, 49),
+                                fontWeight: FontWeight.normal),
+                          ),
+                          Text(
+                            widget.interviewDateTime!,
+                            style: GoogleFonts.montserrat(
+                                fontSize: 16,
+                                color: Color.fromARGB(255, 49, 50, 49),
+                                fontWeight: FontWeight.normal),
+                          ),
+                        ],
+                      ),
+                      Expanded(flex: 1, child: Container()),
+                      Image.asset("assets/images/waiting_graphic.png"),
+                      Text(
+                        "No applications...yet",
+                        style: GoogleFonts.montserrat(
+                            fontSize: 24,
+                            color: Color.fromARGB(255, 49, 50, 49),
+                            fontWeight: FontWeight.w600),
+                      ),
+                      SizedBox(height: 8),
+                      Text(
+                        "Once candidates start applying to this job listing you will be able to see and review the applications right here",
+                        style: GoogleFonts.montserrat(
+                            fontSize: 16,
+                            color: Color.fromARGB(255, 49, 50, 49),
+                            fontWeight: FontWeight.normal),
+                        textAlign: TextAlign.center,
+                      ),
+                      Expanded(flex: 3, child: Container()),
+                    ],
+                  ),
+                );
               }
             }
             return Container(
