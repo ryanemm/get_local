@@ -7,6 +7,7 @@ import 'dart:convert';
 import 'package:flutter_toggle_tab/flutter_toggle_tab.dart';
 import 'package:get_local/components/listing_card.dart';
 import 'package:get_local/components/listing_card_applications.dart';
+import 'package:get_local/layouts/EmployerAccount/listings/new_listing_screen.dart';
 import 'package:get_local/models/listing.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' show post;
@@ -15,7 +16,8 @@ import 'package:scroll_to_hide/scroll_to_hide.dart';
 
 class ListingsScreenCompany extends StatefulWidget {
   final String? id;
-  const ListingsScreenCompany({super.key, this.id});
+  final String? companyName;
+  const ListingsScreenCompany({super.key, this.id, this.companyName});
 
   @override
   State<ListingsScreenCompany> createState() => _ListingsScreenCompanyState();
@@ -201,31 +203,52 @@ class _ListingsScreenCompanyState extends State<ListingsScreenCompany> {
                     Positioned(
                         bottom: 100,
                         right: 20,
-                        child: Container(
-                          width: 70,
-                          height: 70,
-                          decoration: BoxDecoration(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(16)),
-                              color: Color.fromARGB(255, 22, 44, 49),
-                              boxShadow: [
-                                BoxShadow(
-                                  offset: Offset(1, 1),
-                                  color: Colors.grey.shade300,
-                                  blurRadius: 2,
-                                  spreadRadius: 1,
+                        child: GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => NewListingScreen(
+                                      companyId: widget.id,
+                                      companyName: widget.companyName)),
+                            );
+                          },
+                          child: Container(
+                            width: 70,
+                            height: 70,
+                            decoration: BoxDecoration(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(16)),
+                                color: Color.fromARGB(255, 22, 44, 49),
+                                boxShadow: [
+                                  BoxShadow(
+                                    offset: Offset(1, 1),
+                                    color: Colors.grey.shade300,
+                                    blurRadius: 2,
+                                    spreadRadius: 1,
+                                  ),
+                                  BoxShadow(
+                                    offset: Offset(-1, -1),
+                                    color: Colors.grey.shade200,
+                                    blurRadius: 2,
+                                    spreadRadius: 0.5,
+                                  ),
+                                ]),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  Icons.add,
+                                  color: Color.fromARGB(255, 255, 207, 47),
                                 ),
-                                BoxShadow(
-                                  offset: Offset(-1, -1),
-                                  color: Colors.grey.shade200,
-                                  blurRadius: 2,
-                                  spreadRadius: 0.5,
+                                Text(
+                                  "Listing",
+                                  style: GoogleFonts.montserrat(
+                                      color: Color.fromARGB(255, 255, 207, 47),
+                                      fontWeight: FontWeight.bold),
                                 ),
-                              ]),
-                          child: Text(
-                            "+ Listing",
-                            style: GoogleFonts.montserrat(
-                                color: Color.fromARGB(255, 255, 207, 47)),
+                              ],
+                            ),
                           ),
                         ))
                   ],

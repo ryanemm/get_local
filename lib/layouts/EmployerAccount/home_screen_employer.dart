@@ -86,6 +86,7 @@ class _HomeScreenEmployerState extends State<HomeScreenEmployer> {
       const Feed(),
       ListingsScreenCompany(
         id: widget.id,
+        companyName: widget.companyName,
       ),
       widget.approved == "true"
           ? NotificationsScreen(
