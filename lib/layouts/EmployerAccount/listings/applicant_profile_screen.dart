@@ -31,7 +31,9 @@ class _ApplicantProfileScreenState extends State<ApplicantProfileScreen> {
   List<AccountDetailsLocal> userAccounts = [];
 
   Future<List<AccountDetailsLocal>> getUserAccount() async {
-    print("getting user's account");
+    print("getting user's account for application ID: ");
+    print(widget.applicationId);
+
     const jsonEndpoint =
         "http://139.144.77.133/getLocalDemo/getUserAccount.php";
 

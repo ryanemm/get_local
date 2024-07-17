@@ -136,65 +136,99 @@ class _ListingsScreenCompanyState extends State<ListingsScreenCompany> {
               print("Snapshot contains data");
 
               if (listings.isNotEmpty) {
-                return Container(
-                  padding: EdgeInsets.symmetric(horizontal: 16),
-                  color: Colors.white,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      AnimatedContainer(
-                        duration: Duration(milliseconds: 500),
-                        height: isContainerVisible ? 40 : 0,
-                        width: double.infinity,
-                        child: FlutterToggleTab(
-                          selectedBackgroundColors: [Colors.white],
-                          unSelectedBackgroundColors: [
-                            Color.fromARGB(255, 241, 243, 252)
-                          ],
-                          height: 40,
-                          width: 92,
-                          borderRadius: 15,
-                          marginSelected: EdgeInsets.all(4),
-                          selectedTextStyle: TextStyle(
-                            color: Colors.black,
-                            fontSize: 14,
-                            fontWeight: FontWeight.w600,
+                return Stack(
+                  children: [
+                    Container(
+                      padding: EdgeInsets.symmetric(horizontal: 16),
+                      color: Colors.white,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          AnimatedContainer(
+                            duration: Duration(milliseconds: 500),
+                            height: isContainerVisible ? 40 : 0,
+                            width: double.infinity,
+                            child: FlutterToggleTab(
+                              selectedBackgroundColors: [Colors.white],
+                              unSelectedBackgroundColors: [
+                                Color.fromARGB(255, 241, 243, 252)
+                              ],
+                              height: 40,
+                              width: 92,
+                              borderRadius: 15,
+                              marginSelected: EdgeInsets.all(4),
+                              selectedTextStyle: TextStyle(
+                                color: Colors.black,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w600,
+                              ),
+                              unSelectedTextStyle: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w400),
+                              labels: ["All", "Shortlist"],
+                              selectedIndex: _tabTextIconIndexSelected,
+                              selectedLabelIndex: (index) {
+                                setState(() {
+                                  _tabTextIconIndexSelected = index;
+                                });
+                              },
+                            ),
                           ),
-                          unSelectedTextStyle: TextStyle(
-                              color: Colors.black,
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400),
-                          labels: ["All", "Shortlist"],
-                          selectedIndex: _tabTextIconIndexSelected,
-                          selectedLabelIndex: (index) {
-                            setState(() {
-                              _tabTextIconIndexSelected = index;
-                            });
-                          },
-                        ),
+                          SizedBox(height: 8),
+                          Expanded(
+                            child: ListView.builder(
+                              controller: _scrollController,
+                              physics: ClampingScrollPhysics(),
+                              itemCount: listings.length,
+                              itemBuilder: (context, index) {
+                                return ListingCardApplications(
+                                    id: listings[index].id,
+                                    company: listings[index].company,
+                                    companyId: listings[index].companyId,
+                                    job: listings[index].job!,
+                                    startDate: listings[index].startDate!,
+                                    endDate: listings[index].endDate!,
+                                    interviewDateTime:
+                                        listings[index].interviewDateTime,
+                                    applications: listings[index].applications);
+                              },
+                            ),
+                          ),
+                        ],
                       ),
-                      SizedBox(height: 8),
-                      Expanded(
-                        child: ListView.builder(
-                          controller: _scrollController,
-                          physics: ClampingScrollPhysics(),
-                          itemCount: listings.length,
-                          itemBuilder: (context, index) {
-                            return ListingCardApplications(
-                                id: listings[index].id,
-                                company: listings[index].company,
-                                companyId: listings[index].companyId,
-                                job: listings[index].job!,
-                                startDate: listings[index].startDate!,
-                                endDate: listings[index].endDate!,
-                                interviewDateTime:
-                                    listings[index].interviewDateTime,
-                                applications: listings[index].applications);
-                          },
-                        ),
-                      ),
-                    ],
-                  ),
+                    ),
+                    Positioned(
+                        bottom: 100,
+                        right: 20,
+                        child: Container(
+                          width: 70,
+                          height: 70,
+                          decoration: BoxDecoration(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(16)),
+                              color: Color.fromARGB(255, 22, 44, 49),
+                              boxShadow: [
+                                BoxShadow(
+                                  offset: Offset(1, 1),
+                                  color: Colors.grey.shade300,
+                                  blurRadius: 2,
+                                  spreadRadius: 1,
+                                ),
+                                BoxShadow(
+                                  offset: Offset(-1, -1),
+                                  color: Colors.grey.shade200,
+                                  blurRadius: 2,
+                                  spreadRadius: 0.5,
+                                ),
+                              ]),
+                          child: Text(
+                            "+ Listing",
+                            style: GoogleFonts.montserrat(
+                                color: Color.fromARGB(255, 255, 207, 47)),
+                          ),
+                        ))
+                  ],
                 );
               }
             }
