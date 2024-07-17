@@ -65,8 +65,9 @@ class _ProfileScreenCompanyState extends State<ProfileScreenCompany> {
               width: double.infinity,
               padding: EdgeInsets.all(16),
               decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(16)),
-                  color: Color.fromARGB(255, 202, 214, 203)),
+                borderRadius: BorderRadius.all(Radius.circular(16)),
+                color: Color.fromARGB(255, 236, 250, 236),
+              ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [

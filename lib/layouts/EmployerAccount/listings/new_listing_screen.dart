@@ -19,23 +19,50 @@ class _NewListingScreenState extends State<NewListingScreen> {
   String? startDate;
   DateTime endDateObj = DateTime.now();
   String? endDate;
+  DateTime interviewDateObj = DateTime.now();
+  String? interviewDate;
   String _chosenModel = "Looking for...";
 
-  Future<void> selectDate(BuildContext context) async {
+  TextEditingController additionalNotesController = TextEditingController();
+
+  Future<void> selectDate(BuildContext context, String date) async {
     final pickedDate = await showDatePicker(
       context: context,
       initialDate: selectedDate,
       firstDate: DateTime(1900),
       lastDate: DateTime(2030),
     );
-    if (pickedDate != null && pickedDate != selectedDate) {
-      setState(() {
-        selectedDate = pickedDate;
-        startDateObj = selectedDate;
-        print(startDateObj);
-        startDate = DateFormat('dd/MM/yyyy').format(startDateObj);
-        print(startDate);
-      });
+    switch (date) {
+      case "startDate":
+        if (pickedDate != null && pickedDate != selectedDate) {
+          setState(() {
+            selectedDate = pickedDate;
+            startDateObj = selectedDate;
+            print(startDateObj);
+            startDate = DateFormat('dd/MM/yyyy').format(startDateObj);
+            print("Start date to set to $startDate");
+          });
+        }
+      case "endDate":
+        if (pickedDate != null && pickedDate != selectedDate) {
+          setState(() {
+            selectedDate = pickedDate;
+            endDateObj = selectedDate;
+            print(endDateObj);
+            endDate = DateFormat('dd/MM/yyyy').format(endDateObj);
+            print("End date set to $endDate");
+          });
+        }
+      case "interviewDate":
+        if (pickedDate != null && pickedDate != selectedDate) {
+          setState(() {
+            selectedDate = pickedDate;
+            interviewDateObj = selectedDate;
+            print(interviewDateObj);
+            interviewDate = DateFormat('dd/MM/yyyy').format(interviewDateObj);
+            print("Interview date set to $interviewDate");
+          });
+        }
     }
   }
 
@@ -97,10 +124,12 @@ class _NewListingScreenState extends State<NewListingScreen> {
             child: DropdownButton<String>(
               value: _chosenModel,
               underline: Container(),
+              borderRadius: BorderRadius.all(Radius.circular(16)),
+              dropdownColor: Color.fromARGB(255, 242, 251, 242),
               isExpanded: true,
               disabledHint: Text("Job"),
               menuMaxHeight: screenSize.height * 0.2,
-              items: <String>[
+              items: [
                 'Looking for...',
                 'General Worker/Labourer',
                 'Dump Truck Operator',
@@ -180,7 +209,7 @@ class _NewListingScreenState extends State<NewListingScreen> {
                 ]),
             child: GestureDetector(
               onTap: () {
-                selectDate(context);
+                selectDate(context, "startDate");
               },
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -200,9 +229,13 @@ class _NewListingScreenState extends State<NewListingScreen> {
                   ),
                   GestureDetector(
                     child: Container(
+                      padding: EdgeInsets.all(4),
+                      decoration: BoxDecoration(
+                          color: Color.fromARGB(255, 22, 44, 49),
+                          borderRadius: BorderRadius.all(Radius.circular(20))),
                       child: Icon(
                         Icons.chevron_right_rounded,
-                        color: Color.fromARGB(255, 0, 23, 226),
+                        color: Color.fromARGB(255, 253, 228, 0),
                       ),
                     ),
                   )
@@ -226,7 +259,7 @@ class _NewListingScreenState extends State<NewListingScreen> {
                 ]),
             child: GestureDetector(
               onTap: () {
-                selectDate(context);
+                selectDate(context, "endDate");
               },
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -246,9 +279,13 @@ class _NewListingScreenState extends State<NewListingScreen> {
                   ),
                   GestureDetector(
                     child: Container(
+                      padding: EdgeInsets.all(4),
+                      decoration: BoxDecoration(
+                          color: Color.fromARGB(255, 22, 44, 49),
+                          borderRadius: BorderRadius.all(Radius.circular(20))),
                       child: Icon(
                         Icons.chevron_right_rounded,
-                        color: Color.fromARGB(255, 0, 23, 226),
+                        color: Color.fromARGB(255, 253, 228, 0),
                       ),
                     ),
                   )
@@ -272,7 +309,7 @@ class _NewListingScreenState extends State<NewListingScreen> {
                 ]),
             child: GestureDetector(
               onTap: () {
-                selectDate(context);
+                selectDate(context, "interviewDate");
               },
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -292,9 +329,13 @@ class _NewListingScreenState extends State<NewListingScreen> {
                   ),
                   GestureDetector(
                     child: Container(
+                      padding: EdgeInsets.all(4),
+                      decoration: BoxDecoration(
+                          color: Color.fromARGB(255, 22, 44, 49),
+                          borderRadius: BorderRadius.all(Radius.circular(20))),
                       child: Icon(
                         Icons.chevron_right_rounded,
-                        color: Color.fromARGB(255, 0, 23, 226),
+                        color: Color.fromARGB(255, 253, 228, 0),
                       ),
                     ),
                   )
@@ -303,11 +344,29 @@ class _NewListingScreenState extends State<NewListingScreen> {
             ),
           ),
           SizedBox(height: 32),
-          TextField(
-            maxLines: null, // Allows the text field to grow as needed
-            decoration: InputDecoration(
-              border: OutlineInputBorder(),
-              hintText: 'Additional notes or preferences for the job',
+          Container(
+            decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: const BorderRadius.all(Radius.circular(32)),
+                boxShadow: [
+                  BoxShadow(
+                    offset: const Offset(4, 7),
+                    color: Colors.grey.shade300,
+                    blurRadius: 8,
+                    spreadRadius: 0,
+                  ),
+                ]),
+            child: TextFormField(
+              autofocus: false,
+              maxLines: null,
+              controller: additionalNotesController,
+              style: simpleTextStyle(Colors.black),
+              decoration: textFieldInputDecoration(
+                  "Additional notes or candidate preferences",
+                  const Icon(
+                    Icons.text_snippet,
+                    color: const Color.fromARGB(255, 19, 53, 61),
+                  )),
             ),
           ),
           Expanded(child: Container()),
