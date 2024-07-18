@@ -80,7 +80,8 @@ class _ApplicantProfileScreenState extends State<ApplicantProfileScreen> {
     Object requestBody = {
       "listingId": widget.listingId,
       "email": userAccounts[0].email,
-      "userId": userAccounts[0].id
+      "userId": userAccounts[0].id,
+      "name": userAccounts[0].name
     };
 
     try {
@@ -91,6 +92,7 @@ class _ApplicantProfileScreenState extends State<ApplicantProfileScreen> {
       switch (response.statusCode) {
         case 200:
           print(response.body);
+          showToast("Invitation sent to applicant");
         default:
           throw Exception(response.reasonPhrase);
       }
@@ -106,21 +108,51 @@ class _ApplicantProfileScreenState extends State<ApplicantProfileScreen> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Send Interview Invite'),
+          backgroundColor: Color.fromARGB(255, 242, 251, 242),
+          elevation: 16,
+          shadowColor: Colors.black,
+          contentTextStyle: GoogleFonts.montserrat(
+              color: Color.fromARGB(255, 2, 50, 10),
+              fontSize: 16,
+              fontWeight: FontWeight.normal),
+          title: Row(
+            children: [
+              Icon(Icons.send),
+              SizedBox(width: 8),
+              Text('Send Interview Invite'),
+            ],
+          ),
+          titleTextStyle: GoogleFonts.montserrat(
+              color: Color.fromARGB(255, 2, 50, 10),
+              fontSize: 24,
+              fontWeight: FontWeight.bold),
           content: Text('Invite candidate to an interview on $formattedDate.'),
           actions: <Widget>[
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
-              },
-              child: Text('Select New Date'),
-            ),
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
                 _selectDate(context);
               },
-              child: Text('Confirm'),
+              child: Text(
+                'Select New Date',
+                style: GoogleFonts.montserrat(
+                    color: Color.fromARGB(255, 2, 50, 10),
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold),
+              ),
+            ),
+            TextButton(
+              onPressed: () async {
+                Navigator.of(context).pop();
+                await sendInterviewInvite();
+              },
+              child: Text(
+                'Confirm',
+                style: GoogleFonts.montserrat(
+                    color: Color.fromARGB(255, 2, 50, 10),
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold),
+              ),
             ),
           ],
         );
