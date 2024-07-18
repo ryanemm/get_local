@@ -121,33 +121,37 @@ class _DetailedListingsScreenCompanyState
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      GestureDetector(
-                        onTap: () {
-                          print("Back button tapped");
-                          Navigator.pop(context);
-                        },
-                        child: Container(
-                          height: 30,
-                          width: 30,
-                          decoration: const BoxDecoration(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(15)),
-                              color: Color.fromARGB(84, 148, 147, 147)),
-                          child: Center(
-                            child: Icon(
-                              Icons.arrow_back,
-                              color: Colors.black,
+                      Row(
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              print("Back button tapped");
+                              Navigator.pop(context);
+                            },
+                            child: Container(
+                              height: 30,
+                              width: 30,
+                              decoration: const BoxDecoration(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(15)),
+                                  color: Color.fromARGB(84, 148, 147, 147)),
+                              child: Center(
+                                child: Icon(
+                                  Icons.arrow_back,
+                                  color: Colors.black,
+                                ),
+                              ),
                             ),
                           ),
-                        ),
-                      ),
-                      SizedBox(height: 8),
-                      Text(
-                        widget.job!,
-                        style: GoogleFonts.montserrat(
-                            color: Color.fromARGB(255, 2, 50, 10),
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold),
+                          SizedBox(width: 16),
+                          Text(
+                            widget.job!,
+                            style: GoogleFonts.montserrat(
+                                color: Color.fromARGB(255, 2, 50, 10),
+                                fontSize: 24,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ],
                       ),
                       SizedBox(height: 8),
                       Row(
@@ -205,13 +209,13 @@ class _DetailedListingsScreenCompanyState
                             itemCount: applications.length,
                             itemBuilder: (context, index) {
                               return ApplicationCard(
-                                applicationId:
-                                    applications[index].applicationId,
-                                companyId: applications[index].companyId!,
-                                listingId: applications[index].listingId,
-                                userId: applications[index].userId,
-                                name: applications[index].name,
-                              );
+                                  applicationId:
+                                      applications[index].applicationId,
+                                  companyId: applications[index].companyId!,
+                                  listingId: applications[index].listingId,
+                                  userId: applications[index].userId,
+                                  name: applications[index].name,
+                                  interviewDateTime: widget.interviewDateTime);
                             },
                           ),
                         ),

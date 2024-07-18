@@ -135,6 +135,7 @@ class _ListingsScreenCompanyState extends State<ListingsScreenCompany> {
               print("snapshot data :");
               print(snapshot.data);
               listings = snapshot.data!;
+              listings = listings.reversed.toList();
               print("Snapshot contains data");
 
               if (listings.isNotEmpty) {

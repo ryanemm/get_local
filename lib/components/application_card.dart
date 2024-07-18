@@ -11,6 +11,7 @@ class ApplicationCard extends StatefulWidget {
   final String? listingId;
   final String? userId;
   String? name;
+  String? interviewDateTime;
 
   ApplicationCard(
       {super.key,
@@ -18,7 +19,8 @@ class ApplicationCard extends StatefulWidget {
       this.applicationId,
       this.listingId,
       this.userId,
-      this.name});
+      this.name,
+      this.interviewDateTime});
 
   @override
   State<ApplicationCard> createState() => _ApplicationCardState();
@@ -37,8 +39,10 @@ class _ApplicationCardState extends State<ApplicationCard> {
               context,
               MaterialPageRoute(
                 builder: (context) => ApplicantProfileScreen(
-                    applicationId: widget.applicationId!,
-                    listingId: widget.listingId!),
+                  applicationId: widget.applicationId!,
+                  listingId: widget.listingId!,
+                  interviewDateTime: widget.interviewDateTime!,
+                ),
               ),
             );
           },

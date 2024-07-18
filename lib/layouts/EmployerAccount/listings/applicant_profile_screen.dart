@@ -11,15 +11,18 @@ import 'package:get_local/models/work_history.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' show post;
 import 'package:loader_overlay/loader_overlay.dart';
+import 'package:intl/intl.dart';
 
 class ApplicantProfileScreen extends StatefulWidget {
   final String applicationId;
   final String listingId;
+  final String interviewDateTime;
 
   const ApplicantProfileScreen({
     super.key,
     required this.applicationId,
     required this.listingId,
+    required this.interviewDateTime,
   });
 
   @override
@@ -29,6 +32,8 @@ class ApplicantProfileScreen extends StatefulWidget {
 class _ApplicantProfileScreenState extends State<ApplicantProfileScreen> {
   Timer? timer;
   List<AccountDetailsLocal> userAccounts = [];
+  DateTime? interviewDateObj;
+  String? formattedDate;
 
   Future<List<AccountDetailsLocal>> getUserAccount() async {
     print("getting user's account for application ID: ");
@@ -96,6 +101,47 @@ class _ApplicantProfileScreenState extends State<ApplicantProfileScreen> {
     }
   }
 
+  void _showDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Send Interview Invite'),
+          content: Text('Invite candidate to an interview on $formattedDate.'),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('Select New Date'),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+                _selectDate(context);
+              },
+              child: Text('Confirm'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Future<void> _selectDate(BuildContext context) async {
+    final DateTime? pickedDate = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2101),
+    );
+
+    if (pickedDate != null && pickedDate != DateTime.now()) {
+      // Handle the selected date
+      print('Selected date: $pickedDate');
+    }
+  }
+
   void showToast(String message) {
     Fluttertoast.showToast(
       msg: message,
@@ -146,6 +192,8 @@ class _ApplicantProfileScreenState extends State<ApplicantProfileScreen> {
   ];
   @override
   Widget build(BuildContext context) {
+    interviewDateObj = DateTime.parse(widget.interviewDateTime);
+    formattedDate = DateFormat('EEEE, MMMM d').format(interviewDateObj!);
     return LoaderOverlay(
       child: Scaffold(
         body: FutureBuilder<List<AccountDetailsLocal>>(
@@ -172,6 +220,7 @@ class _ApplicantProfileScreenState extends State<ApplicantProfileScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           GestureDetector(
                             onTap: () {
@@ -193,64 +242,27 @@ class _ApplicantProfileScreenState extends State<ApplicantProfileScreen> {
                               ),
                             ),
                           ),
-                          SizedBox(width: 8),
-                          Container(
-                            height: 60,
-                            width: 60,
-                            decoration: const BoxDecoration(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(30)),
-                                color: Colors.grey),
-                            child: Icon(Icons.person_2_outlined),
+                          SizedBox(width: 16),
+                          Text(
+                            userAccounts[0].name,
+                            style: GoogleFonts.montserrat(
+                                color: Color.fromARGB(255, 2, 50, 10),
+                                fontSize: 24,
+                                fontWeight: FontWeight.bold),
                           ),
-                          SizedBox(width: 8),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                children: [
-                                  Text(
-                                    userAccounts[0].name,
-                                    style: GoogleFonts.montserrat(
-                                        color: Colors.black,
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                  SizedBox(width: 2),
-                                  Text(
-                                    userAccounts[0].surname,
-                                    style: GoogleFonts.montserrat(
-                                        color: Colors.black,
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                ],
-                              ),
-                              Text(
-                                userAccounts[0].job,
-                                style: GoogleFonts.montserrat(
-                                    color: Colors.black,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.normal),
-                              ),
-                              Row(
-                                children: [
-                                  Icon(Icons.phone),
-                                  Text(
-                                    userAccounts[0].phoneNumber,
-                                    style: GoogleFonts.montserrat(
-                                        color: Colors.black,
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.normal),
-                                  ),
-                                ],
-                              )
-                            ],
+                          SizedBox(width: 2),
+                          Text(
+                            userAccounts[0].surname,
+                            style: GoogleFonts.montserrat(
+                                color: Color.fromARGB(255, 2, 50, 10),
+                                fontSize: 24,
+                                fontWeight: FontWeight.bold),
                           ),
                           Expanded(child: Container()),
                           GestureDetector(
                             onTap: () {
-                              showToast("Invitation sent to applicant");
+                              //showToast("Invitation sent to applicant");
+                              _showDialog(context);
                             },
                             child: Container(
                               padding: EdgeInsets.all(12),
@@ -271,6 +283,47 @@ class _ApplicantProfileScreenState extends State<ApplicantProfileScreen> {
                                         fontWeight: FontWeight.bold)),
                               ),
                             ),
+                          )
+                        ],
+                      ),
+                      SizedBox(height: 16),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(width: 46),
+                          Container(
+                            height: 60,
+                            width: 60,
+                            decoration: const BoxDecoration(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(15)),
+                                color: Colors.grey),
+                            child: Icon(Icons.person_2_outlined),
+                          ),
+                          SizedBox(width: 8),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                userAccounts[0].job,
+                                style: GoogleFonts.montserrat(
+                                    color: Colors.black,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.normal),
+                              ),
+                              Row(
+                                children: [
+                                  Icon(Icons.phone),
+                                  Text(
+                                    userAccounts[0].phoneNumber,
+                                    style: GoogleFonts.montserrat(
+                                        color: Colors.black,
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.normal),
+                                  ),
+                                ],
+                              )
+                            ],
                           )
                         ],
                       ),
