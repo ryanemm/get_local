@@ -48,7 +48,7 @@ class _DetailedListingsScreenCompanyState
   List<Application> applications = [];
   DateTime? interviewDate;
 
-  int _tabTextIconIndexSelected = 0;
+  int _selectedTab = 0;
 
   @override
   void initState() {
@@ -94,226 +94,219 @@ class _DetailedListingsScreenCompanyState
 
   @override
   Widget build(BuildContext context) {
+    interviewDate = DateTime.parse(widget.interviewDateTime!);
+    String formattedDate = DateFormat('EEEE, MMMM d').format(interviewDate!);
     return LoaderOverlay(
       child: Scaffold(
-        body: FutureBuilder<List<Application>>(
-          future: getApplications(),
-          builder: (context, snapshot) {
-            if (snapshot.hasError) {
-              if (applications.isNotEmpty) {
-                return Container(
-                  color: Colors.blue,
-                );
-              }
-            } else if (snapshot.hasData && snapshot.hasError == false) {
-              print("snapshot data :");
-              print(snapshot.data);
-              applications = snapshot.data!;
-              print("Snapshot contains data");
-              interviewDate = DateTime.parse(widget.interviewDateTime!);
-              String formattedDate =
-                  DateFormat('EEEE, MMMM d').format(interviewDate!);
-
-              if (applications.isNotEmpty) {
-                return Container(
-                  padding: EdgeInsets.symmetric(horizontal: 16),
-                  color: Colors.white,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          GestureDetector(
-                            onTap: () {
-                              print("Back button tapped");
-                              Navigator.pop(context);
-                            },
-                            child: Container(
-                              height: 30,
-                              width: 30,
-                              decoration: const BoxDecoration(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(15)),
-                                  color: Color.fromARGB(84, 148, 147, 147)),
-                              child: Center(
-                                child: Icon(
-                                  Icons.arrow_back,
-                                  color: Colors.black,
-                                ),
-                              ),
-                            ),
-                          ),
-                          SizedBox(width: 16),
-                          Text(
-                            widget.job!,
-                            style: GoogleFonts.montserrat(
-                                color: Color.fromARGB(255, 2, 50, 10),
-                                fontSize: 24,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 8),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            height: 50,
-                            width: 50,
-                            decoration: BoxDecoration(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular((10))),
-                                color: Colors.grey),
-                            child: Icon(Icons.engineering_outlined),
-                          ),
-                          SizedBox(width: 8),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text("Piet Retief",
-                                      style: GoogleFonts.montserrat(
-                                          color: Colors.grey[900],
-                                          fontSize: 16)),
-                                  Row(
-                                    children: [
-                                      Text(widget.applications!),
-                                      widget.applications == "1"
-                                          ? Text(" application",
-                                              style: GoogleFonts.montserrat(
-                                                  color: Colors.grey[900],
-                                                  fontSize: 16))
-                                          : Text(" applications",
-                                              style: GoogleFonts.montserrat(
-                                                  color: Colors.grey[900],
-                                                  fontSize: 16))
-                                    ],
-                                  ),
-                                ],
-                              ),
-                              Text("Interview Date: $formattedDate",
-                                  style: GoogleFonts.montserrat(
-                                      color: Colors.grey[900], fontSize: 16))
-                            ],
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 24),
-                      Expanded(
-                        child: Container(
-                          child: ListView.builder(
-                            itemCount: applications.length,
-                            itemBuilder: (context, index) {
-                              return ApplicationCard(
-                                  applicationId:
-                                      applications[index].applicationId,
-                                  companyId: applications[index].companyId!,
-                                  listingId: applications[index].listingId,
-                                  userId: applications[index].userId,
-                                  name: applications[index].name,
-                                  interviewDateTime: widget.interviewDateTime);
-                            },
+          backgroundColor: Colors.white,
+          body: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        print("Back button tapped");
+                        Navigator.pop(context);
+                      },
+                      child: Container(
+                        height: 30,
+                        width: 30,
+                        decoration: const BoxDecoration(
+                            borderRadius: BorderRadius.all(Radius.circular(15)),
+                            color: Color.fromARGB(84, 148, 147, 147)),
+                        child: Center(
+                          child: Icon(
+                            Icons.arrow_back,
+                            color: Colors.black,
                           ),
                         ),
                       ),
-                    ],
-                  ),
-                );
-              } else if (applications.isEmpty) {
-                return Container(
-                  padding: EdgeInsets.symmetric(horizontal: 16),
-                  color: Colors.white,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Row(
-                        children: [
-                          GestureDetector(
-                            onTap: () {
-                              print("Back button tapped");
-                              Navigator.pop(context);
-                            },
-                            child: Container(
-                              height: 30,
-                              width: 30,
-                              decoration: const BoxDecoration(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(15)),
-                                  color: Color.fromARGB(84, 148, 147, 147)),
-                              child: Center(
-                                child: Icon(
-                                  Icons.arrow_back,
-                                  color: Colors.black,
-                                ),
-                              ),
-                            ),
-                          ),
-                          SizedBox(width: 16),
-                          Text(
-                            widget.job!,
-                            style: GoogleFonts.montserrat(
-                                fontSize: 24,
-                                color: Color.fromARGB(255, 2, 50, 10),
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 8),
-                      Row(
-                        children: [
-                          SizedBox(width: 46),
-                          Text(
-                            "Interview date: ",
-                            style: GoogleFonts.montserrat(
-                                fontSize: 16,
-                                color: Color.fromARGB(255, 49, 50, 49),
-                                fontWeight: FontWeight.normal),
-                          ),
-                          Text(
-                            widget.interviewDateTime!,
-                            style: GoogleFonts.montserrat(
-                                fontSize: 16,
-                                color: Color.fromARGB(255, 49, 50, 49),
-                                fontWeight: FontWeight.normal),
-                          ),
-                        ],
-                      ),
-                      Expanded(flex: 1, child: Container()),
-                      Image.asset("assets/images/waiting_graphic.png"),
-                      Text(
-                        "No applications...yet",
-                        style: GoogleFonts.montserrat(
-                            fontSize: 24,
-                            color: Color.fromARGB(255, 49, 50, 49),
-                            fontWeight: FontWeight.w600),
-                      ),
-                      SizedBox(height: 8),
-                      Text(
-                        "Once candidates start applying to this job listing you will be able to see and review the applications right here",
-                        style: GoogleFonts.montserrat(
-                            fontSize: 16,
-                            color: Color.fromARGB(255, 49, 50, 49),
-                            fontWeight: FontWeight.normal),
-                        textAlign: TextAlign.center,
-                      ),
-                      Expanded(flex: 3, child: Container()),
-                    ],
-                  ),
-                );
-              }
-            }
-            return Container(
-                decoration: BoxDecoration(
-                  color: Colors.white,
+                    ),
+                    SizedBox(width: 16),
+                    Text(
+                      widget.job!,
+                      style: GoogleFonts.montserrat(
+                          color: Color.fromARGB(255, 2, 50, 10),
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ],
                 ),
-                child: const Center(child: CircularProgressIndicator()));
-          },
-        ),
-      ),
+                SizedBox(height: 8),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      height: 50,
+                      width: 50,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular((10))),
+                          color: Colors.grey),
+                      child: Icon(Icons.engineering_outlined),
+                    ),
+                    SizedBox(width: 8),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text("Piet Retief",
+                                style: GoogleFonts.montserrat(
+                                    color: Colors.grey[900], fontSize: 16)),
+                            Row(
+                              children: [
+                                Text(widget.applications!),
+                                widget.applications == "1"
+                                    ? Text(" application",
+                                        style: GoogleFonts.montserrat(
+                                            color: Colors.grey[900],
+                                            fontSize: 16))
+                                    : Text(" applications",
+                                        style: GoogleFonts.montserrat(
+                                            color: Colors.grey[900],
+                                            fontSize: 16))
+                              ],
+                            ),
+                          ],
+                        ),
+                        Text("Interview Date: $formattedDate",
+                            style: GoogleFonts.montserrat(
+                                color: Colors.grey[900], fontSize: 16))
+                      ],
+                    ),
+                  ],
+                ),
+                SizedBox(height: 16),
+                FlutterToggleTab(
+                  selectedBackgroundColors: [Colors.white],
+                  unSelectedBackgroundColors: [
+                    Color.fromARGB(255, 241, 243, 252)
+                  ],
+                  height: 40,
+                  width: 92,
+                  borderRadius: 15,
+                  marginSelected: EdgeInsets.all(4),
+                  selectedTextStyle: TextStyle(
+                    color: Colors.black,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                  ),
+                  unSelectedTextStyle: TextStyle(
+                      color: Colors.black,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w400),
+                  labels: ["Applications", "Shortlist"],
+                  selectedIndex: _selectedTab,
+                  selectedLabelIndex: (index) {
+                    setState(() {
+                      _selectedTab = index;
+                      print("Selected tab: $_selectedTab");
+                    });
+                  },
+                ),
+                _selectedTab == 0
+                    ? Expanded(
+                        child: FutureBuilder<List<Application>>(
+                          future: getApplications(),
+                          builder: (context, snapshot) {
+                            if (snapshot.hasError) {
+                              if (applications.isNotEmpty) {
+                                return Container(
+                                  color: Colors.blue,
+                                );
+                              }
+                            } else if (snapshot.hasData &&
+                                snapshot.hasError == false) {
+                              print("snapshot data :");
+                              print(snapshot.data);
+                              applications = snapshot.data!;
+                              print("Snapshot contains data");
+
+                              if (applications.isNotEmpty) {
+                                return Container(
+                                  color: Colors.white,
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      SizedBox(height: 24),
+                                      Expanded(
+                                        child: Container(
+                                          child: ListView.builder(
+                                            itemCount: applications.length,
+                                            itemBuilder: (context, index) {
+                                              return ApplicationCard(
+                                                  applicationId:
+                                                      applications[index]
+                                                          .applicationId,
+                                                  companyId: applications[index]
+                                                      .companyId!,
+                                                  listingId: applications[index]
+                                                      .listingId,
+                                                  userId: applications[index]
+                                                      .userId,
+                                                  name:
+                                                      applications[index].name,
+                                                  interviewDateTime:
+                                                      widget.interviewDateTime);
+                                            },
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              } else if (applications.isEmpty) {
+                                return Container(
+                                  padding: EdgeInsets.symmetric(horizontal: 16),
+                                  color: Colors.white,
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Expanded(flex: 1, child: Container()),
+                                      Image.asset(
+                                          "assets/images/waiting_graphic.png"),
+                                      Text(
+                                        "No applications...yet",
+                                        style: GoogleFonts.montserrat(
+                                            fontSize: 24,
+                                            color:
+                                                Color.fromARGB(255, 49, 50, 49),
+                                            fontWeight: FontWeight.w600),
+                                      ),
+                                      SizedBox(height: 8),
+                                      Text(
+                                        "Once candidates start applying to this job listing you will be able to see and review the applications right here",
+                                        style: GoogleFonts.montserrat(
+                                            fontSize: 16,
+                                            color:
+                                                Color.fromARGB(255, 49, 50, 49),
+                                            fontWeight: FontWeight.normal),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                      Expanded(flex: 3, child: Container()),
+                                    ],
+                                  ),
+                                );
+                              }
+                            }
+                            return Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                ),
+                                child: const Center(
+                                    child: CircularProgressIndicator()));
+                          },
+                        ),
+                      )
+                    : Expanded(child: Container()),
+              ],
+            ),
+          )),
     );
   }
 }

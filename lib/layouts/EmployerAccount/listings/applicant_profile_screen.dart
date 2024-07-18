@@ -81,7 +81,9 @@ class _ApplicantProfileScreenState extends State<ApplicantProfileScreen> {
       "listingId": widget.listingId,
       "email": userAccounts[0].email,
       "userId": userAccounts[0].id,
-      "name": userAccounts[0].name
+      "name": userAccounts[0].name,
+      "surname": userAccounts[0].surname,
+      "interviewDate": formattedDate
     };
 
     try {
