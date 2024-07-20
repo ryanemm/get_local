@@ -81,7 +81,7 @@ class _DetailedListingsScreenCompanyState
 
           print(formatted);
 
-          return formatted;
+          return formatted; sd
         default:
           throw Exception(response.reasonPhrase);
       }
@@ -303,7 +303,101 @@ class _DetailedListingsScreenCompanyState
                           },
                         ),
                       )
-                    : Expanded(child: Container()),
+                    : Expanded(
+                        child: Container(
+                        child: FutureBuilder<List<Application>>(
+                          future: getApplications(),
+                          builder: (context, snapshot) {
+                            if (snapshot.hasError) {
+                              if (applications.isNotEmpty) {
+                                return Container(
+                                  color: Colors.blue,
+                                );
+                              }
+                            } else if (snapshot.hasData &&
+                                snapshot.hasError == false) {
+                              print("snapshot data :");
+                              print(snapshot.data);
+                              applications = snapshot.data!;
+                              print("Snapshot contains data");
+
+                              if (applications.isNotEmpty) {
+                                return Container(
+                                  color: Colors.white,
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      SizedBox(height: 24),
+                                      Expanded(
+                                        child: Container(
+                                          child: ListView.builder(
+                                            itemCount: applications.length,
+                                            itemBuilder: (context, index) {
+                                              return ApplicationCard(
+                                                  applicationId:
+                                                      applications[index]
+                                                          .applicationId,
+                                                  companyId: applications[index]
+                                                      .companyId!,
+                                                  listingId: applications[index]
+                                                      .listingId,
+                                                  userId: applications[index]
+                                                      .userId,
+                                                  name:
+                                                      applications[index].name,
+                                                  interviewDateTime:
+                                                      widget.interviewDateTime);
+                                            },
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              } else if (applications.isEmpty) {
+                                return Container(
+                                  padding: EdgeInsets.symmetric(horizontal: 16),
+                                  color: Colors.white,
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Expanded(flex: 1, child: Container()),
+                                      Image.asset(
+                                          "assets/images/waiting_graphic.png"),
+                                      Text(
+                                        "No applications...yet",
+                                        style: GoogleFonts.montserrat(
+                                            fontSize: 24,
+                                            color:
+                                                Color.fromARGB(255, 49, 50, 49),
+                                            fontWeight: FontWeight.w600),
+                                      ),
+                                      SizedBox(height: 8),
+                                      Text(
+                                        "Once candidates start applying to this job listing you will be able to see and review the applications right here",
+                                        style: GoogleFonts.montserrat(
+                                            fontSize: 16,
+                                            color:
+                                                Color.fromARGB(255, 49, 50, 49),
+                                            fontWeight: FontWeight.normal),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                      Expanded(flex: 3, child: Container()),
+                                    ],
+                                  ),
+                                );
+                              }
+                            }
+                            return Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                ),
+                                child: const Center(
+                                    child: CircularProgressIndicator()));
+                          },
+                        ),
+                      )),
               ],
             ),
           )),
