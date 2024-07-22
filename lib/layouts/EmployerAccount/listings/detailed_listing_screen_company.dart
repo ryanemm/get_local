@@ -7,6 +7,7 @@ import 'package:flutter_toggle_tab/flutter_toggle_tab.dart';
 import 'package:get_local/components/application_card.dart';
 import 'package:get_local/components/listing_card.dart';
 import 'package:get_local/components/listing_card_applications.dart';
+import 'package:get_local/components/shortlist_card.dart';
 import 'package:get_local/models/application.dart';
 import 'package:get_local/models/listing.dart';
 import 'package:get_local/models/shortlisting.dart';
@@ -47,6 +48,7 @@ class _DetailedListingsScreenCompanyState
     extends State<DetailedListingScreenCompany> {
   Timer? timer;
   List<Application> applications = [];
+  List<Shortlisting> shortlist = [];
   DateTime? interviewDate;
 
   int _selectedTab = 0;
@@ -340,11 +342,11 @@ class _DetailedListingsScreenCompanyState
                       )
                     : Expanded(
                         child: Container(
-                        child: FutureBuilder<List<Application>>(
-                          future: getApplications(),
+                        child: FutureBuilder<List<Shortlisting>>(
+                          future: getShortlist(),
                           builder: (context, snapshot) {
                             if (snapshot.hasError) {
-                              if (applications.isNotEmpty) {
+                              if (shortlist.isNotEmpty) {
                                 return Container(
                                   color: Colors.blue,
                                 );
@@ -353,10 +355,10 @@ class _DetailedListingsScreenCompanyState
                                 snapshot.hasError == false) {
                               print("snapshot data :");
                               print(snapshot.data);
-                              applications = snapshot.data!;
+                              shortlist = snapshot.data!;
                               print("Snapshot contains data");
 
-                              if (applications.isNotEmpty) {
+                              if (shortlist.isNotEmpty) {
                                 return Container(
                                   color: Colors.white,
                                   child: Column(
@@ -369,20 +371,14 @@ class _DetailedListingsScreenCompanyState
                                           child: ListView.builder(
                                             itemCount: applications.length,
                                             itemBuilder: (context, index) {
-                                              return ApplicationCard(
-                                                  applicationId:
-                                                      applications[index]
-                                                          .applicationId,
-                                                  companyId: applications[index]
-                                                      .companyId!,
-                                                  listingId: applications[index]
+                                              return ShortlistCard(
+                                                  listingId: shortlist[index]
                                                       .listingId,
-                                                  userId: applications[index]
-                                                      .userId,
-                                                  name:
-                                                      applications[index].name,
-                                                  interviewDateTime:
-                                                      widget.interviewDateTime);
+                                                  userId:
+                                                      shortlist[index].userId,
+                                                  name: shortlist[index].name,
+                                                  surname:
+                                                      shortlist[index].surname);
                                             },
                                           ),
                                         ),
