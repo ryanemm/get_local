@@ -9,6 +9,7 @@ import 'package:get_local/components/listing_card.dart';
 import 'package:get_local/components/listing_card_applications.dart';
 import 'package:get_local/models/application.dart';
 import 'package:get_local/models/listing.dart';
+import 'package:get_local/models/shortlisting.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' show post;
 import 'package:loader_overlay/loader_overlay.dart';
@@ -77,6 +78,40 @@ class _DetailedListingsScreenCompanyState
 
           var formatted =
               applications.map((post) => Application.fromJson(post)).toList();
+          print(formatted);
+
+          print(formatted);
+
+          return formatted;
+        default:
+          throw Exception(response.reasonPhrase);
+      }
+    } on Exception {
+      print("Caught an exception: ");
+      //return Future.error(e.toString());
+      rethrow;
+    }
+  }
+
+  Future<List<Shortlisting>> getShortlist() async {
+    print("getting shortlist");
+    const jsonEndpoint = "http://139.144.77.133/getLocalDemo/getShortlist.php";
+
+    Object requestBody = {"listingId": widget.id};
+
+    try {
+      final response = await post(
+        Uri.parse(jsonEndpoint),
+        body: requestBody,
+      );
+      switch (response.statusCode) {
+        case 200:
+          List shortlistedCandidates = json.decode(response.body);
+          print(shortlistedCandidates);
+
+          var formatted = shortlistedCandidates
+              .map((shortlisting) => Shortlisting.fromJson(shortlisting))
+              .toList();
           print(formatted);
 
           print(formatted);
