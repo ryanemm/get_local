@@ -81,7 +81,7 @@ class _DetailedListingsScreenCompanyState
 
           print(formatted);
 
-          return formatted; sd
+          return formatted;
         default:
           throw Exception(response.reasonPhrase);
       }

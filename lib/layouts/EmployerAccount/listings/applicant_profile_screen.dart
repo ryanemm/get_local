@@ -34,6 +34,7 @@ class _ApplicantProfileScreenState extends State<ApplicantProfileScreen> {
   List<AccountDetailsLocal> userAccounts = [];
   DateTime? interviewDateObj;
   String? formattedDate;
+  String? userId;
 
   Future<List<AccountDetailsLocal>> getUserAccount() async {
     print("getting user's account for application ID: ");
@@ -58,6 +59,7 @@ class _ApplicantProfileScreenState extends State<ApplicantProfileScreen> {
               .map((userAccount) => AccountDetailsLocal.fromJson(userAccount))
               .toList();
           print(formatted);
+          userId = formatted[0].id;
 
           print(formatted);
 
@@ -226,6 +228,9 @@ class _ApplicantProfileScreenState extends State<ApplicantProfileScreen> {
   ];
   @override
   Widget build(BuildContext context) {
+    print("Listing ID: ");
+    print(widget.listingId);
+    print(widget.interviewDateTime);
     interviewDateObj = DateTime.parse(widget.interviewDateTime);
     formattedDate = DateFormat('EEEE, MMMM d').format(interviewDateObj!);
     return LoaderOverlay(
