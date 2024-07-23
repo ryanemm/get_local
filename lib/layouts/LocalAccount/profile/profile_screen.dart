@@ -2,10 +2,12 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:dotted_border/dotted_border.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get_local/components/work_history_card.dart';
 import 'package:get_local/models/work_history.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:mime/mime.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:http/http.dart' as http;
@@ -34,6 +36,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
   File? _profilePic;
   String? profilePicName;
   String? id;
+  final ImagePicker _picker = ImagePicker();
+
   List<WorkHistoryItem> workHistoryItems = [
     WorkHistoryItem(
       title: 'Crane Operator',
@@ -82,6 +86,86 @@ class _ProfileScreenState extends State<ProfileScreen> {
     id = widget.id;
     profilePicName = "local_$id\_profile_pic.jpg";
     super.initState();
+  }
+
+  Future<void> pickImage() async {
+    final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+    if (image != null) {
+      // Use the image
+      print('Image path: ${image.path}');
+      File pic = File(image.path);
+      uploadProfilePic(pic, profilePicName!);
+    }
+  }
+
+  void _showDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: Color.fromARGB(255, 242, 251, 242),
+          elevation: 16,
+          shadowColor: Colors.black,
+          contentTextStyle: GoogleFonts.montserrat(
+              color: Color.fromARGB(255, 2, 50, 10),
+              fontSize: 16,
+              fontWeight: FontWeight.normal),
+          title: Row(
+            children: [
+              Icon(Icons.person),
+              SizedBox(width: 8),
+              Text('Profile Picture'),
+            ],
+          ),
+          titleTextStyle: GoogleFonts.montserrat(
+              color: Color.fromARGB(255, 2, 50, 10),
+              fontSize: 24,
+              fontWeight: FontWeight.bold),
+          content: Text('Would you like to pick a picture for your profile?'),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () async {
+                Navigator.of(context).pop();
+              },
+              child: Text(
+                'Cancel',
+                style: GoogleFonts.montserrat(
+                    color: Color.fromARGB(255, 2, 50, 10),
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold),
+              ),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+                pickImage();
+              },
+              child: Text(
+                'Select Image',
+                style: GoogleFonts.montserrat(
+                    color: Color.fromARGB(255, 2, 50, 10),
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Future<void> _pickFile() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles();
+    setState(() {
+      if (result != null) {
+        _profilePic = File(result.files.single.path!);
+        //filename = result.files.single.name;
+        uploadProfilePic(_profilePic!, profilePicName!);
+        print("Document selected");
+      } else {
+        print('No file selected.');
+      }
+    });
   }
 
   Future<void> uploadProfilePic(File file, String newName) async {
@@ -138,13 +222,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
             Row(
               children: [
                 SizedBox(width: 8),
-                Container(
-                  height: 60,
-                  width: 60,
-                  decoration: const BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(30)),
-                      color: Colors.grey),
-                  child: Icon(Icons.person_2_outlined),
+                GestureDetector(
+                  onTap: () {
+                    _showDialog(context);
+                  },
+                  child: Container(
+                    height: 60,
+                    width: 60,
+                    decoration: const BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(30)),
+                        color: Colors.grey),
+                    child: Icon(Icons.person_2_outlined),
+                  ),
                 ),
                 SizedBox(width: 8),
                 Column(

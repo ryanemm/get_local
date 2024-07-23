@@ -109,33 +109,6 @@ class _ListingsScreenState extends State<ListingsScreen> {
                             fontWeight: FontWeight.bold),
                       ),
                       SizedBox(height: 16),
-                      FlutterToggleTab(
-                        selectedBackgroundColors: [Colors.white],
-                        unSelectedBackgroundColors: [
-                          Color.fromARGB(255, 241, 243, 252)
-                        ],
-                        height: 40,
-                        width: 92,
-                        borderRadius: 15,
-                        marginSelected: EdgeInsets.all(4),
-                        selectedTextStyle: TextStyle(
-                          color: Colors.black,
-                          fontSize: 14,
-                          fontWeight: FontWeight.w600,
-                        ),
-                        unSelectedTextStyle: TextStyle(
-                            color: Colors.black,
-                            fontSize: 14,
-                            fontWeight: FontWeight.w400),
-                        labels: ["All", "Bookmarks", "Invites"],
-                        selectedIndex: _tabTextIconIndexSelected,
-                        selectedLabelIndex: (index) {
-                          setState(() {
-                            _tabTextIconIndexSelected = index;
-                          });
-                        },
-                      ),
-                      SizedBox(height: 20),
                       Expanded(
                         child: ListView.builder(
                           itemCount: listings.length,
