@@ -1,8 +1,14 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:get_local/components/work_history_card.dart';
 import 'package:get_local/models/work_history.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mime/mime.dart';
+import 'package:http_parser/http_parser.dart';
+import 'package:http/http.dart' as http;
 
 class ProfileScreen extends StatefulWidget {
   final String name;
@@ -10,19 +16,24 @@ class ProfileScreen extends StatefulWidget {
   final String email;
   final String approved;
   final String job;
+  final String id;
   const ProfileScreen(
       {super.key,
       required this.name,
       required this.surname,
       required this.email,
       required this.approved,
-      required this.job});
+      required this.job,
+      required this.id});
 
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  File? _profilePic;
+  String? profilePicName;
+  String? id;
   List<WorkHistoryItem> workHistoryItems = [
     WorkHistoryItem(
       title: 'Crane Operator',
@@ -65,6 +76,56 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
     // Add more items here...
   ];
+
+  @override
+  void initState() {
+    id = widget.id;
+    profilePicName = "local_$id\_profile_pic.jpg";
+    super.initState();
+  }
+
+  Future<void> uploadProfilePic(File file, String newName) async {
+    final uri =
+        Uri.parse("http://139.144.77.133/getLocalDemo/document_upload_mod.php");
+
+    var request = http.MultipartRequest('POST', uri);
+
+    // Add widget.name to the file name
+    String fileName = newName;
+
+    var mimeTypeData =
+        lookupMimeType(file.path, headerBytes: [0xFF, 0xD8])?.split('/');
+    var fileStream = http.ByteStream(file.openRead());
+    var fileLength = await file.length();
+
+    request.files.add(http.MultipartFile(
+      'files[]', // field name on the server
+      fileStream,
+      fileLength,
+      filename: fileName,
+      contentType: mimeTypeData != null
+          ? MediaType(mimeTypeData[0], mimeTypeData[1])
+          : null,
+    ));
+
+    // Adding newName as a field in the request
+    request.fields['newNames'] = json.encode([fileName]);
+
+    // Sending the request
+    try {
+      var response = await request.send();
+
+      if (response.statusCode == 200) {
+        var responseBody = await http.Response.fromStream(response);
+        print('Response: ${responseBody.body}');
+      } else {
+        print('Error: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Exception: $e');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     Size screenSize = MediaQuery.of(context).size;

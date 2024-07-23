@@ -95,6 +95,7 @@ class _HomeScreenLocalState extends State<HomeScreenLocal> {
           name: widget.name!,
           surname: widget.surname!,
           email: widget.email!,
+          id: widget.id!,
           approved: widget.approved!,
           job: widget.job!)
     ];

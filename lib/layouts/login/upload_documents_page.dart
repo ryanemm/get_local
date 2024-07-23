@@ -280,7 +280,7 @@ class _UploadDocumentsPageState extends State<UploadDocumentsPage> {
                                         .add(uploadCardsLocal[2].document!);
                                     print("uploading documents");
                                     await uploadFilesWithNewNames1(documents, [
-                                      "local_$user_id\_id.pdf",
+                                      "local_$user_id\_ID.pdf",
                                       "local_$user_id\_proof_of_res.pdf",
                                       "local_$user_id\_CV.pdf"
                                     ]);
