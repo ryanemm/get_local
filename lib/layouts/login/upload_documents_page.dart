@@ -11,6 +11,8 @@ import 'package:get_local/layouts/login/await_approval_page.dart';
 import 'package:get_local/layouts/login/pre_doc_upload.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:loader_overlay/loader_overlay.dart';
+import 'package:mime/mime.dart';
+import 'package:http_parser/http_parser.dart';
 import 'package:http/http.dart' as http;
 
 class UploadDocumentsPage extends StatefulWidget {
@@ -61,6 +63,7 @@ class _UploadDocumentsPageState extends State<UploadDocumentsPage> {
   List<File> documents = [];
   String? filename;
   String? applicantId;
+  String? user_id;
   bool documentUploaded = false;
   List<DocumentUploadCard> uploadCardsLocal = [
     DocumentUploadCard(
@@ -79,6 +82,7 @@ class _UploadDocumentsPageState extends State<UploadDocumentsPage> {
   void initState() {
     // TODO: implement initState
     applicantId = widget.applicantId;
+    user_id = widget.applicantId;
   }
 
   Future<File> changeFileNameOnly(File file, String newFileName) {
@@ -105,7 +109,7 @@ class _UploadDocumentsPageState extends State<UploadDocumentsPage> {
     print(documents.length);
 
     final uri =
-        Uri.parse('http://139.144.77.133/getLocalDemo/document_upload.php');
+        Uri.parse('http://139.144.77.133/getLocalDemo/document_upload_mod.php');
     final request = http.MultipartRequest('POST', uri);
 
     for (File document in documents) {
@@ -124,6 +128,54 @@ class _UploadDocumentsPageState extends State<UploadDocumentsPage> {
       }));
     } else {
       print('File upload failed');
+    }
+  }
+
+  Future<void> uploadFilesWithNewNames1(
+      List<File> files, List<String> newNames) async {
+    int length = documents.length;
+    print("Document list contains $length files");
+    final uri =
+        Uri.parse("http://139.144.77.133/getLocalDemo/document_upload_mod.php");
+
+    var request = http.MultipartRequest('POST', uri);
+
+    // Adding files to the request
+    for (int i = 0; i < files.length; i++) {
+      File file = files[i];
+      String fileName = newNames[i];
+
+      var mimeTypeData =
+          lookupMimeType(file.path, headerBytes: [0xFF, 0xD8])?.split('/');
+      var fileStream = http.ByteStream(file.openRead());
+      var fileLength = await file.length();
+
+      request.files.add(http.MultipartFile(
+        'files[]', // field name on the server, updated to 'files[]'
+        fileStream,
+        fileLength,
+        filename: fileName,
+        contentType: mimeTypeData != null
+            ? MediaType(mimeTypeData[0], mimeTypeData[1])
+            : null,
+      ));
+    }
+
+    // Adding newNames as a field in the request
+    request.fields['newNames'] = json.encode(newNames);
+
+    // Sending the request
+    try {
+      var response = await request.send();
+
+      if (response.statusCode == 200) {
+        var responseBody = await http.Response.fromStream(response);
+        print('Response: ${responseBody.body}');
+      } else {
+        print('Error: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Exception: $e');
     }
   }
 
@@ -170,7 +222,18 @@ class _UploadDocumentsPageState extends State<UploadDocumentsPage> {
                                   offsetY: 4,
                                   width: 120.00,
                                   function: () async {
-                                    await _uploadFile();
+                                    documents
+                                        .add(uploadCardsCompany[0].document!);
+                                    documents
+                                        .add(uploadCardsCompany[1].document!);
+                                    documents
+                                        .add(uploadCardsCompany[2].document!);
+                                    print("uploading documents");
+                                    await uploadFilesWithNewNames1(documents, [
+                                      "company_$user_id\_company_profile.pdf",
+                                      "company_$user_id\_CIPC.pdf",
+                                      "company_$user_id\_proof_of_address.pdf"
+                                    ]);
 
                                     Navigator.push(
                                         context,
@@ -209,7 +272,18 @@ class _UploadDocumentsPageState extends State<UploadDocumentsPage> {
                                   offsetY: 4,
                                   width: 60.00,
                                   function: () async {
-                                    await _uploadFile();
+                                    documents
+                                        .add(uploadCardsLocal[0].document!);
+                                    documents
+                                        .add(uploadCardsLocal[1].document!);
+                                    documents
+                                        .add(uploadCardsLocal[2].document!);
+                                    print("uploading documents");
+                                    await uploadFilesWithNewNames1(documents, [
+                                      "local_$user_id\_id.pdf",
+                                      "local_$user_id\_proof_of_res.pdf",
+                                      "local_$user_id\_CV.pdf"
+                                    ]);
                                     Navigator.push(
                                         context,
                                         MaterialPageRoute(

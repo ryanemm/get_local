@@ -14,8 +14,8 @@ class Shortlisting {
 
   factory Shortlisting.fromJson(Map<String, dynamic> jsonData) {
     return Shortlisting(
-        listingId: jsonData['listingId'],
-        userId: jsonData['userId'],
+        listingId: jsonData['listing_id'],
+        userId: jsonData['user_id'],
         name: jsonData['name'],
         surname: jsonData['surname']);
   }

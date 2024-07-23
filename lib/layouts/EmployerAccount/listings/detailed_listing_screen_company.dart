@@ -51,7 +51,7 @@ class _DetailedListingsScreenCompanyState
   List<Shortlisting> shortlist = [];
   DateTime? interviewDate;
 
-  int _selectedTab = 0;
+  int _selectedTab = 1;
 
   @override
   void initState() {
@@ -78,8 +78,9 @@ class _DetailedListingsScreenCompanyState
           List applications = json.decode(response.body);
           print(applications);
 
-          var formatted =
-              applications.map((post) => Application.fromJson(post)).toList();
+          var formatted = applications
+              .map((application) => Application.fromJson(application))
+              .toList();
           print(formatted);
 
           print(formatted);
@@ -112,10 +113,8 @@ class _DetailedListingsScreenCompanyState
           print(shortlistedCandidates);
 
           var formatted = shortlistedCandidates
-              .map((shortlisting) => Shortlisting.fromJson(shortlisting))
+              .map((listing) => Shortlisting.fromJson(listing))
               .toList();
-          print(formatted);
-
           print(formatted);
 
           return formatted;
@@ -345,6 +344,7 @@ class _DetailedListingsScreenCompanyState
                         child: FutureBuilder<List<Shortlisting>>(
                           future: getShortlist(),
                           builder: (context, snapshot) {
+                            print(snapshot.data);
                             if (snapshot.hasError) {
                               if (shortlist.isNotEmpty) {
                                 return Container(
@@ -356,9 +356,10 @@ class _DetailedListingsScreenCompanyState
                               print("snapshot data :");
                               print(snapshot.data);
                               shortlist = snapshot.data!;
-                              print("Snapshot contains data");
+                              print("Snapshot contains shortlist data");
 
                               if (shortlist.isNotEmpty) {
+                                print("show list of candidates");
                                 return Container(
                                   color: Colors.white,
                                   child: Column(
@@ -369,7 +370,7 @@ class _DetailedListingsScreenCompanyState
                                       Expanded(
                                         child: Container(
                                           child: ListView.builder(
-                                            itemCount: applications.length,
+                                            itemCount: shortlist.length,
                                             itemBuilder: (context, index) {
                                               return ShortlistCard(
                                                   listingId: shortlist[index]
@@ -386,7 +387,7 @@ class _DetailedListingsScreenCompanyState
                                     ],
                                   ),
                                 );
-                              } else if (applications.isEmpty) {
+                              } else if (shortlist.isEmpty) {
                                 return Container(
                                   padding: EdgeInsets.symmetric(horizontal: 16),
                                   color: Colors.white,
@@ -397,7 +398,7 @@ class _DetailedListingsScreenCompanyState
                                       Image.asset(
                                           "assets/images/waiting_graphic.png"),
                                       Text(
-                                        "No applications...yet",
+                                        "No shortlisted candidates...yet",
                                         style: GoogleFonts.montserrat(
                                             fontSize: 24,
                                             color:

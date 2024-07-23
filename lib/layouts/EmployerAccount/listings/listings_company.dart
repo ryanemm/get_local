@@ -147,42 +147,17 @@ class _ListingsScreenCompanyState extends State<ListingsScreenCompany> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          AnimatedContainer(
-                            duration: Duration(milliseconds: 500),
-                            height: isContainerVisible ? 40 : 0,
-                            width: double.infinity,
-                            child: FlutterToggleTab(
-                              selectedBackgroundColors: [Colors.white],
-                              unSelectedBackgroundColors: [
-                                Color.fromARGB(255, 241, 243, 252)
-                              ],
-                              height: 40,
-                              width: 92,
-                              borderRadius: 15,
-                              marginSelected: EdgeInsets.all(4),
-                              selectedTextStyle: TextStyle(
-                                color: Colors.black,
-                                fontSize: 14,
-                                fontWeight: FontWeight.w600,
-                              ),
-                              unSelectedTextStyle: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w400),
-                              labels: ["All", "Shortlist"],
-                              selectedIndex: _tabTextIconIndexSelected,
-                              selectedLabelIndex: (index) {
-                                setState(() {
-                                  _tabTextIconIndexSelected = index;
-                                });
-                              },
-                            ),
+                          Text(
+                            "Active Listings",
+                            style: GoogleFonts.montserrat(
+                                fontSize: 24,
+                                color: Color.fromARGB(255, 2, 50, 10),
+                                fontWeight: FontWeight.bold),
                           ),
                           SizedBox(height: 8),
                           Expanded(
                             child: ListView.builder(
                               controller: _scrollController,
-                              physics: ClampingScrollPhysics(),
                               itemCount: listings.length,
                               itemBuilder: (context, index) {
                                 return ListingCardApplications(

@@ -6,20 +6,19 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
 class ShortlistCard extends StatefulWidget {
-  final String? applicationId;
-
+  String? listingId;
   final String? userId;
   String? name;
-  String? listingId;
+  String surname;
   String? interviewDateTime;
 
   ShortlistCard({
     super.key,
-    this.applicationId,
     this.listingId,
-    this.interviewDateTime,
     this.userId,
     this.name,
+    required this.surname,
+    this.interviewDateTime,
   });
 
   @override
@@ -30,7 +29,7 @@ class _ShortlistCardState extends State<ShortlistCard> {
   @override
   Widget build(BuildContext context) {
     Size screenSize = MediaQuery.of(context).size;
-
+    print("build shortlist card");
     return Column(
       children: [
         GestureDetector(
@@ -39,7 +38,7 @@ class _ShortlistCardState extends State<ShortlistCard> {
               context,
               MaterialPageRoute(
                 builder: (context) => ApplicantProfileScreen(
-                  applicationId: widget.applicationId!,
+                  applicationId: "",
                   listingId: widget.listingId!,
                   interviewDateTime: widget.interviewDateTime!,
                 ),
@@ -88,19 +87,33 @@ class _ShortlistCardState extends State<ShortlistCard> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       widget.name != null
-                          ? Text(
-                              widget.name!,
-                              style: GoogleFonts.montserrat(
-                                color: Colors.black,
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                              ),
+                          ? Row(
+                              children: [
+                                Text(
+                                  widget.name!,
+                                  style: GoogleFonts.montserrat(
+                                    color: Colors.black,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                SizedBox(width: 6),
+                                Text(
+                                  widget.surname,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: GoogleFonts.montserrat(
+                                    color: Colors.black,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ],
                             )
                           : Row(
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 Text(
-                                  "User account: ",
+                                  widget.name!,
                                   overflow: TextOverflow.ellipsis,
                                   style: GoogleFonts.montserrat(
                                     color: Colors.black,
@@ -109,7 +122,7 @@ class _ShortlistCardState extends State<ShortlistCard> {
                                   ),
                                 ),
                                 Text(
-                                  widget.userId!,
+                                  widget.surname,
                                   overflow: TextOverflow.ellipsis,
                                   style: GoogleFonts.montserrat(
                                     color: Colors.black,
