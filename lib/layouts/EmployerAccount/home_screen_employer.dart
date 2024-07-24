@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get_local/layouts/EmployerAccount/notifications/notifications_unverified_employer.dart';
-import 'package:get_local/layouts/home/feed.dart';
+import 'package:get_local/layouts/home/feed_employers.dart';
 
 import 'package:get_local/layouts/EmployerAccount/listings/listings_company.dart';
 import 'package:get_local/layouts/login/login_screen.dart';
@@ -14,8 +14,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeScreenEmployer extends StatefulWidget {
   String? email;
-  String? companyName;
-  String? id;
+  final String companyName;
+  final String id;
   String? service;
   String? approved;
   String? password;
@@ -24,8 +24,8 @@ class HomeScreenEmployer extends StatefulWidget {
       {super.key,
       this.email,
       this.password,
-      this.companyName,
-      this.id,
+      required this.companyName,
+      required this.id,
       this.service,
       this.approved});
   @override
@@ -83,7 +83,10 @@ class _HomeScreenEmployerState extends State<HomeScreenEmployer> {
 
   List<Widget> _buildScreens() {
     return [
-      const Feed(),
+      FeedEmployers(
+        id: widget.id,
+        companyName: widget.companyName,
+      ),
       ListingsScreenCompany(
         id: widget.id,
         companyName: widget.companyName,

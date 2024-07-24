@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get_local/layouts/LocalAccount/feed/feed_locals.dart';
 import 'package:get_local/layouts/home/feed.dart';
 import 'package:get_local/layouts/LocalAccount/listings/listings.dart';
 import 'package:get_local/layouts/EmployerAccount/listings/listings_company.dart';
@@ -76,7 +77,7 @@ class _HomeScreenLocalState extends State<HomeScreenLocal> {
 
   List<Widget> _buildScreens() {
     return [
-      const Feed(),
+      const FeedLocals(),
       ListingsScreen(
           approved: widget.approved!,
           name: widget.name!,

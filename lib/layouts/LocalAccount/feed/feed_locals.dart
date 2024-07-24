@@ -4,20 +4,21 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_toggle_tab/flutter_toggle_tab.dart';
 import 'package:get_local/components/post_card.dart';
+import 'package:get_local/layouts/EmployerAccount/feed/new_post_screen.dart';
 import 'package:get_local/models/post.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' show post;
 import 'package:load_switch/load_switch.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 
-class Feed extends StatefulWidget {
-  const Feed({super.key});
+class FeedLocals extends StatefulWidget {
+  const FeedLocals({super.key});
 
   @override
-  State<Feed> createState() => _FeedState();
+  State<FeedLocals> createState() => _FeedLocalsState();
 }
 
-class _FeedState extends State<Feed> {
+class _FeedLocalsState extends State<FeedLocals> {
   Timer? timer;
   List<Post> posts = [];
 
@@ -85,49 +86,51 @@ class _FeedState extends State<Feed> {
                 return Container(
                   padding: EdgeInsets.symmetric(horizontal: 16),
                   color: Colors.white,
-                  child: Column(
-                    children: [
-                      FlutterToggleTab(
-                        selectedBackgroundColors: [Colors.white],
-                        unSelectedBackgroundColors: [
-                          Color.fromARGB(255, 241, 243, 252)
-                        ],
-                        height: 40,
-                        width: 92,
-                        borderRadius: 15,
-                        marginSelected: EdgeInsets.all(4),
-                        selectedTextStyle: TextStyle(
-                          color: Colors.black,
-                          fontSize: 14,
-                          fontWeight: FontWeight.w600,
-                        ),
-                        unSelectedTextStyle: TextStyle(
+                  child: Stack(children: [
+                    Column(
+                      children: [
+                        FlutterToggleTab(
+                          selectedBackgroundColors: [Colors.white],
+                          unSelectedBackgroundColors: [
+                            Color.fromARGB(255, 241, 243, 252)
+                          ],
+                          height: 40,
+                          width: 92,
+                          borderRadius: 15,
+                          marginSelected: EdgeInsets.all(4),
+                          selectedTextStyle: TextStyle(
                             color: Colors.black,
                             fontSize: 14,
-                            fontWeight: FontWeight.w400),
-                        labels: ["All", "Mining", "Construction"],
-                        selectedIndex: _tabTextIconIndexSelected,
-                        selectedLabelIndex: (index) {
-                          setState(() {
-                            _tabTextIconIndexSelected = index;
-                          });
-                        },
-                      ),
-                      SizedBox(height: 20),
-                      Expanded(
-                        child: ListView.builder(
-                          itemCount: posts.length,
-                          itemBuilder: (context, index) {
-                            return PostCard(
-                              company: posts[index].company,
-                              title: posts[index].title!,
-                              content: posts[index].content!,
-                            );
+                            fontWeight: FontWeight.w600,
+                          ),
+                          unSelectedTextStyle: TextStyle(
+                              color: Colors.black,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w400),
+                          labels: ["All", "Mining", "Construction"],
+                          selectedIndex: _tabTextIconIndexSelected,
+                          selectedLabelIndex: (index) {
+                            setState(() {
+                              _tabTextIconIndexSelected = index;
+                            });
                           },
                         ),
-                      ),
-                    ],
-                  ),
+                        SizedBox(height: 20),
+                        Expanded(
+                          child: ListView.builder(
+                            itemCount: posts.length,
+                            itemBuilder: (context, index) {
+                              return PostCard(
+                                company: posts[index].company,
+                                title: posts[index].title!,
+                                content: posts[index].content!,
+                              );
+                            },
+                          ),
+                        ),
+                      ],
+                    )
+                  ]),
                 );
               }
             }
