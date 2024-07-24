@@ -37,6 +37,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   File? _profilePic;
   String? profilePicName;
   String? id;
+  String profilePicUrl = "";
   final ImagePicker _picker = ImagePicker();
 
   List<WorkHistoryItem> workHistoryItems = [
@@ -86,6 +87,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
   void initState() {
     id = widget.id;
     profilePicName = "local_$id\_profile_pic";
+    profilePicUrl =
+        "http://139.144.77.133/getLocalDemo/documents/local_$id\_profile_pic.jpg";
     super.initState();
   }
 
@@ -97,8 +100,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
       File pic = File(image.path);
       String fileExtension = path.extension(pic.path);
       print("File extension: $fileExtension");
-      uploadProfilePic(pic, profilePicName! + fileExtension);
+      await uploadProfilePic(pic, profilePicName! + fileExtension);
+      _refreshImage();
     }
+  }
+
+  void _refreshImage() {
+    setState(() {
+      // Append a unique query parameter to force refresh
+      profilePicUrl =
+          'http://139.144.77.133/getLocalDemo/documents/local_$id\_profile_pic.jpg?timestamp=${DateTime.now().millisecondsSinceEpoch}';
+    });
   }
 
   void _showDialog(BuildContext context) {
@@ -230,18 +242,40 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     _showDialog(context);
                   },
                   child: Container(
-                    height: 60,
-                    width: 60,
-                    decoration: const BoxDecoration(
+                      height: 60,
+                      width: 60,
+                      decoration: const BoxDecoration(
                         borderRadius: BorderRadius.all(Radius.circular(30)),
                         color: Colors.grey,
-                        image: DecorationImage(
-                            image: NetworkImage(
-                              "http://139.144.77.133/getLocalDemo/documents/local_55_profile_pic.jpg",
-                            ),
-                            fit: BoxFit.cover)),
-                    child: Icon(Icons.person_2_outlined),
-                  ),
+                      ),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.all(Radius.circular(30)),
+                        child: Image.network(
+                          profilePicUrl,
+                          fit: BoxFit.cover,
+                          loadingBuilder: (BuildContext context, Widget child,
+                              ImageChunkEvent? loadingProgress) {
+                            if (loadingProgress == null) {
+                              return child;
+                            } else {
+                              return Center(
+                                child: CircularProgressIndicator(
+                                  value: loadingProgress.expectedTotalBytes !=
+                                          null
+                                      ? loadingProgress.cumulativeBytesLoaded /
+                                          (loadingProgress.expectedTotalBytes ??
+                                              1)
+                                      : null,
+                                ),
+                              );
+                            }
+                          },
+                          errorBuilder: (BuildContext context, Object exception,
+                              StackTrace? stackTrace) {
+                            return Icon(Icons.person_2_outlined);
+                          },
+                        ),
+                      )),
                 ),
                 SizedBox(width: 8),
                 Column(
