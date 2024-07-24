@@ -10,6 +10,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mime/mime.dart';
 import 'package:http_parser/http_parser.dart';
+import 'package:path/path.dart' as path;
 import 'package:http/http.dart' as http;
 
 class ProfileScreen extends StatefulWidget {
@@ -84,7 +85,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   void initState() {
     id = widget.id;
-    profilePicName = "local_$id\_profile_pic.jpg";
+    profilePicName = "local_$id\_profile_pic";
     super.initState();
   }
 
@@ -94,7 +95,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
       // Use the image
       print('Image path: ${image.path}');
       File pic = File(image.path);
-      uploadProfilePic(pic, profilePicName!);
+      String fileExtension = path.extension(pic.path);
+      print("File extension: $fileExtension");
+      uploadProfilePic(pic, profilePicName! + fileExtension);
     }
   }
 
@@ -170,7 +173,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   Future<void> uploadProfilePic(File file, String newName) async {
     final uri =
-        Uri.parse("http://139.144.77.133/getLocalDemo/document_upload_mod.php");
+        Uri.parse("http://139.144.77.133/getLocalDemo/profile_pic_upload.php");
 
     var request = http.MultipartRequest('POST', uri);
 
@@ -231,7 +234,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     width: 60,
                     decoration: const BoxDecoration(
                         borderRadius: BorderRadius.all(Radius.circular(30)),
-                        color: Colors.grey),
+                        color: Colors.grey,
+                        image: DecorationImage(
+                            image: NetworkImage(
+                              "http://139.144.77.133/getLocalDemo/documents/local_55_profile_pic.jpg",
+                            ),
+                            fit: BoxFit.cover)),
                     child: Icon(Icons.person_2_outlined),
                   ),
                 ),

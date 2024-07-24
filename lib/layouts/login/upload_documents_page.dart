@@ -199,6 +199,12 @@ class _UploadDocumentsPageState extends State<UploadDocumentsPage> {
                     style: GoogleFonts.montserrat(
                         fontSize: 16, fontWeight: FontWeight.bold),
                   ),
+                  SizedBox(height: 8),
+                  Text(
+                    "All files should be in PDF format",
+                    style: GoogleFonts.montserrat(
+                        fontSize: 16, fontWeight: FontWeight.normal),
+                  ),
                   SizedBox(height: 32),
                   Expanded(
                     child: Container(
