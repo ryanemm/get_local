@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get_local/layouts/LocalAccount/feed/feed_locals.dart';
-import 'package:get_local/layouts/home/feed.dart';
+import 'package:get_local/layouts/home/feed_employers.dart';
 import 'package:get_local/layouts/LocalAccount/listings/listings.dart';
 import 'package:get_local/layouts/EmployerAccount/listings/listings_company.dart';
 import 'package:get_local/layouts/login/login_screen.dart';

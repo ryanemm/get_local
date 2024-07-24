@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get_local/layouts/EmployerAccount/home_screen_employer.dart';
 import 'package:get_local/layouts/LocalAccount/home_screen_local.dart';
-import 'package:get_local/layouts/home/feed.dart';
+import 'package:get_local/layouts/home/feed_employers.dart';
 import 'package:get_local/layouts/LocalAccount/listings/listings.dart';
 import 'package:get_local/layouts/EmployerAccount/listings/listings_company.dart';
 import 'package:get_local/layouts/login/login_screen.dart';
@@ -65,9 +65,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 approved: widget.approved,
                 job: widget.job)
             : HomeScreenEmployer(
-                id: widget.id,
+                id: widget.id!,
                 email: widget.email,
-                companyName: widget.companyName,
+                companyName: widget.companyName!,
                 service: widget.service,
                 approved: widget.approved,
               ));

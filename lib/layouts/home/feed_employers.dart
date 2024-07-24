@@ -4,20 +4,23 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_toggle_tab/flutter_toggle_tab.dart';
 import 'package:get_local/components/post_card.dart';
+import 'package:get_local/layouts/EmployerAccount/feed/new_post_screen.dart';
 import 'package:get_local/models/post.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' show post;
 import 'package:load_switch/load_switch.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 
-class Feed extends StatefulWidget {
-  const Feed({super.key});
+class FeedEmployers extends StatefulWidget {
+  final String id;
+  final String companyName;
+  const FeedEmployers({super.key, required this.id, required this.companyName});
 
   @override
-  State<Feed> createState() => _FeedState();
+  State<FeedEmployers> createState() => _FeedEmployersState();
 }
 
-class _FeedState extends State<Feed> {
+class _FeedEmployersState extends State<FeedEmployers> {
   Timer? timer;
   List<Post> posts = [];
 
@@ -128,7 +131,58 @@ class _FeedState extends State<Feed> {
                           ),
                         ),
                       ],
-                    )
+                    ),
+                    Positioned(
+                        bottom: 100,
+                        right: 20,
+                        child: GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => NewPostScreen(
+                                      companyId: widget.id,
+                                      companyName: widget.companyName)),
+                            );
+                          },
+                          child: Container(
+                            width: 70,
+                            height: 70,
+                            decoration: BoxDecoration(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(16)),
+                                color: Color.fromARGB(255, 22, 44, 49),
+                                boxShadow: [
+                                  BoxShadow(
+                                    offset: Offset(1, 1),
+                                    color: Colors.grey.shade300,
+                                    blurRadius: 2,
+                                    spreadRadius: 1,
+                                  ),
+                                  BoxShadow(
+                                    offset: Offset(-1, -1),
+                                    color: Colors.grey.shade200,
+                                    blurRadius: 2,
+                                    spreadRadius: 0.5,
+                                  ),
+                                ]),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  Icons.add,
+                                  color: Color.fromARGB(255, 255, 207, 47),
+                                ),
+                                Text(
+                                  "Post",
+                                  style: GoogleFonts.montserrat(
+                                      color: Color.fromARGB(255, 255, 207, 47),
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ],
+                            ),
+                          ),
+                        )),
                   ]),
                 );
               }
