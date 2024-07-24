@@ -97,9 +97,11 @@ class _HomeScreenEmployerState extends State<HomeScreenEmployer> {
               email: widget.email!,
             ),
       ProfileScreenCompany(
-          companyName: widget.companyName!,
-          service: widget.service!,
-          email: widget.service!),
+        companyName: widget.companyName!,
+        service: widget.service!,
+        email: widget.service!,
+        id: widget.id!,
+      ),
     ];
   }
 
