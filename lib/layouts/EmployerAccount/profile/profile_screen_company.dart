@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:get_local/models/bio.dart';
@@ -33,6 +34,7 @@ class ProfileScreenCompany extends StatefulWidget {
 class _ProfileScreenCompanyState extends State<ProfileScreenCompany> {
   File? _profilePic;
   String? profilePicName;
+  String? galleryPicName;
   String? id;
   String profilePicUrl = "";
   String? service;
@@ -44,6 +46,7 @@ class _ProfileScreenCompanyState extends State<ProfileScreenCompany> {
   void initState() {
     id = widget.id;
     service = widget.service;
+    galleryPicName = "company_$id\_";
     profilePicName = "company_$id\_profile_pic";
     profilePicUrl =
         "http://139.144.77.133/getLocalDemo/documents/company_$id\_profile_pic.jpg";
@@ -103,6 +106,26 @@ class _ProfileScreenCompanyState extends State<ProfileScreenCompany> {
     }
   }
 
+  Future<void> pickGalleryImage() async {
+    final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+    if (image != null) {
+      // Use the image
+      print('Image path: ${image.path}');
+      File pic = File(image.path);
+      String fileExtension = path.extension(pic.path);
+      print("File extension: $fileExtension");
+      String uniqueIdentifier = "";
+      const characters =
+          'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+      Random random = Random();
+      uniqueIdentifier = String.fromCharCodes(Iterable.generate(
+          10, (_) => characters.codeUnitAt(random.nextInt(characters.length))));
+      await uploadGalleryPic(
+          pic, galleryPicName! + uniqueIdentifier + fileExtension);
+      _refreshImage();
+    }
+  }
+
   Future<void> pickImage() async {
     final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
     if (image != null) {
@@ -122,6 +145,48 @@ class _ProfileScreenCompanyState extends State<ProfileScreenCompany> {
       profilePicUrl =
           'http://139.144.77.133/getLocalDemo/documents/local_$id\_profile_pic.jpg?timestamp=${DateTime.now().millisecondsSinceEpoch}';
     });
+  }
+
+  Future<void> uploadGalleryPic(File file, String newName) async {
+    final uri =
+        Uri.parse("http://139.144.77.133/getLocalDemo/gallery_pic_upload.php");
+
+    var request = http.MultipartRequest('POST', uri);
+
+    // Add widget.name to the file name
+    String fileName = newName;
+
+    var mimeTypeData =
+        lookupMimeType(file.path, headerBytes: [0xFF, 0xD8])?.split('/');
+    var fileStream = http.ByteStream(file.openRead());
+    var fileLength = await file.length();
+
+    request.files.add(http.MultipartFile(
+      'files[]', // field name on the server
+      fileStream,
+      fileLength,
+      filename: fileName,
+      contentType: mimeTypeData != null
+          ? MediaType(mimeTypeData[0], mimeTypeData[1])
+          : null,
+    ));
+
+    // Adding newName as a field in the request
+    request.fields['newNames'] = json.encode([fileName]);
+
+    // Sending the request
+    try {
+      var response = await request.send();
+
+      if (response.statusCode == 200) {
+        var responseBody = await http.Response.fromStream(response);
+        print('Response: ${responseBody.body}');
+      } else {
+        print('Error: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Exception: $e');
+    }
   }
 
   Future<void> uploadProfilePic(File file, String newName) async {
@@ -297,7 +362,7 @@ class _ProfileScreenCompanyState extends State<ProfileScreenCompany> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: Container(
-        padding: EdgeInsets.all(16),
+        padding: EdgeInsets.symmetric(horizontal: 16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -460,23 +525,28 @@ class _ProfileScreenCompanyState extends State<ProfileScreenCompany> {
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                Container(
-                  padding: EdgeInsets.all(8),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(12)),
-                      color: Color.fromARGB(255, 253, 242, 141)),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Text(
-                        "Add photos",
-                        style: GoogleFonts.montserrat(
-                            color: Color.fromARGB(255, 2, 50, 10),
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold),
-                      ),
-                      Icon(Icons.add)
-                    ],
+                GestureDetector(
+                  onTap: () {
+                    pickGalleryImage();
+                  },
+                  child: Container(
+                    padding: EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(12)),
+                        color: Color.fromARGB(255, 253, 242, 141)),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Text(
+                          "Add photos",
+                          style: GoogleFonts.montserrat(
+                              color: Color.fromARGB(255, 2, 50, 10),
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        Icon(Icons.add)
+                      ],
+                    ),
                   ),
                 ),
               ],
