@@ -54,10 +54,11 @@ class _PostCardState extends State<PostCard> {
             context,
             MaterialPageRoute(
                 builder: (context) => DetailedPostScreen(
-                      company: widget.company,
-                      title: widget.title,
-                      content: widget.content,
-                    )));
+                    company: widget.company,
+                    title: widget.title,
+                    content: widget.content,
+                    imageUrl: postTitlePicUrl!,
+                    companyProfilePicUrl: companyProfilePicUrl!)));
       },
       child: Column(
         children: [
