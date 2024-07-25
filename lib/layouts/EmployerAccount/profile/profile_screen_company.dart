@@ -4,6 +4,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:get_local/models/bio.dart';
+import 'package:get_local/models/gallery_image.dart';
 import 'package:get_local/widgets/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
@@ -39,6 +40,7 @@ class _ProfileScreenCompanyState extends State<ProfileScreenCompany> {
   String profilePicUrl = "";
   String? service;
   List<Bio> bios = [];
+  List<GalleryImage> images = [];
   String? fileExtension;
   String? uniqueIdentifier;
   final ImagePicker _picker = ImagePicker();
@@ -108,6 +110,38 @@ class _ProfileScreenCompanyState extends State<ProfileScreenCompany> {
     }
   }
 
+  Future<List<GalleryImage>> getImages() async {
+    print("getting bio ");
+    try {
+      const jsonEndpoint =
+          "http://139.144.77.133/getLocalDemo/get_gallery_images.php";
+
+      final response = await post(
+        Uri.parse(jsonEndpoint),
+        body: {"companyId": widget.id},
+      );
+      switch (response.statusCode) {
+        case 200:
+          List images = json.decode(response.body);
+          //print(posts);
+
+          var formatted =
+              images.map((image) => GalleryImage.fromJson(image)).toList();
+          //print(formatted);
+
+          //print(formatted);
+
+          return formatted;
+        default:
+          throw Exception(response.reasonPhrase);
+      }
+    } on Exception {
+      print("Caught an exception: ");
+      //return Future.error(e.toString());
+      rethrow;
+    }
+  }
+
   Future insertImage(String name) async {
     print("saving image to database");
     try {
@@ -124,7 +158,7 @@ class _ProfileScreenCompanyState extends State<ProfileScreenCompany> {
       );
       switch (response.statusCode) {
         case 200:
-          print("Bio updated successfully");
+          print("Image data inserted successfully");
           setState(() {});
         default:
           throw Exception(response.reasonPhrase);
@@ -445,7 +479,7 @@ class _ProfileScreenCompanyState extends State<ProfileScreenCompany> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      "Kosi Connect",
+                      widget.companyName,
                       style: GoogleFonts.montserrat(
                           color: Color.fromARGB(255, 2, 50, 10),
                           fontSize: 24,
@@ -583,36 +617,198 @@ class _ProfileScreenCompanyState extends State<ProfileScreenCompany> {
               ],
             ),
             SizedBox(height: 16),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                ClipRRect(
-                  borderRadius: const BorderRadius.all(Radius.circular(16)),
-                  child: Container(
-                    height: screenSize.height * 0.20,
-                    width: screenSize.height * 0.20,
+            FutureBuilder<List<GalleryImage>>(
+              future: getImages(),
+              builder: (context, snapshot) {
+                if (snapshot.hasError) {
+                  if (bios.isNotEmpty) {
+                    return Container(
+                      color: Colors.blue,
+                    );
+                  }
+                } else if (snapshot.hasData && snapshot.hasError == false) {
+                  print("snapshot data :");
+                  print(snapshot.data);
+                  images = snapshot.data!;
+                  print("Snapshot contains data");
+
+                  if (images.isNotEmpty) {
+                    return Column(
+                      children: [
+                        Container(
+                            child: images.length == 1
+                                ? Container(
+                                    height: screenSize.height * 0.20,
+                                    width: double.infinity,
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(20)),
+                                        border: Border.all(
+                                            color: Colors.grey.shade300)),
+                                    child: ClipRRect(
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(20)),
+                                      child: Image.network(
+                                        "http://139.144.77.133/getLocalDemo/documents/" +
+                                            images[0].imageName,
+                                        fit: BoxFit.cover,
+                                        loadingBuilder: (BuildContext context,
+                                            Widget child,
+                                            ImageChunkEvent? loadingProgress) {
+                                          if (loadingProgress == null) {
+                                            return child;
+                                          } else {
+                                            return Center(
+                                              child: CircularProgressIndicator(
+                                                value: loadingProgress
+                                                            .expectedTotalBytes !=
+                                                        null
+                                                    ? loadingProgress
+                                                            .cumulativeBytesLoaded /
+                                                        (loadingProgress
+                                                                .expectedTotalBytes ??
+                                                            1)
+                                                    : null,
+                                              ),
+                                            );
+                                          }
+                                        },
+                                        errorBuilder: (BuildContext context,
+                                            Object exception,
+                                            StackTrace? stackTrace) {
+                                          return Icon(Icons.person_2_outlined);
+                                        },
+                                      ),
+                                    ))
+                                : Row(
+                                    children: [
+                                      Container(
+                                          height: screenSize.height * 0.20,
+                                          width: screenSize.height * 0.20,
+                                          decoration: BoxDecoration(
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(20)),
+                                              border: Border.all(
+                                                  color: Colors.grey.shade300)),
+                                          child: ClipRRect(
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(20)),
+                                            child: Image.network(
+                                              "http://139.144.77.133/getLocalDemo/documents/" +
+                                                  images[0].imageName,
+                                              fit: BoxFit.cover,
+                                              loadingBuilder:
+                                                  (BuildContext context,
+                                                      Widget child,
+                                                      ImageChunkEvent?
+                                                          loadingProgress) {
+                                                if (loadingProgress == null) {
+                                                  return child;
+                                                } else {
+                                                  return Center(
+                                                    child:
+                                                        CircularProgressIndicator(
+                                                      value: loadingProgress
+                                                                  .expectedTotalBytes !=
+                                                              null
+                                                          ? loadingProgress
+                                                                  .cumulativeBytesLoaded /
+                                                              (loadingProgress
+                                                                      .expectedTotalBytes ??
+                                                                  1)
+                                                          : null,
+                                                    ),
+                                                  );
+                                                }
+                                              },
+                                              errorBuilder:
+                                                  (BuildContext context,
+                                                      Object exception,
+                                                      StackTrace? stackTrace) {
+                                                return Icon(
+                                                    Icons.person_2_outlined);
+                                              },
+                                            ),
+                                          )),
+                                      SizedBox(width: 16),
+                                      Container(
+                                          height: screenSize.height * 0.20,
+                                          width: screenSize.height * 0.20,
+                                          decoration: BoxDecoration(
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(20)),
+                                              border: Border.all(
+                                                  color: Colors.grey.shade300)),
+                                          child: ClipRRect(
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(20)),
+                                            child: Image.network(
+                                              "http://139.144.77.133/getLocalDemo/documents/" +
+                                                  images[1].imageName,
+                                              fit: BoxFit.cover,
+                                              loadingBuilder:
+                                                  (BuildContext context,
+                                                      Widget child,
+                                                      ImageChunkEvent?
+                                                          loadingProgress) {
+                                                if (loadingProgress == null) {
+                                                  return child;
+                                                } else {
+                                                  return Center(
+                                                    child:
+                                                        CircularProgressIndicator(
+                                                      value: loadingProgress
+                                                                  .expectedTotalBytes !=
+                                                              null
+                                                          ? loadingProgress
+                                                                  .cumulativeBytesLoaded /
+                                                              (loadingProgress
+                                                                      .expectedTotalBytes ??
+                                                                  1)
+                                                          : null,
+                                                    ),
+                                                  );
+                                                }
+                                              },
+                                              errorBuilder:
+                                                  (BuildContext context,
+                                                      Object exception,
+                                                      StackTrace? stackTrace) {
+                                                return Icon(
+                                                    Icons.person_2_outlined);
+                                              },
+                                            ),
+                                          ))
+                                    ],
+                                  )),
+                        SizedBox(height: 8),
+                        images.length > 2
+                            ? Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  Text(
+                                    "See more images...",
+                                    style: GoogleFonts.montserrat(
+                                        color: Colors.black,
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold),
+                                  )
+                                ],
+                              )
+                            : Container()
+                      ],
+                    );
+                  } else if (images.isEmpty) {
+                    return Container();
+                  }
+                }
+                return Container(
                     decoration: BoxDecoration(
-                        image: DecorationImage(
-                            image:
-                                AssetImage("assets/images/stone_crushing.jpg"),
-                            fit: BoxFit.cover)),
-                    child: Container(),
-                  ),
-                ),
-                ClipRRect(
-                  borderRadius: const BorderRadius.all(Radius.circular(16)),
-                  child: Container(
-                    height: screenSize.height * 0.20,
-                    width: screenSize.height * 0.20,
-                    decoration: BoxDecoration(
-                        image: DecorationImage(
-                            image: AssetImage("assets/images/filtering.jpeg"),
-                            fit: BoxFit.cover)),
-                    child: Container(),
-                  ),
-                ),
-              ],
-            )
+                      color: Colors.white,
+                    ),
+                    child: const Center(child: CircularProgressIndicator()));
+              },
+            ),
           ],
         ),
       ),
