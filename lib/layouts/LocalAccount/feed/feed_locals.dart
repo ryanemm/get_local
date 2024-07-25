@@ -121,6 +121,8 @@ class _FeedLocalsState extends State<FeedLocals> {
                             itemCount: posts.length,
                             itemBuilder: (context, index) {
                               return PostCard(
+                                id: posts[index].id,
+                                companyId: posts[index].companyId,
                                 company: posts[index].company,
                                 title: posts[index].title!,
                                 content: posts[index].content!,

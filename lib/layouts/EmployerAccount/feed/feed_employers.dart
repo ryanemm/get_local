@@ -82,6 +82,7 @@ class _FeedEmployersState extends State<FeedEmployers> {
               print("snapshot data :");
               print(snapshot.data);
               posts = snapshot.data!;
+              posts = posts.reversed.toList();
               print("Snapshot contains data");
 
               if (posts.isNotEmpty) {
@@ -123,6 +124,8 @@ class _FeedEmployersState extends State<FeedEmployers> {
                             itemCount: posts.length,
                             itemBuilder: (context, index) {
                               return PostCard(
+                                id: posts[index].id,
+                                companyId: posts[index].companyId,
                                 company: posts[index].company,
                                 title: posts[index].title!,
                                 content: posts[index].content!,

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get_local/layouts/EmployerAccount/home_screen_employer.dart';
 import 'package:get_local/layouts/LocalAccount/home_screen_local.dart';
-import 'package:get_local/layouts/home/feed_employers.dart';
+import 'package:get_local/layouts/EmployerAccount/feed/feed_employers.dart';
 import 'package:get_local/layouts/LocalAccount/listings/listings.dart';
 import 'package:get_local/layouts/EmployerAccount/listings/listings_company.dart';
 import 'package:get_local/layouts/login/login_screen.dart';

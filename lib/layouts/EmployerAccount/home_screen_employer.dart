@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get_local/layouts/EmployerAccount/notifications/notifications_unverified_employer.dart';
-import 'package:get_local/layouts/home/feed_employers.dart';
+import 'package:get_local/layouts/EmployerAccount/feed/feed_employers.dart';
 
 import 'package:get_local/layouts/EmployerAccount/listings/listings_company.dart';
 import 'package:get_local/layouts/login/login_screen.dart';

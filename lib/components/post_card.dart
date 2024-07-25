@@ -3,14 +3,19 @@ import 'package:get_local/layouts/home/detailed_post_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class PostCard extends StatefulWidget {
+  final String id;
+  final String companyId;
   final String title;
+
   final String company;
   final String content;
   const PostCard(
       {super.key,
       required this.title,
       required this.company,
-      required this.content});
+      required this.content,
+      required this.id,
+      required this.companyId});
 
   @override
   State<PostCard> createState() => _PostCardState();
