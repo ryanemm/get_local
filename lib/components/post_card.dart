@@ -6,22 +6,44 @@ class PostCard extends StatefulWidget {
   final String id;
   final String companyId;
   final String title;
-
   final String company;
   final String content;
   const PostCard(
       {super.key,
+      required this.id,
+      required this.companyId,
       required this.title,
       required this.company,
-      required this.content,
-      required this.id,
-      required this.companyId});
+      required this.content});
 
   @override
   State<PostCard> createState() => _PostCardState();
 }
 
 class _PostCardState extends State<PostCard> {
+  String? id;
+  String? companyId;
+  String? companyProfilePic;
+  String? companyProfilePicUrl;
+  String? postTitlePic;
+  String? postTitlePicUrl;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    id = widget.id;
+    companyId = widget.companyId;
+    companyProfilePic = "company_$companyId\_profile_pic";
+    postTitlePic = "company_$companyId\_post_$id";
+    companyProfilePicUrl =
+        "http://139.144.77.133/getLocalDemo/documents/$companyProfilePic\.jpg";
+    postTitlePicUrl =
+        "http://139.144.77.133/getLocalDemo/documents/$postTitlePic\.jpg";
+    print(companyProfilePic);
+    print(postTitlePic);
+  }
+
   @override
   Widget build(BuildContext context) {
     Size screenSize = MediaQuery.of(context).size;
@@ -48,10 +70,34 @@ class _PostCardState extends State<PostCard> {
                   height: 30,
                   width: 30,
                   decoration: const BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(25)),
-                      image: DecorationImage(
-                          image: AssetImage("assets/images/exxaro.png"),
-                          fit: BoxFit.cover)),
+                    borderRadius: BorderRadius.all(Radius.circular(25)),
+                  ),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.all(Radius.circular(30)),
+                    child: Image.network(
+                      companyProfilePicUrl!,
+                      fit: BoxFit.cover,
+                      loadingBuilder: (BuildContext context, Widget child,
+                          ImageChunkEvent? loadingProgress) {
+                        if (loadingProgress == null) {
+                          return child;
+                        } else {
+                          return Center(
+                            child: CircularProgressIndicator(
+                              value: loadingProgress.expectedTotalBytes != null
+                                  ? loadingProgress.cumulativeBytesLoaded /
+                                      (loadingProgress.expectedTotalBytes ?? 1)
+                                  : null,
+                            ),
+                          );
+                        }
+                      },
+                      errorBuilder: (BuildContext context, Object exception,
+                          StackTrace? stackTrace) {
+                        return Icon(Icons.person_2_outlined);
+                      },
+                    ),
+                  ),
                 ),
                 const SizedBox(width: 8),
                 Text(
@@ -84,11 +130,32 @@ class _PostCardState extends State<PostCard> {
                   child: Stack(children: [
                     Container(
                       height: screenSize.height * 0.21,
-                      decoration: const BoxDecoration(
-                          image: DecorationImage(
-                              image: AssetImage("assets/images/post_image.jpg"),
-                              fit: BoxFit.cover)),
-                      child: Container(),
+                      width: double.infinity,
+                      child: Image.network(
+                        postTitlePicUrl!,
+                        fit: BoxFit.cover,
+                        loadingBuilder: (BuildContext context, Widget child,
+                            ImageChunkEvent? loadingProgress) {
+                          if (loadingProgress == null) {
+                            return child;
+                          } else {
+                            return Center(
+                              child: CircularProgressIndicator(
+                                value: loadingProgress.expectedTotalBytes !=
+                                        null
+                                    ? loadingProgress.cumulativeBytesLoaded /
+                                        (loadingProgress.expectedTotalBytes ??
+                                            1)
+                                    : null,
+                              ),
+                            );
+                          }
+                        },
+                        errorBuilder: (BuildContext context, Object exception,
+                            StackTrace? stackTrace) {
+                          return Icon(Icons.person_2_outlined);
+                        },
+                      ),
                     ),
                     Positioned.fill(
                       child: Container(
