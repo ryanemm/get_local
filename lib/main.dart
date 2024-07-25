@@ -22,6 +22,7 @@ Future<void> main() async {
   String approved = "";
   String password = "";
   String job = "";
+  String address = "";
   String? sharedPrefLoggedIn;
   String? sharedPrefAccountType;
   String? sharedPrefEmail;
@@ -33,6 +34,7 @@ Future<void> main() async {
   String? sharedPrefApproved;
   String? sharedPrefPassword;
   String? sharedPrefJob;
+  String? sharedPrefAddress;
 
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
       statusBarBrightness: Brightness.dark,
@@ -76,12 +78,14 @@ Future<void> main() async {
       sharedPrefEmail = startPrefs.getString("email");
       sharedPrefApproved = startPrefs.getString("approved");
       sharedPrefLoggedIn = startPrefs.getString("loggedIn");
+      sharedPrefAddress = startPrefs.getString("address");
       id = sharedPrefId!;
       service = sharedPrefService!;
       companyName = sharedPrefCompanyName!;
       email = sharedPrefEmail!;
       approved = sharedPrefApproved!;
       loggedIn = sharedPrefLoggedIn!;
+      address = sharedPrefAddress!;
     }
   }
 
@@ -95,6 +99,7 @@ Future<void> main() async {
       service: service,
       job: job,
       id: id,
+      address: address,
       approved: approved,
       password: password));
 }
@@ -111,6 +116,7 @@ class MyApp extends StatelessWidget {
   final String approved;
   final String password;
   final String job;
+  final String address;
   const MyApp(
       {super.key,
       required this.loggedIn,
@@ -123,7 +129,8 @@ class MyApp extends StatelessWidget {
       required this.id,
       required this.approved,
       required this.password,
-      required this.job});
+      required this.job,
+      required this.address});
 
   // This widget is the root of your application.
   @override
@@ -150,7 +157,7 @@ class MyApp extends StatelessWidget {
               password: password,
               approved: approved,
               job: job,
-            )
+              address: address)
           : LoginScreen(),
     );
   }

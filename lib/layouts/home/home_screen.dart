@@ -25,6 +25,7 @@ class HomeScreen extends StatefulWidget {
   String? job;
   String? approved;
   String? password;
+  String? address;
 
   HomeScreen(
       {super.key,
@@ -37,7 +38,8 @@ class HomeScreen extends StatefulWidget {
       this.id,
       this.service,
       this.job,
-      this.approved});
+      this.approved,
+      this.address});
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
@@ -52,6 +54,7 @@ class _HomeScreenState extends State<HomeScreen> {
   String? companyName;
   String? id;
   String? service;
+  String? address;
 
   @override
   Widget build(BuildContext context) {
@@ -70,6 +73,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 companyName: widget.companyName!,
                 service: widget.service,
                 approved: widget.approved,
+                address: widget.address!,
               ));
   }
 }

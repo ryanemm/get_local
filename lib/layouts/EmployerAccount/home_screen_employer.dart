@@ -19,6 +19,7 @@ class HomeScreenEmployer extends StatefulWidget {
   String? service;
   String? approved;
   String? password;
+  final String address;
 
   HomeScreenEmployer(
       {super.key,
@@ -27,7 +28,8 @@ class HomeScreenEmployer extends StatefulWidget {
       required this.companyName,
       required this.id,
       this.service,
-      this.approved});
+      this.approved,
+      required this.address});
   @override
   _HomeScreenEmployerState createState() => _HomeScreenEmployerState();
 }
@@ -100,10 +102,11 @@ class _HomeScreenEmployerState extends State<HomeScreenEmployer> {
               email: widget.email!,
             ),
       ProfileScreenCompany(
-        companyName: widget.companyName!,
+        companyName: widget.companyName,
         service: widget.service!,
         email: widget.service!,
-        id: widget.id!,
+        id: widget.id,
+        address: widget.address,
       ),
     ];
   }

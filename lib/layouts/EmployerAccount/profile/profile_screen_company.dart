@@ -2,24 +2,28 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:get_local/models/bio.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mime/mime.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:path/path.dart' as path;
 import 'package:http/http.dart' as http;
+import 'package:http/http.dart' show post;
 
 class ProfileScreenCompany extends StatefulWidget {
   final String companyName;
   final String service;
   final String email;
   final String id;
+  final String address;
   const ProfileScreenCompany(
       {super.key,
       required this.companyName,
       required this.service,
       required this.email,
-      required this.id});
+      required this.id,
+      required this.address});
 
   @override
   State<ProfileScreenCompany> createState() => _ProfileScreenCompanyState();
@@ -30,15 +34,47 @@ class _ProfileScreenCompanyState extends State<ProfileScreenCompany> {
   String? profilePicName;
   String? id;
   String profilePicUrl = "";
+  String? service;
   final ImagePicker _picker = ImagePicker();
 
   @override
   void initState() {
     id = widget.id;
+    service = widget.service;
     profilePicName = "company_$id\_profile_pic";
     profilePicUrl =
         "http://139.144.77.133/getLocalDemo/documents/company_$id\_profile_pic.jpg";
     super.initState();
+  }
+
+  Future<List<Bio>> getBio() async {
+    print("getting posts");
+    try {
+      const jsonEndpoint = "http://139.144.77.133/getLocalDemo/get_bio.php";
+
+      final response = await post(
+        Uri.parse(jsonEndpoint),
+        body: "companyId",
+      );
+      switch (response.statusCode) {
+        case 200:
+          List bios = json.decode(response.body);
+          //print(posts);
+
+          var formatted = bios.map((bio) => Bio.fromJson(bio)).toList();
+          //print(formatted);
+
+          //print(formatted);
+
+          return formatted;
+        default:
+          throw Exception(response.reasonPhrase);
+      }
+    } on Exception {
+      print("Caught an exception: ");
+      //return Future.error(e.toString());
+      rethrow;
+    }
   }
 
   Future<void> pickImage() async {
@@ -255,27 +291,13 @@ class _ProfileScreenCompanyState extends State<ProfileScreenCompany> {
                         color: Color.fromARGB(255, 2, 36, 10),
                       ),
                       Text(
-                        "21 Steenkamp Street, Del Jundor",
+                        widget.address,
                         style: GoogleFonts.montserrat(
                             color: Colors.black,
                             fontSize: 16,
                             fontWeight: FontWeight.normal),
-                      ),
+                      )
                     ],
-                  ),
-                  Text(
-                    "     Witbank",
-                    style: GoogleFonts.montserrat(
-                        color: Colors.black,
-                        fontSize: 16,
-                        fontWeight: FontWeight.normal),
-                  ),
-                  Text(
-                    "     Mpumalanga",
-                    style: GoogleFonts.montserrat(
-                        color: Colors.black,
-                        fontSize: 16,
-                        fontWeight: FontWeight.normal),
                   ),
                   SizedBox(
                     height: 16,
@@ -283,27 +305,13 @@ class _ProfileScreenCompanyState extends State<ProfileScreenCompany> {
                   Row(
                     children: [
                       Text(
-                        "⦿ Filtering ",
-                        style: GoogleFonts.montserrat(
-                            color: Colors.black,
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold),
-                      ),
-                      Text(
-                        "  ⦿ Stone Crushing ",
+                        " ⦿ $service ",
                         style: GoogleFonts.montserrat(
                             color: Colors.black,
                             fontSize: 16,
                             fontWeight: FontWeight.bold),
                       ),
                     ],
-                  ),
-                  Text(
-                    "⦿ Geochemical Analysis ",
-                    style: GoogleFonts.montserrat(
-                        color: Colors.black,
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold),
                   ),
                 ],
               ),

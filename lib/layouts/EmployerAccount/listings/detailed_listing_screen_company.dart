@@ -51,7 +51,7 @@ class _DetailedListingsScreenCompanyState
   List<Shortlisting> shortlist = [];
   DateTime? interviewDate;
 
-  int _selectedTab = 1;
+  int _selectedTab = 0;
 
   @override
   void initState() {

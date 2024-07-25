@@ -82,6 +82,7 @@ class _LoginScreenState extends State<LoginScreen> {
             "companyRegistration", formatted[0].companyRegistration);
         await prefs.setString("loggedIn", "true");
         await prefs.setString("service", formatted[0].service);
+        await prefs.setString("address", formatted[0].address);
         await prefs.setString("accountType", formatted[0].accountType);
         await prefs.setString("approved", formatted[0].verified);
         await prefs.setString("id", formatted[0].id);
@@ -97,6 +98,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       id: formatted[0].id,
                       service: formatted[0].service,
                       approved: formatted[0].verified,
+                      address: formatted[0].address,
                     )));
       }
     } else if (response.body.contains("local")) {
