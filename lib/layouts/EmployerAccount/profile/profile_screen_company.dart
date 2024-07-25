@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get_local/models/bio.dart';
+import 'package:get_local/widgets/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mime/mime.dart';
@@ -35,7 +36,9 @@ class _ProfileScreenCompanyState extends State<ProfileScreenCompany> {
   String? id;
   String profilePicUrl = "";
   String? service;
+  List<Bio> bios = [];
   final ImagePicker _picker = ImagePicker();
+  TextEditingController bioController = TextEditingController();
 
   @override
   void initState() {
@@ -48,13 +51,13 @@ class _ProfileScreenCompanyState extends State<ProfileScreenCompany> {
   }
 
   Future<List<Bio>> getBio() async {
-    print("getting posts");
+    print("getting bio ");
     try {
       const jsonEndpoint = "http://139.144.77.133/getLocalDemo/get_bio.php";
 
       final response = await post(
         Uri.parse(jsonEndpoint),
-        body: "companyId",
+        body: {"companyId": widget.id},
       );
       switch (response.statusCode) {
         case 200:
@@ -67,6 +70,29 @@ class _ProfileScreenCompanyState extends State<ProfileScreenCompany> {
           //print(formatted);
 
           return formatted;
+        default:
+          throw Exception(response.reasonPhrase);
+      }
+    } on Exception {
+      print("Caught an exception: ");
+      //return Future.error(e.toString());
+      rethrow;
+    }
+  }
+
+  Future updateBio() async {
+    print("updating bio ");
+    try {
+      const jsonEndpoint = "http://139.144.77.133/getLocalDemo/update_bio.php";
+
+      final response = await post(
+        Uri.parse(jsonEndpoint),
+        body: {"companyId": widget.id, "bio": bioController.text},
+      );
+      switch (response.statusCode) {
+        case 200:
+          print("Bio updated successfully");
+          setState(() {});
         default:
           throw Exception(response.reasonPhrase);
       }
@@ -197,6 +223,74 @@ class _ProfileScreenCompanyState extends State<ProfileScreenCompany> {
     );
   }
 
+  void showBioDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: Color.fromARGB(255, 242, 251, 242),
+          elevation: 16,
+          shadowColor: Colors.black,
+          contentTextStyle: GoogleFonts.montserrat(
+              color: Color.fromARGB(255, 2, 50, 10),
+              fontSize: 16,
+              fontWeight: FontWeight.normal),
+          title: Row(
+            children: [
+              Icon(Icons.person),
+              SizedBox(width: 8),
+              Text('Update Company Bio'),
+            ],
+          ),
+          titleTextStyle: GoogleFonts.montserrat(
+              color: Color.fromARGB(255, 2, 50, 10),
+              fontSize: 24,
+              fontWeight: FontWeight.bold),
+          content: TextFormField(
+            autofocus: false,
+            maxLines: null,
+            controller: bioController,
+            style: simpleTextStyle(Colors.black),
+            decoration: textFieldInputDecoration(
+                "Type new bio here",
+                const Icon(
+                  Icons.abc,
+                  color: const Color.fromARGB(255, 19, 53, 61),
+                )),
+          ),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () async {
+                Navigator.of(context).pop();
+              },
+              child: Text(
+                'Cancel',
+                style: GoogleFonts.montserrat(
+                    color: Color.fromARGB(255, 2, 50, 10),
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold),
+              ),
+            ),
+            TextButton(
+              onPressed: () async {
+                await updateBio();
+                bioController.clear();
+                Navigator.of(context).pop();
+              },
+              child: Text(
+                'Update',
+                style: GoogleFonts.montserrat(
+                    color: Color.fromARGB(255, 2, 50, 10),
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     Size screenSize = MediaQuery.of(context).size;
@@ -264,10 +358,6 @@ class _ProfileScreenCompanyState extends State<ProfileScreenCompany> {
                     SizedBox(
                       width: 120,
                     ),
-                    Icon(
-                      Icons.edit,
-                      color: Color.fromARGB(255, 0, 33, 7),
-                    )
                   ],
                 ),
                 Expanded(child: Container()),
@@ -317,17 +407,56 @@ class _ProfileScreenCompanyState extends State<ProfileScreenCompany> {
               ),
             ),
             SizedBox(height: 16),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                "Kosi Connect is a leading provider of comprehensive stone crushing and geochemical analysis services. With years of industry experience and state-of-the-art technology, we deliver high-quality solutions for mining, construction, and environmental projects.",
-                style: GoogleFonts.montserrat(
-                    color: Colors.black,
-                    fontSize: 16,
-                    fontWeight: FontWeight.normal),
-                textAlign: TextAlign.justify,
-              ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    showBioDialog(context);
+                  },
+                  child: Icon(
+                    Icons.edit,
+                    color: Color.fromARGB(255, 0, 33, 7),
+                  ),
+                ),
+              ],
             ),
+            Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: FutureBuilder<List<Bio>>(
+                  future: getBio(),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasError) {
+                      if (bios.isNotEmpty) {
+                        return Container(
+                          color: Colors.blue,
+                        );
+                      }
+                    } else if (snapshot.hasData && snapshot.hasError == false) {
+                      print("snapshot data :");
+                      print(snapshot.data);
+                      bios = snapshot.data!;
+                      print("Snapshot contains data");
+
+                      if (bios.isNotEmpty) {
+                        return Text(
+                          bios[0].bio,
+                          style: GoogleFonts.montserrat(
+                              color: Colors.black,
+                              fontSize: 16,
+                              fontWeight: FontWeight.normal),
+                          textAlign: TextAlign.justify,
+                        );
+                      }
+                    }
+                    return Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                        ),
+                        child:
+                            const Center(child: CircularProgressIndicator()));
+                  },
+                )),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
