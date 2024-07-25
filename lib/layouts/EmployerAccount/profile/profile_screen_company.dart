@@ -39,6 +39,8 @@ class _ProfileScreenCompanyState extends State<ProfileScreenCompany> {
   String profilePicUrl = "";
   String? service;
   List<Bio> bios = [];
+  String? fileExtension;
+  String? uniqueIdentifier;
   final ImagePicker _picker = ImagePicker();
   TextEditingController bioController = TextEditingController();
 
@@ -106,22 +108,50 @@ class _ProfileScreenCompanyState extends State<ProfileScreenCompany> {
     }
   }
 
+  Future insertImage(String name) async {
+    print("saving image to database");
+    try {
+      const jsonEndpoint =
+          "http://139.144.77.133/getLocalDemo/insert_image.php";
+
+      final response = await post(
+        Uri.parse(jsonEndpoint),
+        body: {
+          "companyId": widget.id,
+          "companyName": widget.companyName,
+          "imageName": name
+        },
+      );
+      switch (response.statusCode) {
+        case 200:
+          print("Bio updated successfully");
+          setState(() {});
+        default:
+          throw Exception(response.reasonPhrase);
+      }
+    } on Exception {
+      print("Caught an exception: ");
+      //return Future.error(e.toString());
+      rethrow;
+    }
+  }
+
   Future<void> pickGalleryImage() async {
     final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
     if (image != null) {
       // Use the image
       print('Image path: ${image.path}');
       File pic = File(image.path);
-      String fileExtension = path.extension(pic.path);
+      fileExtension = path.extension(pic.path);
       print("File extension: $fileExtension");
-      String uniqueIdentifier = "";
       const characters =
           'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
       Random random = Random();
       uniqueIdentifier = String.fromCharCodes(Iterable.generate(
           10, (_) => characters.codeUnitAt(random.nextInt(characters.length))));
       await uploadGalleryPic(
-          pic, galleryPicName! + uniqueIdentifier + fileExtension);
+          pic, galleryPicName! + uniqueIdentifier! + fileExtension!);
+
       _refreshImage();
     }
   }
@@ -181,6 +211,7 @@ class _ProfileScreenCompanyState extends State<ProfileScreenCompany> {
       if (response.statusCode == 200) {
         var responseBody = await http.Response.fromStream(response);
         print('Response: ${responseBody.body}');
+        await insertImage(galleryPicName! + uniqueIdentifier! + fileExtension!);
       } else {
         print('Error: ${response.statusCode}');
       }
